@@ -32,7 +32,8 @@ PROJ:=$(shell basename $(CURDIR))$(DEBUG_SUFFIX)
 
 # Compilers and initial compiler flags
 CXX:=$(PREFIX)g++
-CXX_FLAGS:=$(CXX_FLAGS) -std=c++20 -fcoroutines -fmodules-ts -Wall
+CXX_FLAGS:=$(CXX_FLAGS) -std=c++20 -fcoroutines -fmodules-ts -Wall \
+	$(shell pkg-config --cflags sdl2)
 
 ifdef DEBUG
 	CXX_FLAGS:=$(CXX_FLAGS) -DDEBUG=1
@@ -51,7 +52,9 @@ OBJDUMP:=$(PREFIX)objdump
 LD:=$(CXX)
 
 # Initial linker flags
-LD_FLAGS:=$(LD_FLAGS) -lm
+LD_FLAGS:=$(LD_FLAGS) -lm \
+	$(shell pkg-config --libs sdl2) \
+	-lSDL2_image
 
 
 
