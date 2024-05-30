@@ -1,16 +1,17 @@
-#ifndef src_mat3x3_cls_hpp
-#define src_mat3x3_cls_hpp
+#ifndef src_mat4x4_cls_hpp
+#define src_mat4x4_cls_hpp
 
 #include <cmath>
+#include "vec4_cls.hpp"
 #include "misc_includes.hpp"
 
 template<typename T>
-class Mat3x3 final {
+class Mat4x4 final {
 public:		// constants
 	static constexpr Vec2<size_t>
 		SIZE_2D{
-			.x=3u,
-			.y=3u,
+			.x=4u,
+			.y=4u,
 		};
 public:		// variables
 	std::array<
@@ -18,10 +19,10 @@ public:		// variables
 		SIZE_2D.y
 	> m;
 public:		// functions
-	constexpr inline Mat3x3 operator + (
-		const Mat3x3& other
+	constexpr inline Mat4x4 operator + (
+		const Mat4x4& other
 	) const {
-		Mat3x3 ret;
+		Mat4x4 ret;
 		for (size_t j=0; j<SIZE_2D.y; ++j) {
 			for (size_t i=0; i<SIZE_2D.x; ++i) {
 				ret.m.at(j).at(i) = (
@@ -31,10 +32,10 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat3x3 operator - (
-		const Mat3x3& other
+	constexpr inline Mat4x4 operator - (
+		const Mat4x4& other
 	) const {
-		Mat3x3 ret;
+		Mat4x4 ret;
 		for (size_t j=0; j<SIZE_2D.y; ++j) {
 			for (size_t i=0; i<SIZE_2D.x; ++i) {
 				ret.m.at(j).at(i) = (
@@ -44,10 +45,10 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat3x3 operator * (
-		const Mat3x3& other
+	constexpr inline Mat4x4 operator * (
+		const Mat4x4& other
 	) const {
-		Mat3x3 ret;
+		Mat4x4 ret;
 		for (size_t j=0; j<SIZE_2D.y; ++j) {
 			for (size_t i=0; i<SIZE_2D.x; ++i) {
 				T sum = T();
@@ -59,10 +60,10 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Vec3<T> operator * (
-		const Vec3<T>& other
+	constexpr inline Vec4<T> operator * (
+		const Vec4<T>& other
 	) const {
-		Vec3<T> ret{
+		Vec4<T> ret{
 			.x=T(),
 			.y=T(),
 			.z=T(),
@@ -78,4 +79,4 @@ public:		// functions
 	}
 };
 
-#endif		// src_mat3x3_cls_hpp
+#endif		// src_mat4x4_cls_hpp
