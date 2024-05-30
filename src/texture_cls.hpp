@@ -20,6 +20,7 @@ public:		// functions
 	void load(const std::string& fname);
 	//Uint32& at(const Vec2<size_t>& pos);
 	SDL_Color at(const Vec2<size_t>& uv);
+	Uint32 at_u32(const Vec2<size_t>& uv);
 };
 
 #endif		// src_texture_cls_hpp
