@@ -67,6 +67,7 @@ public:		// functions
 			.x=T(),
 			.y=T(),
 			.z=T(),
+			.w=T(),
 		};
 		for (size_t y=0; y<SIZE_2D.y; ++y) {
 			T sum = T();
@@ -78,5 +79,25 @@ public:		// functions
 		return ret;
 	}
 };
+//template<typename T>
+//inline Vec4<T> operator * (const Vec4<T>& v, const Mat4x4<T>& mat) {
+//	Vec4<T> ret{
+//		.x=T(),
+//		.y=T(),
+//		.z=T(),
+//		.w=T(),
+//	};
+//	for (size_t x=0; x<mat.SIZE_2D.x; ++x) {
+//		T sum = T();
+//		for (size_t y=0; y<mat.SIZE_2D.y; ++y) {
+//			sum += mat.m.at(y).at(x) * v.at(y);
+//		}
+//		ret.at(x) = sum;
+//	}
+//	return ret;
+//}
+//template<typename T>
+//constexpr inline Vec4<T> project
+
 
 #endif		// src_mat4x4_cls_hpp

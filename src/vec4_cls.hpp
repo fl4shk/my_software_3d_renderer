@@ -14,6 +14,14 @@ public:		// variables
 		z=T(),
 		w=T();
 public:		// functions
+	static constexpr inline Vec4 build_homogeneous(const Vec3<T>& v) {
+		return Vec4{
+			.x=v.x,
+			.y=v.y,
+			.z=v.z,
+			.w=T(1),
+		};
+	}
 	constexpr inline Vec4 operator + (const Vec4& other) const {
 		Vec4 ret;
 		for (size_t i=0; i<SIZE; ++i) {
