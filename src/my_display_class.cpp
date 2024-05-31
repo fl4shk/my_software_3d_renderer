@@ -98,6 +98,7 @@ void MyDisplay::handle_sdl_events() {
 
 	while (SDL_PollEvent(&e) != 0) {
 		if (e.type == SDL_QUIT) {
+			_do_exit = true;
 		} else if (
 			liborangepower::sdl::handle_key_events(
 				e,
@@ -108,4 +109,7 @@ void MyDisplay::handle_sdl_events() {
 		}
 	}
 	_update_engine_key_status();
+	if (_engine_key_status.key_down_now(SnesKeyKind::ExitSim)) {
+		_do_exit = true;
+	}
 }

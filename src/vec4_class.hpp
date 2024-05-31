@@ -44,12 +44,12 @@ public:		// functions
 		return ret;
 	}
 	constexpr inline T& at(size_t pos) {
-		const std::array<T, SIZE> arr{x, y, z, w};
-		return arr.at(pos);
+		std::array<T*, SIZE> arr{&x, &y, &z, &w};
+		return *arr.at(pos);
 	}
 	constexpr inline const T& at(size_t pos) const {
-		const std::array<T, SIZE> arr{x, y, z, w};
-		return arr.at(pos);
+		std::array<const T*, SIZE> arr{&x, &y, &z, &w};
+		return *arr.at(pos);
 	}
 };
 

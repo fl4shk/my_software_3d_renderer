@@ -15,7 +15,7 @@ NS_DIRS:=$(SHARED_SRC_DIRS)
 # Whether or not to do debugging stuff
 #DEBUG:=yeah do debug
 
-DEBUG_OPTIMIZATION_LEVEL:=-Og
+DEBUG_OPTIMIZATION_LEVEL:=-O0
 REGULAR_OPTIMIZATION_LEVEL:=-O2
 
 

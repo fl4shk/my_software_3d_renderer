@@ -83,12 +83,23 @@ public:		// functions
 		for (size_t y=0; y<SIZE_2D.y; ++y) {
 			T sum = T();
 			for (size_t x=0; x<SIZE_2D.x; ++x) {
-				sum += m.at(y).at(x) * other.at(x);
+				sum = sum + m.at(y).at(x) * other.at(x);
 			}
 			ret.at(y) = sum;
 		}
 		return ret;
 	}
+};
+template<typename T>
+static constexpr Mat4x4<T> MAT4X4_IDENTITY{
+	.m={
+		{
+			{T(1), T(0), T(0), T(0)},
+			{T(0), T(1), T(0), T(0)},
+			{T(0), T(0), T(1), T(0)},
+			{T(0), T(0), T(0), T(1)},
+		}
+	},
 };
 //template<typename T>
 //inline Vec4<T> operator * (const Vec4<T>& v, const Mat4x4<T>& mat) {
@@ -110,5 +121,15 @@ public:		// functions
 //template<typename T>
 //constexpr inline Vec4<T> project
 
+template<typename T>
+std::ostream& operator << (std::ostream& os, const Mat4x4<T>& mat) {
+	for (size_t j=0; j<mat.m.size(); ++j) {
+		for (size_t i=0; i<mat.m.at(j).size(); ++i) {
+			osprintout(os, mat.m.at(j).at(i), " ");
+		}
+		osprintout(os, "\n");
+	}
+	return os;
+}
 
 #endif		// src_mat4x4_class_hpp
