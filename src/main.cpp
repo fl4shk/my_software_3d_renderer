@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
 		//},
 		//MAT3X3_IDENTITY<double>,
 		Vec3<double>{ // translate
-			.x=double(0.0),
-			.y=double(0.0),
+			.x=double(15.0),
+			.y=double(15.0),
 			.z=double(0.0),
 		}
 		//MAT4X4_IDENTITY<double>
@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
 			Vec3<double>{ // translate
 				.x=double(1.0),
 				.y=double(1.0),
-				.z=double(1.0),
+				.z=double(-1.0),
 			},
 			Vec3<double>{
 				.x=1.0,
@@ -156,12 +156,17 @@ int main(int argc, char** argv) {
 	const auto& visib = rast.calc_visib(tri);
 	for (size_t j=0; j<SIZE_2D.y; ++j) {
 		for (size_t i=0; i<SIZE_2D.x; ++i) {
-			printout(
-				uint32_t(visib.at(j * SIZE_2D.x + i))
-			);
+			if (visib.at(j * SIZE_2D.x + i)) {
+				printout(
+					//uint32_t(visib.at(j * SIZE_2D.x + i)),
+					Vec2<size_t>{.x=i, .y=j},
+					"\n"
+				);
+			}
 		}
-		printout("\n");
+		//printout("\n");
 	}
+	printout("\n");
 	for (;;) {
 		if (disp.do_exit()) {
 			break;

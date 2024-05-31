@@ -4,6 +4,7 @@
 #include "texture_class.hpp"
 #include "tri_class.hpp"
 #include "transform_class.hpp"
+#include "line_drawing_funcs.hpp"
 
 class MyDisplay;
 
@@ -31,6 +32,15 @@ public:		// functions
 		const Tri& tri
 		//const TriDraw& tri_draw
 	) const;
+private:		// functions
+	std::vector<u8> _calc_flat_top_visib(
+		const Tri& tri
+	) const;
+	std::vector<u8> _calc_flat_bot_visib(
+		const Tri& tri
+	) const;
+
 };
+
 
 #endif		// src_rast_class_hpp

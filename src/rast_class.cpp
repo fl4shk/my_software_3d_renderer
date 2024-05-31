@@ -46,13 +46,28 @@ std::vector<u8> Rast::calc_visib(
 	}
 	//--------
 	// 28.4 fixed-point coordinates
-    const int Y1 = std::round(16.0f * tri.v.at(0).v.y);
-    const int Y2 = std::round(16.0f * tri.v.at(1).v.y);
-    const int Y3 = std::round(16.0f * tri.v.at(2).v.y);
+    const int Y1 = std::round(16.0f * tri.project_v.at(0).v.y);
+    const int Y2 = std::round(16.0f * tri.project_v.at(1).v.y);
+    const int Y3 = std::round(16.0f * tri.project_v.at(2).v.y);
 
-    const int X1 = std::round(16.0f * tri.v.at(0).v.x);
-    const int X2 = std::round(16.0f * tri.v.at(1).v.x);
-    const int X3 = std::round(16.0f * tri.v.at(2).v.x);
+    const int X1 = std::round(16.0f * tri.project_v.at(0).v.x);
+    const int X2 = std::round(16.0f * tri.project_v.at(1).v.x);
+    const int X3 = std::round(16.0f * tri.project_v.at(2).v.x);
+    const std::array<Vec2<int>, 3> coords{
+		{
+			{.x=X1, .y=Y1},
+			{.x=X2, .y=Y2},
+			{.x=X3, .y=Y3},
+		}
+    };
+    for (size_t i=0; i<coords.size(); ++i) {
+		printout(
+			tri.project_v.at(i).v, " ",
+			std::hex,
+			coords.at(i), "\n",
+			std::dec
+		);
+	}
 
     // Deltas
     const int DX12 = X1 - X2;
@@ -117,98 +132,116 @@ std::vector<u8> Rast::calc_visib(
     // Loop through blocks
     for (int y = miny; y < maxy; y += q) {
 		//ret.push_back(std::vector<bool>());
+		printout(
+			"y: ", y, "\n"
+		);
         for (int x = minx; x < maxx; x += q) {
+			printout(
+				"x: ", x, "\n"
+			);
             // Corners of block
-            int x0 = x << 4;
-            int x1 = (x + q - 1) << 4;
-            int y0 = y << 4;
-            int y1 = (y + q - 1) << 4;
+            //int x0 = x << 4;
+            //int x1 = (x + q - 1) << 4;
+            //int y0 = y << 4;
+            //int y1 = (y + q - 1) << 4;
 
-            // Evaluate half-space functions
-            bool a00 = C1 + DX12 * y0 - DY12 * x0 > 0;
-            bool a10 = C1 + DX12 * y0 - DY12 * x1 > 0;
-            bool a01 = C1 + DX12 * y1 - DY12 * x0 > 0;
-            bool a11 = C1 + DX12 * y1 - DY12 * x1 > 0;
-            int a = (a00 << 0) | (a10 << 1) | (a01 << 2) | (a11 << 3);
+            //// Evaluate half-space functions
+            //bool a00 = C1 + DX12 * y0 - DY12 * x0 > 0;
+            //bool a10 = C1 + DX12 * y0 - DY12 * x1 > 0;
+            //bool a01 = C1 + DX12 * y1 - DY12 * x0 > 0;
+            //bool a11 = C1 + DX12 * y1 - DY12 * x1 > 0;
+            //int a = (a00 << 0) | (a10 << 1) | (a01 << 2) | (a11 << 3);
     
-            bool b00 = C2 + DX23 * y0 - DY23 * x0 > 0;
-            bool b10 = C2 + DX23 * y0 - DY23 * x1 > 0;
-            bool b01 = C2 + DX23 * y1 - DY23 * x0 > 0;
-            bool b11 = C2 + DX23 * y1 - DY23 * x1 > 0;
-            int b = (b00 << 0) | (b10 << 1) | (b01 << 2) | (b11 << 3);
+            //bool b00 = C2 + DX23 * y0 - DY23 * x0 > 0;
+            //bool b10 = C2 + DX23 * y0 - DY23 * x1 > 0;
+            //bool b01 = C2 + DX23 * y1 - DY23 * x0 > 0;
+            //bool b11 = C2 + DX23 * y1 - DY23 * x1 > 0;
+            //int b = (b00 << 0) | (b10 << 1) | (b01 << 2) | (b11 << 3);
     
-            bool c00 = C3 + DX31 * y0 - DY31 * x0 > 0;
-            bool c10 = C3 + DX31 * y0 - DY31 * x1 > 0;
-            bool c01 = C3 + DX31 * y1 - DY31 * x0 > 0;
-            bool c11 = C3 + DX31 * y1 - DY31 * x1 > 0;
-            int c = (c00 << 0) | (c10 << 1) | (c01 << 2) | (c11 << 3);
+            //bool c00 = C3 + DX31 * y0 - DY31 * x0 > 0;
+            //bool c10 = C3 + DX31 * y0 - DY31 * x1 > 0;
+            //bool c01 = C3 + DX31 * y1 - DY31 * x0 > 0;
+            //bool c11 = C3 + DX31 * y1 - DY31 * x1 > 0;
+            //int c = (c00 << 0) | (c10 << 1) | (c01 << 2) | (c11 << 3);
 
-            // Skip block when outside an edge
-            if (a == 0x0 || b == 0x0 || c == 0x0) {
-				continue;
-			}
+            //// Skip block when outside an edge
+            //if (a == 0x0 || b == 0x0 || c == 0x0) {
+			//	printout(
+			//		"skip block: ", Vec2<int>{.x=x, .y=y}, "\n"
+			//	);
+			//	continue;
+			//}
 
-            //unsigned int *buffer = colorBuffer;
-            u8* buf = col_buf;
+            ////unsigned int *buffer = colorBuffer;
+            ////u8* buf = col_buf;
 
-            // Accept whole block when totally covered
-            if (a == 0xF && b == 0xF && c == 0xF) {
-                for (int iy = 0; iy < q; ++iy) {
-                    for (int ix = x; ix < x + q; ++ix) {
-                        //buffer[ix] = 0x00007F00;   // Green
-                        //to_push_idx = ix;
-                        //ret.at(y).at(x) = true;
-                        //++to_push_idx;
-                        buf[ix] = true;
-                        //printout(
-						//	buf[ix], "\n"
-                        //);
-                    }
+            //// Accept whole block when totally covered
+            //if (a == 0xF && b == 0xF && c == 0xF) {
+			//	printout(
+			//		"whole block: ", Vec2<int>{.x=x, .y=y}, "\n"
+			//	);
+            //    for (int iy = 0; iy < q; ++iy) {
+            //        for (int ix = x; ix < x + q; ++ix) {
+            //            //buffer[ix] = 0x00007F00;   // Green
+            //            //to_push_idx = ix;
+            //            //ret.at(y).at(x) = true;
+            //            //++to_push_idx;
+            //            //buf[ix] = true;
+            //            col_buf[y * SIZE_2D.x + ix] = true;
+            //            //printout(
+			//			//	buf[ix], "\n"
+            //            //);
+            //        }
 
-                    //(char*&)buffer += STRIDE;
-                    buf += STRIDE;
-                    //to_push_idx += 8;
-                    //++to_push_idx;
-                }
-            } else { // Partially covered block
-                int CY1 = C1 + DX12 * y0 - DY12 * x0;
-                int CY2 = C2 + DX23 * y0 - DY23 * x0;
-                int CY3 = C3 + DX31 * y0 - DY31 * x0;
+            //        //(char*&)buffer += STRIDE;
+            //        //buf += STRIDE;
+            //        //to_push_idx += 8;
+            //        //++to_push_idx;
+            //    }
+            //} else { // Partially covered block
+			//	printout(
+			//		"partial  block: ", Vec2<int>{.x=x, .y=y}, "\n"
+			//	);
+            //    int CY1 = C1 + DX12 * y0 - DY12 * x0;
+            //    int CY2 = C2 + DX23 * y0 - DY23 * x0;
+            //    int CY3 = C3 + DX31 * y0 - DY31 * x0;
 
-                for (int iy = y; iy < y + q; ++iy) {
-                    int CX1 = CY1;
-                    int CX2 = CY2;
-                    int CX3 = CY3;
+            //    for (int iy = y; iy < y + q; ++iy) {
+            //        int CX1 = CY1;
+            //        int CX2 = CY2;
+            //        int CX3 = CY3;
       
-                    for (int ix = x; ix < x + q; ++ix) {
-                        if (CX1 > 0 && CX2 > 0 && CX3 > 0) {
-                            //buffer[ix] = 0x0000007F;   // Blue
-							//ret_row.push_back(true);
-							//ret.at
-							buf[ix] = true;
-                        }
-                        //else {
-						//	//ret_row.push_back(false);
-                        //}
-                        //++to_push_idx;
+            //        for (int ix = x; ix < x + q; ++ix) {
+            //            if (CX1 > 0 && CX2 > 0 && CX3 > 0) {
+            //                //buffer[ix] = 0x0000007F;   // Blue
+			//				//ret_row.push_back(true);
+			//				//ret.at
+			//				//buf[ix] = true;
+			//				col_buf[y * SIZE_2D.x + ix] = true;
+            //            }
+            //            //else {
+			//			//	//ret_row.push_back(false);
+            //            //}
+            //            //++to_push_idx;
 
-                        CX1 -= FDY12;
-                        CX2 -= FDY23;
-                        CX3 -= FDY31;
-                    }
+            //            CX1 -= FDY12;
+            //            CX2 -= FDY23;
+            //            CX3 -= FDY31;
+            //        }
 
-                    CY1 += FDX12;
-                    CY2 += FDX23;
-                    CY3 += FDX31;
+            //        CY1 += FDX12;
+            //        CY2 += FDX23;
+            //        CY3 += FDX31;
 
-                    //(char*&)buffer += STRIDE;
-                    buf += STRIDE;
-                }
-            }
+            //        //(char*&)buffer += STRIDE;
+            //        //buf += STRIDE;
+            //    }
+            //}
         }
+        printout("\n");
 
         //(char*&)colorBuffer += q * STRIDE;
-        col_buf += q * STRIDE;
+        //col_buf += q * STRIDE;
     }
 	return ret;
 }
