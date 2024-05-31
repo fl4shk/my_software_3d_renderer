@@ -1,4 +1,4 @@
-#include "texture_loader_cls.hpp"
+#include "texture_loader_class.hpp"
 
 TextureLoader::TextureLoader(
 	const std::vector<std::string>& s_texture_fname_vec

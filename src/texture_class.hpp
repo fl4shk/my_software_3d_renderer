@@ -1,5 +1,5 @@
-#ifndef src_texture_cls_hpp
-#define src_texture_cls_hpp
+#ifndef src_texture_class_hpp
+#define src_texture_class_hpp
 
 #include "misc_includes.hpp"
 
@@ -23,4 +23,4 @@ public:		// functions
 	Uint32 at_u32(const Vec2<size_t>& uv);
 };
 
-#endif		// src_texture_cls_hpp
+#endif		// src_texture_class_hpp

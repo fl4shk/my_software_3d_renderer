@@ -1,4 +1,4 @@
-#include "my_display_cls.hpp"
+#include "my_display_class.hpp"
 //--------
 Display::Display()
 	: window(

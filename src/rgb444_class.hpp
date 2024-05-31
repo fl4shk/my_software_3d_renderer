@@ -1,7 +1,7 @@
-//#ifndef src_rgb444_cls_hpp
-//#define src_rgb444_cls_hpp
+//#ifndef src_rgb444_class_hpp
+//#define src_rgb444_class_hpp
 //
-//// src/rgb444_cls.hpp
+//// src/rgb444_class.hpp
 //
 //#include "misc_includes.hpp"
 //
@@ -36,4 +36,4 @@
 //	}
 //};
 //
-//#endif		// src_rgb444_cls_hpp
+//#endif		// src_rgb444_class_hpp

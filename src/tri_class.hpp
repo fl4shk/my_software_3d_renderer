@@ -1,12 +1,12 @@
-#ifndef src_tri_cls_hpp
-#define src_tri_cls_hpp
+#ifndef src_tri_class_hpp
+#define src_tri_class_hpp
 
 #include "misc_includes.hpp"
-//#include "rgb444_cls.hpp"
-#include "texture_cls.hpp"
+//#include "rgb444_class.hpp"
+#include "texture_class.hpp"
 
 static constexpr size_t TRI_VERT_SIZE = 3ull;
-using TriVert = std::array<Vec3<double>, TRI_VERT_SIZE>;
+using TriVert = std::array<Vec3<CxFixedI20p12>, TRI_VERT_SIZE>;
 
 class Tri {
 //private:		// variables
@@ -26,4 +26,4 @@ public:		// functions
 	//}
 };
 
-#endif		// src_tri_cls_hpp
+#endif		// src_tri_class_hpp

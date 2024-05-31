@@ -1,5 +1,5 @@
-#ifndef src_vec4_cls_hpp
-#define src_vec4_cls_hpp
+#ifndef src_vec4_class_hpp
+#define src_vec4_class_hpp
 
 #include "misc_includes.hpp"
 
@@ -53,4 +53,4 @@ public:		// functions
 	}
 };
 
-#endif		// src_vec4_cls_hpp
+#endif		// src_vec4_class_hpp

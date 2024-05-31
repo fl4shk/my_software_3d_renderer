@@ -21,8 +21,10 @@
 #include "liborangepower_src/concepts/std_stream_concepts.hpp"
 #include "liborangepower_src/concepts/is_specialization_concepts.hpp"
 #include "liborangepower_src/game_stuff/engine_key_status_class.hpp"
+#include "liborangepower_src/time/time_stuff.hpp"
 #include "liborangepower_src/math/vec2_classes.hpp"
 #include "liborangepower_src/math/vec3_classes.hpp"
+#include "liborangepower_src/math/cx_fixed_pt_class.hpp"
 //#include "liborangepower_src/math/vec4_classes.hpp"
 #include "liborangepower_src/misc/misc_includes.hpp"
 #include "liborangepower_src/sdl2/sdl.hpp"
@@ -42,6 +44,7 @@ using namespace liborangepower::strings;
 using namespace liborangepower::containers;
 using liborangepower::math::Vec2;
 using liborangepower::math::Vec3;
+using liborangepower::math::CxFixedI20p12;
 namespace concepts = liborangepower::concepts;
 namespace sdl = liborangepower::sdl;
 

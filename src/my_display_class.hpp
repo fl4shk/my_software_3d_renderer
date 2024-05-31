@@ -1,10 +1,10 @@
-#ifndef src_my_display_cls_hpp
-#define src_my_display_cls_hpp
+#ifndef src_my_display_class_hpp
+#define src_my_display_class_hpp
 
-// src/my_display_cls.hpp
+// src/my_display_class.hpp
 
 #include "misc_includes.hpp"
-#include "rgb444_cls.hpp"
+#include "rgb444_class.hpp"
 
 static constexpr Vec2<size_t>
 	SIZE_2D{
@@ -75,4 +75,4 @@ protected:		// variables and helper functions
 public:		// functions
 };
 
-#endif		// src_my_display_cls_hpp
+#endif		// src_my_display_class_hpp

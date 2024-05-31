@@ -1,7 +1,7 @@
-#ifndef src_texture_loader_cls_hpp
-#define src_texture_loader_cls_hpp
+#ifndef src_texture_loader_class_hpp
+#define src_texture_loader_class_hpp
 
-#include "texture_cls.hpp"
+#include "texture_class.hpp"
 #include "misc_includes.hpp"
 
 class TextureLoader final {
@@ -19,4 +19,4 @@ public:		// functions
 	void load(const std::string& n_texture_fname);
 };
 
-#endif		// src_texture_loader_cls_hpp
+#endif		// src_texture_loader_class_hpp
