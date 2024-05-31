@@ -3,80 +3,77 @@
 //--------
 #include "misc_includes.hpp"
 
-template<typename Type>
-inline std::vector<Vec2<Type>> line_coords(const Vec2<Type>& v0,
-	const Vec2<Type>& v1, const Vec2<size_t>& screen_size_2d)
-{
-	std::vector<Vec2<Type>> ret;
+template<typename T>
+inline void calc_line_coords(
+	const Vec2<T>& v0, const Vec2<T>& v1,
+	const Vec2<size_t>& screen_size_2d,
+	std::vector<Vec2<T>>& ret
+) {
+	//std::vector<Vec2<T>> ret;
 
-	Vec2<Type> delta, pixel_coord, offset;
+	Vec2<T> delta, pixel_coord, offset;
 
-	delta = {v1.x - v0.x, v1.y - v0.y};
+	delta = Vec2<T>{
+		.x=v1.x - v0.x,
+		.y=v1.y - v0.y
+	};
 
-	if (delta.x < 0)
-	{
+	if (delta.x < 0) {
 		delta.x = -delta.x;
 	}
-	if (delta.y < 0)
-	{
+	if (delta.y < 0) {
 		delta.y = -delta.y;
 	}
 
 	pixel_coord = v0;
 
-	if (v0.x > v1.x)
-	{
+	if (v0.x > v1.x) {
 		offset.x = -1;
-	}
-	else
-	{
+	} else {
 		offset.x = 1;
 	}
 
-	if (v0.y > v1.y)
-	{
+	if (v0.y > v1.y) {
 		offset.y = -1;
-	}
-	else
-	{
+	} else {
 		offset.y = 1;
 	}
 
 	//m4_plot(pixel_coord.x, pixel_coord.y, color_id, page);
-	auto draw_one = [&]() -> bool
-	{
-		if ((pixel_coord.x < 0) || (pixel_coord.x >= screen_size_2d.x)
-			|| (pixel_coord.y < 0) || (pixel_coord.y >= screen_size_2d.y))
-		{
+	auto draw_one = [&]() -> bool {
+		if (
+			(pixel_coord.x < 0)
+			|| (pixel_coord.x >= int(screen_size_2d.x))
+			|| (pixel_coord.y < 0)
+			|| (pixel_coord.y >= int(screen_size_2d.y))
+		) {
 			return false;
 		}
 
-		ret.push_back(pixel_coord);
+		ret.push_back(
+			pixel_coord
+		);
 		return true;
 	};
 
-	if (!draw_one(pixel_coord))
-	{
-		return ret;
+	if (!draw_one()) {
+		//return ret;
+		return;
 	}
 
 	auto draw 
-		= [&]
-		(
-			Type& delta_0, Type& delta_1,
-			Type& pixel_coord_0, Type& pixel_coord_1,
-			Type& v1_0,
-			Type& offset_0, Type& offset_1
-		) -> decltype(ret)
-	{
-		Type error = delta_0 >> 1;
+		= [&](
+			const T& delta_0, const T& delta_1,
+			T& pixel_coord_0, T& pixel_coord_1,
+			const T& v1_0,
+			T& offset_0, T& offset_1
+		) -> decltype(ret) {
+		T error = delta_0 >> 1;
 
-		while (pixel_coord_0 != v1_0)
-		{
+		while (pixel_coord_0 != v1_0) {
 			error -= delta_1;
 
-			if (error < 0)
-			{
+			if (error < 0) {
 				pixel_coord_1 += offset_1;
 				error += delta_0;
 			}
@@ -84,27 +81,21 @@ inline std::vector<Vec2<Type>> line_coords(const Vec2<Type>& v0,
 			pixel_coord_0 += offset_0;
 
 			//m4_plot(pixel_coord_0, pixel_coord_1, color_id, page);
-			if (!draw_one())
-			{
+			if (!draw_one()) {
 				break;
 			}
 		}
 		return ret;
 	};
-	if (delta.x > delta.y)
-	{
-		return draw
-		(
+	if (delta.x > delta.y) {
+		draw(
 			delta.x, delta.y,
 			pixel_coord.x, pixel_coord.y,
 			v1.x, 
 			offset.x, offset.y
 		);
-	}
-	else // if (delta.x <= delta.y)
-	{
-		return draw
-		(
+	} else { // if (delta.x <= delta.y)
+		draw(
 			delta.y, delta.x,
 			pixel_coord.y, pixel_coord.x,
 			v1.y, 

@@ -64,8 +64,8 @@ int main(int argc, char** argv) {
 		//}
 	);
 	Transform perspective(
-		double(0),
-		double(10)
+		double(-100), // near
+		double(100) // far
 	);
 	//TransformMvp mvp{
 	//	.model=&model,
@@ -153,19 +153,24 @@ int main(int argc, char** argv) {
 		view,
 		perspective
 	);
-	const auto& visib = rast.calc_visib(tri);
-	for (size_t j=0; j<SIZE_2D.y; ++j) {
-		for (size_t i=0; i<SIZE_2D.x; ++i) {
-			if (visib.at(j * SIZE_2D.x + i)) {
-				printout(
-					//uint32_t(visib.at(j * SIZE_2D.x + i)),
-					Vec2<size_t>{.x=i, .y=j},
-					"\n"
-				);
-			}
-		}
-		//printout("\n");
-	}
+	std::vector<Vec2<int>> visib;
+	rast.calc_visib(
+		tri,
+		visib
+	);
+	//for (size_t j=0; j<SIZE_2D.y; ++j) {
+	//	for (size_t i=0; i<SIZE_2D.x; ++i) {
+	//		if (visib.at(j * SIZE_2D.x + i)) {
+	//			printout(
+	//				//uint32_t(visib.at(j * SIZE_2D.x + i)),
+	//				"visib: ",
+	//				Vec2<size_t>{.x=i, .y=j},
+	//				"\n"
+	//			);
+	//		}
+	//	}
+	//	//printout("\n");
+	//}
 	printout("\n");
 	for (;;) {
 		if (disp.do_exit()) {

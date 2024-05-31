@@ -27,17 +27,18 @@ public:		// functions
 	Rast& operator = (const Rast&) = default;
 	//GEN_GETTER_BY_VAL(tri_at_func);
 	//std::vector<std::vector<bool>> 
-	std::vector<u8> calc_visib(
-		//size_t tri_idx
-		const Tri& tri
-		//const TriDraw& tri_draw
+	void calc_visib(
+		const Tri& tri,
+		std::vector<Vec2<int>>& ret
 	) const;
 private:		// functions
-	std::vector<u8> _calc_flat_top_visib(
-		const Tri& tri
+	void _calc_flat_top_visib(
+		const Tri& tri,
+		std::vector<Vec2<int>>& ret
 	) const;
-	std::vector<u8> _calc_flat_bot_visib(
-		const Tri& tri
+	void _calc_flat_bot_visib(
+		const Tri& tri,
+		std::vector<Vec2<int>>& ret
 	) const;
 
 };
