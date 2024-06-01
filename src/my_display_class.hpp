@@ -23,7 +23,7 @@ public:		// functions
 		const Vec2<size_t>& pos,
 		Uint32 col
 	) {
-		pixels[pos.y * SIZE_2D.x + pos.x] = col;
+		pixels[pos.y * SCREEN_SIZE_2D.x + pos.x] = col;
 	}
 	inline void set(
 		size_t idx,

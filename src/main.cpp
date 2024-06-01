@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 		Vec3<double>{ // translate
 			.x=double(15.0),
 			.y=double(15.0),
-			.z=double(0.0),
+			.z=double(20.0),
 		}
 		//MAT4X4_IDENTITY<double>
 		//Mat4x4<double>{
@@ -87,11 +87,11 @@ int main(int argc, char** argv) {
 			//	}
 			//},
 			Vec3<double>{ // translate
-				.x=double(1.0),
-				.y=double(1.0),
-				.z=double(-1.0),
+				.x=double(10.0),
+				.y=double(10.0),
+				.z=double(3.0),
 			},
-			Vec3<double>{
+			Vec3<double>{ // scale
 				.x=1.0,
 				.y=1.0,
 				.z=1.0,
@@ -111,9 +111,9 @@ int main(int argc, char** argv) {
 		.v={
 			Vert{
 				.v={
-					.x=double(1.1),
-					.y=double(1.1),
-					.z=double(1.1)
+					.x=double(-1.1),
+					.y=double(-1.1),
+					.z=double(-1.1)
 				},
 				.uv={
 					.x=double(0),
@@ -122,9 +122,9 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=double(15.1),
-					.y=double(1.1),
-					.z=double(1.1)
+					.x=double(-15.1),
+					.y=double(-15.1),
+					.z=double(-1.1)
 				},
 				.uv={
 					.x=double(15),
@@ -133,9 +133,9 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=double(16.1),
-					.y=double(16.1),
-					.z=double(1.1)
+					.x=double(-15.1),
+					.y=double(-5.1),
+					.z=double(-1.1)
 				},
 				.uv={
 					.x=double(15),
@@ -158,25 +158,86 @@ int main(int argc, char** argv) {
 		tri,
 		visib
 	);
-	//for (size_t j=0; j<SIZE_2D.y; ++j) {
-	//	for (size_t i=0; i<SIZE_2D.x; ++i) {
-	//		if (visib.at(j * SIZE_2D.x + i)) {
+	//calc_line_coords(
+	//	Vec2<int>{
+	//		.x=int(tri.project_v.at(0).v.x),
+	//		.y=int(tri.project_v.at(0).v.y),
+	//	},
+	//	Vec2<int>{
+	//		.x=int(tri.project_v.at(1).v.x),
+	//		.y=int(tri.project_v.at(1).v.y),
+	//	},
+	//	SIZE_2D,
+	//	visib
+	//);
+	std::array<u8, SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x> visib_buf;
+	visib_buf.fill(false);
+	//int last_y = 0;
+	for (const auto& item: visib) {
+		//printout(item, " ");
+		//if (last_y != item.y) {
+		//	printout("\n");
+		//}
+		//last_y = item.y;
+		if (
+			item.x >= 0 && item.x <= int(SCREEN_SIZE_2D.x) - 1
+			&& item.y >= 0 && item.y <= int(SCREEN_SIZE_2D.y) - 1
+		) {
+			visib_buf.at(int(item.y) * SCREEN_SIZE_2D.x + int(item.x)) = 1;
+		}
+	}
+	//for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
+	//	for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
+	//		if (visib_buf.at(j * SCREEN_SIZE_2D.x + i)) {
+	//			//disp.set(
+	//			//	Vec2<size_t>{
+	//			//		.x=i,
+	//			//		.y=j,
+	//			//	},
+	//			//	0xfffffff
+	//			//);
 	//			printout(
 	//				//uint32_t(visib.at(j * SIZE_2D.x + i)),
-	//				"visib: ",
-	//				Vec2<size_t>{.x=i, .y=j},
-	//				"\n"
+	//				//"visib: ",
+	//				//Vec2<size_t>{.x=i, .y=j},
+	//				//"\n"
+	//				1
 	//			);
+	//		} else {
+	//			printout(" ");
 	//		}
 	//	}
-	//	//printout("\n");
+	//	printout("\n");
 	//}
-	printout("\n");
+	//printout("\n");
 	for (;;) {
 		if (disp.do_exit()) {
 			break;
 		}
 		disp.handle_sdl_events();
+		for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
+				if (visib_buf.at(j * SCREEN_SIZE_2D.x + i)) {
+					disp.set(
+						Vec2<size_t>{
+							.x=i,
+							.y=j,
+						},
+						0xfffffff
+					);
+					//printout(
+					//	//uint32_t(visib.at(j * SIZE_2D.x + i)),
+					//	//"visib: ",
+					//	//Vec2<size_t>{.x=i, .y=j},
+					//	//"\n"
+					//	1
+					//);
+				} else {
+					//printout(" ");
+				}
+			}
+			//printout("\n");
+		}
 		disp.refresh();
 	}
 	

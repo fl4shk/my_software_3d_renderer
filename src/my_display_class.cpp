@@ -6,8 +6,8 @@ Display::Display()
 			"My Software 3D Renderer",	// title
 			SDL_WINDOWPOS_CENTERED,		// x
 			SDL_WINDOWPOS_CENTERED,		// y
-			SIZE_2D.x,					// WIDTH
-			SIZE_2D.y,					// HEIGHT
+			SCREEN_SIZE_2D.x,			// WIDTH
+			SCREEN_SIZE_2D.y,			// HEIGHT
 			(							// flags
 				SDL_WINDOW_SHOWN
 				//| SDL_WINDOW_RESIZABLE
@@ -26,16 +26,16 @@ Display::Display()
 			renderer,
 			SDL_PIXELFORMAT_ARGB8888,
 			SDL_TEXTUREACCESS_STATIC,
-			SIZE_2D.x,
-			SIZE_2D.y
+			SCREEN_SIZE_2D.x,
+			SCREEN_SIZE_2D.y
 		)
 	),
-	pixels(new Uint32[SIZE_2D.x * SIZE_2D.y])
+	pixels(new Uint32[SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y])
 {
 	std::memset(
 		pixels.get(),
 		0,
-		SIZE_2D.x * SIZE_2D.y * sizeof(Uint32)
+		SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y * sizeof(Uint32)
 	);
 }
 Display::~Display() {
@@ -75,9 +75,9 @@ void MyDisplay::refresh() {
 		texture,
 		NULL,
 		pixels.get(),
-		sizeof(Uint32) * SIZE_2D.x // pitch
+		sizeof(Uint32) * SCREEN_SIZE_2D.x // pitch
 		//sizeof(Uint32) * HALF_SIZE_2D.x // pitch
-		//sizeof(Uint32) * SIZE_2D.x * SIZE_2D.y
+		//sizeof(Uint32) * SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y
 	);
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -86,7 +86,7 @@ void MyDisplay::refresh() {
 	std::memset(
 		pixels.get(),
 		0,
-		SIZE_2D.x * SIZE_2D.y * sizeof(Uint32)
+		SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y * sizeof(Uint32)
 		//HALF_SIZE_2D.x * HALF_SIZE_2D.y * sizeof(Uint32)
 	);
 	//--------

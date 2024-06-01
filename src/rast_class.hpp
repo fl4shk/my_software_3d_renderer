@@ -12,6 +12,7 @@ class Rast final {
 public:		// types
 	//using TriCRef = const Tri&;
 	//using TriAtFunc = TriCRef (*)(size_t idx);
+	using DrawT = double;
 private:		// variables
 	//std::vector<Tri*> _tri_vec;
 	//TriAtFunc _tri_at_func=nullptr;
@@ -33,14 +34,19 @@ public:		// functions
 	) const;
 private:		// functions
 	void _calc_flat_top_visib(
-		const Tri& tri,
+		//const Tri& tri,
+		const Vec2<DrawT>& v1,
+		const Vec2<DrawT>& v2,
+		const Vec2<DrawT>& v3,
 		std::vector<Vec2<int>>& ret
 	) const;
 	void _calc_flat_bot_visib(
-		const Tri& tri,
+		//const Tri& tri,
+		const Vec2<DrawT>& v1,
+		const Vec2<DrawT>& v2,
+		const Vec2<DrawT>& v3,
 		std::vector<Vec2<int>>& ret
 	) const;
-
 };
 
 

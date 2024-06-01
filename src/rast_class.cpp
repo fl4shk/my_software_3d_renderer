@@ -31,76 +31,119 @@ void Rast::calc_visib(
 	auto my_insertion_sort = [](TriVert& project_v) -> void {
 		size_t i, j;
 		auto& arr = project_v;
-		for (i=1; i < project_v.size(); ++i) {
-			const auto& key = project_v.at(i);
-			j = i - 1;
-
+		i = 1;
+		while (i < arr.size()) {
+			j = i;
 			while (
-				j >= 0
-				&& arr.at(j).v.y > key.v.y
+				j > 0
+				&& arr.at(j - 1).v.y > arr.at(j).v.y
 			) {
-				arr.at(j + 1) = arr.at(j);
+				std::swap(arr.at(j), arr.at(j - 1));
 				--j;
 			}
-			arr.at(j + 1) = key;
+			++i;
 		}
+		//for (i=0; i<arr.size(); ++i) {
+		//	project_v.at(i) = arr.at(arr.size() - i - 1);
+		//}
 	};
 	//}
 	temp_tri.project_v = tri.project_v;
 	my_insertion_sort(temp_tri.project_v);
-	//std::sort(
-	//	temp_tri.project_v.begin(),
-	//	temp_tri.project_v.end(),
-	//	[](const Vert* const &a, const Vert* const &b) -> bool {
-	//		return a->v.y < b->v.y;
-	//	}
+	//const auto& v1 = temp_tri.project_v.at(0).v;
+	//const auto& v2 = temp_tri.project_v.at(1).v;
+	//const auto& v3 = temp_tri.project_v.at(2).v;
+	const Vec2<DrawT>
+		v1{
+			.x=DrawT(temp_tri.project_v.at(0).v.x),
+			.y=DrawT(temp_tri.project_v.at(0).v.y),
+		},
+		v2{
+			.x=DrawT(temp_tri.project_v.at(1).v.x),
+			.y=DrawT(temp_tri.project_v.at(1).v.y),
+		},
+		v3{
+			.x=DrawT(temp_tri.project_v.at(2).v.x),
+			.y=DrawT(temp_tri.project_v.at(2).v.y),
+		};
+	//printout(
+	//	"Rast::calc_visib(): ",
+	//	"{",
+	//		tri.project_v.at(0).v, " ", 
+	//		tri.project_v.at(1).v, " ", 
+	//		tri.project_v.at(2).v, " ", 
+	//	"}",
+	//	"\n",
+	//	"{", v1, " ", v2, " ", v3, "}",
+	//	"\n\n"
 	//);
-	const auto& v1 = temp_tri.project_v.at(0).v;
-	const auto& v2 = temp_tri.project_v.at(1).v;
-	const auto& v3 = temp_tri.project_v.at(2).v;
+	//std::vector<Vec2<DrawT>> line12, line23, line13;
+	//calc_line_coords(
+	//	v1, v2,
+	//	SCREEN_SIZE_2D,
+	//	line12
+	//);
 
 	// here we know that v1.y <= v2.y <= v3.y
 	// check for trivial case of bottom-flat triangle
 	if (v2.y == v3.y) {
 		//fillBottomFlatTriangle(v1, v2, v3);
 		_calc_flat_bot_visib(
-			temp_tri,
+			//temp_tri,
+			v1,
+			v2,
+			v3,
 			ret
 		);
 	} else if (v1.y == v2.y) {
 		// check for trivial case of top-flat triangle
 		//fillTopFlatTriangle(g, v1, v2, v3);
 		_calc_flat_top_visib(
-			temp_tri,
+			//temp_tri,
+			v1,
+			v2,
+			v3,
 			ret
 		);
-	}
-	else {
+	} else {
 		// general case - split the triangle in a topflat and bottom-flat 
 		// one
-		const Vec3<double> v4{
-			.x=(double)(
+		const Vec2<DrawT> v4{
+			//.x=DrawT(int(
+			//	/*int*/(v1.x)
+			//	+ (
+			//		(double)((v2.y) - (v1.y))
+			//		/ (double)((v3.y) - (v1.y))
+			//	) * (
+			//		(v3.x) - (v1.x)
+			//	)
+			//)),
+			.x=DrawT(int(
 				v1.x
 				+ (
-					(double)(v2.y - v1.y) / (double)(v3.y - v1.y)
+					(double)(v2.y - v1.y) 
+					/ (double)(v3.y - v1.y)
 				) * (
 					v3.x - v1.x
 				)
-			),
-			.y=v2.y,
-			.z=v2.z,
+			)),
+			.y=DrawT(v2.y),
+			//.z=v2.z,
 		};
+		printout("v4: ", v4, "\n");
 		//fillBottomFlatTriangle(g, v1, v2, v4);
 		//fillTopFlatTriangle(g, v2, v4, v3);
-		Tri flat_top;
-		Tri flat_bot;
-		flat_bot.project_v.at(0).v = v1;
-		flat_bot.project_v.at(1).v = v2;
-		flat_bot.project_v.at(2).v = v4;
 
-		flat_top.project_v.at(0).v = v2;
-		flat_top.project_v.at(1).v = v4;
-		flat_top.project_v.at(2).v = v3;
+		//Tri flat_bot;
+		//Tri flat_top;
+
+		//flat_bot.project_v.at(0).v = v1;
+		//flat_bot.project_v.at(1).v = v2;
+		//flat_bot.project_v.at(2).v = v4;
+
+		//flat_top.project_v.at(0).v = v2;
+		//flat_top.project_v.at(1).v = v4;
+		//flat_top.project_v.at(2).v = v3;
 
 		_calc_flat_bot_visib(
 			//Tri{
@@ -110,9 +153,13 @@ void Rast::calc_visib(
 			//		v4
 			//	}
 			//},
-			flat_bot,
+			//flat_bot,
+			v1,
+			v2,
+			v4,
 			ret
 		);
+
 		_calc_flat_top_visib(
 			//Tri{
 			//	.v={
@@ -121,36 +168,66 @@ void Rast::calc_visib(
 			//		v3
 			//	}
 			//},
-			flat_top,
+			//flat_top,
+			v2,
+			v4,
+			v3,
 			ret
 		);
 	}
 }
 void Rast::_calc_flat_top_visib(
-	const Tri& tri,
+	//const Tri& tri,
+	const Vec2<DrawT>& v1,
+	const Vec2<DrawT>& v2,
+	const Vec2<DrawT>& v3,
 	std::vector<Vec2<int>>& ret
 ) const {
-	const auto& v1 = tri.project_v.at(0).v;
-	const auto& v2 = tri.project_v.at(1).v;
-	const auto& v3 = tri.project_v.at(2).v;
-	double invslope1 = (v3.x - v1.x) / (v3.y - v1.y);
-	double invslope2 = (v3.x - v2.x) / (v3.y - v2.y);
+	//const auto& v1 = tri.project_v.at(0).v;
+	//const auto& v2 = tri.project_v.at(1).v;
+	//const auto& v3 = tri.project_v.at(2).v;
+
+	//const Vec2<double> v1{
+	//	.x=double(tri.project_v.at(0).v.x),
+	//	.y=double(tri.project_v.at(0).v.y),
+	//};
+	//const Vec2<double> v2{
+	//	.x=double(tri.project_v.at(1).v.x),
+	//	.y=double(tri.project_v.at(1).v.y),
+	//};
+	//const Vec2<double> v3{
+	//	.x=double(tri.project_v.at(2).v.x),
+	//	.y=double(tri.project_v.at(2).v.y),
+	//};
+	double invslope1 = double(v3.x - v1.x) / double(v3.y - v1.y);
+	double invslope2 = double(v3.x - v2.x) / double(v3.y - v2.y);
 
 	double curr_x1 = v3.x;
 	double curr_x2 = v3.x;
 
-	for (int scanline_y = v3.y; scanline_y > v1.y; scanline_y--) {
-		//drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
+	printout(
+		"Rast::_calc_flat_top_visib(): ",
+		v1.x, " ", v2.x, " ", v3.x, "\n",
+		v1.y, " ", v2.y, " ", v3.y,
+		"\n"
+	);
+
+	for (
+		int scanline_y = std::round(v3.y);
+		scanline_y>std::round(v1.y);
+		scanline_y-=(1)
+	) {
+		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);
 		calc_line_coords(
 			Vec2<int>{
-				.x=int(curr_x1),
-				.y=int(scanline_y),
+				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
+				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			Vec2<int>{
-				.x=int(curr_x2),
-				.y=int(scanline_y),
+				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
+				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			SIZE_2D,
+			SCREEN_SIZE_2D,
 			ret
 		);
 		curr_x1 -= invslope1;
@@ -158,7 +235,10 @@ void Rast::_calc_flat_top_visib(
 	}
 }
 void Rast::_calc_flat_bot_visib(
-	const Tri& tri,
+	//const Tri& tri,
+	const Vec2<DrawT>& v1,
+	const Vec2<DrawT>& v2,
+	const Vec2<DrawT>& v3,
 	std::vector<Vec2<int>>& ret
 ) const {
 	//std::vector<Vec2<size_t>> ret(SIZE_2D.y * SIZE_2D.x);
@@ -166,33 +246,78 @@ void Rast::_calc_flat_bot_visib(
 	//for (auto& item: ret) {
 	//	item = false;
 	//}
-	const auto& v1 = tri.project_v.at(0).v;
-	const auto& v2 = tri.project_v.at(1).v;
-	const auto& v3 = tri.project_v.at(2).v;
+	//const Vec2<double> v1{
+	//	.x=double(tri.project_v.at(0).v.x),
+	//	.y=double(tri.project_v.at(0).v.y),
+	//};
+	//const Vec2<double> v2{
+	//	.x=double(tri.project_v.at(1).v.x),
+	//	.y=double(tri.project_v.at(1).v.y),
+	//};
+	//const Vec2<double> v3{
+	//	.x=double(tri.project_v.at(2).v.x),
+	//	.y=double(tri.project_v.at(2).v.y),
+	//};
 
-	double invslope1 = (v2.x - v1.x) / (v2.y - v1.y);
-	double invslope2 = (v3.x - v1.x) / (v3.y - v1.y);
+	double invslope1 = double(v2.x - v1.x) / double(v2.y - v1.y);
+	double invslope2 = double(v3.x - v1.x) / double(v3.y - v1.y);
 
 	double curr_x1 = v1.x;
 	double curr_x2 = v1.x;
 
-	for (int scanline_y=v1.y; scanline_y<=v2.y; ++scanline_y) {
-		//drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
+	//printout(
+	//	"Rast::_calc_flat_bot_visib(): ",
+	//	//v1.x, " ", v2.x, " ", v3.x, "\n",
+	//	//v1.y, " ", v2.y, " ", v3.y,
+	//	v1, " ", v2, " ", v3,
+	//	"\n"
+	//);
+
+	for (
+		int scanline_y=/*std::round*/(v1.y);
+		scanline_y<=/*std::round*/(v2.y);
+		scanline_y+=1
+	) {
+		//printout(
+		//	curr_x1, " ",
+		//	curr_x2, " ",
+		//	scanline_y,
+		//	"\n"
+		//);
+		//drawLine((double)curx1, scanlineY, (double)curx2, scanlineY);
+		//calc_line_coords(
+		//	Vec2<int>{
+		//		.x=int(std::trunc(curr_x1)),
+		//		.y=int(/*std::trunc*/(scanline_y)),
+		//	},
+		//	Vec2<int>{
+		//		.x=int(std::trunc(curr_x2)),
+		//		.y=int(/*std::trunc*/(scanline_y)),
+		//	},
+		//	SCREEN_SIZE_2D,
+		//	ret
+		//);
 		calc_line_coords(
 			Vec2<int>{
-				.x=int(curr_x1),
-				.y=int(scanline_y),
+				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
+				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			Vec2<int>{
-				.x=int(curr_x2),
-				.y=int(scanline_y),
+				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
+				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			SIZE_2D,
+			SCREEN_SIZE_2D,
 			ret
 		);
 		curr_x1 += invslope1;
 		curr_x2 += invslope2;
 	}
+	//for (const auto& item: ret) {
+	//	printout(
+	//		item
+	//	);
+	//}
+	//printout("\n");
 }
 //std::vector<u8> Rast::calc_visib(
 //	//size_t tri_idx
