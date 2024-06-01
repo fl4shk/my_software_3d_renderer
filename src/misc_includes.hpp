@@ -44,7 +44,7 @@ using namespace liborangepower::strings;
 using namespace liborangepower::containers;
 using liborangepower::math::Vec2;
 using liborangepower::math::Vec3;
-//using liborangepower::math::double;
+//using liborangepower::math::CxFixedI16p16;
 using liborangepower::math::CxFixedI24p8;
 using liborangepower::math::CxFixedI20p12;
 using liborangepower::math::CxFixedI16p16;
@@ -55,7 +55,7 @@ namespace sdl = liborangepower::sdl;
 #include <SDL_events.h>
 #include <SDL_image.h>
 
-static constexpr double MATH_PI = 3.141592653589793;
+static constexpr double MATH_PI = double(3.141592653589793);
 static constexpr Vec2<size_t>
 	SCREEN_SIZE_2D{
 		.x=640,

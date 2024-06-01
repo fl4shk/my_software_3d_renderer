@@ -71,6 +71,28 @@ public:		// functions
 		}
 		return ret;
 	}
+	constexpr inline Vec3<T> mult_homogeneous(
+		const Vec3<T>& v
+	) const {
+		//const Vec4<T> temp = *this * Vec4<T>::build_homogeneous(other);
+		Vec3<T> ret;
+
+		T a = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + m[0][3];
+		T b = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + m[1][3];
+		T c = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + m[2][3];
+		T w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + m[3][3];
+		if (w != T(1)) {
+			ret.x = a / w;
+			ret.y = b / w;
+			ret.z = c / w;
+		} else {
+			ret.x = a;
+			ret.y = b;
+			ret.z = c;
+		}
+
+		return ret;
+	}
 	constexpr inline Vec4<T> operator * (
 		const Vec4<T>& other
 	) const {

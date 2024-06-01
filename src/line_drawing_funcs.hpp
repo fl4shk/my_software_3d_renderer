@@ -6,9 +6,9 @@
 
 //template<typename T>
 void calc_line_coords(
-	const Vec2<int>& v0, const Vec2<int>& v1,
+	const Vec2<CxFixedI16p16>& v0, const Vec2<CxFixedI16p16>& v1,
 	const Vec2<size_t>& screen_size_2d,
-	std::vector<Vec2<int>>& ret
+	std::vector<Vec2<CxFixedI16p16>>& ret
 );
 
 //template<typename T>

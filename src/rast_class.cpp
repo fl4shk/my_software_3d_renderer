@@ -19,7 +19,7 @@ Rast::~Rast() {
 
 void Rast::calc_visib(
 	const Tri& tri,
-	std::vector<Vec2<int>>& ret
+	std::vector<Vec2<DrawT>>& ret
 ) const {
 	// at first sort the three vertices by y-coordinate ascending so v1 is 
 	// the topmost vertex
@@ -112,17 +112,17 @@ void Rast::calc_visib(
 			//.x=DrawT(int(
 			//	/*int*/(v1.x)
 			//	+ (
-			//		(double)((v2.y) - (v1.y))
-			//		/ (double)((v3.y) - (v1.y))
+			//		(CxFixedI16p16)((v2.y) - (v1.y))
+			//		/ (CxFixedI16p16)((v3.y) - (v1.y))
 			//	) * (
 			//		(v3.x) - (v1.x)
 			//	)
 			//)),
-			.x=DrawT(int(
+			.x=DrawT(/*int*/(
 				v1.x
 				+ (
-					(double)(v2.y - v1.y) 
-					/ (double)(v3.y - v1.y)
+					(CxFixedI16p16)(v2.y - v1.y) 
+					/ (CxFixedI16p16)(v3.y - v1.y)
 				) * (
 					v3.x - v1.x
 				)
@@ -130,7 +130,7 @@ void Rast::calc_visib(
 			.y=DrawT(v2.y),
 			//.z=v2.z,
 		};
-		printout("v4: ", v4, "\n");
+		//printout("v4: ", v4, "\n");
 		//fillBottomFlatTriangle(g, v1, v2, v4);
 		//fillTopFlatTriangle(g, v2, v4, v3);
 
@@ -181,50 +181,50 @@ void Rast::_calc_flat_top_visib(
 	const Vec2<DrawT>& v1,
 	const Vec2<DrawT>& v2,
 	const Vec2<DrawT>& v3,
-	std::vector<Vec2<int>>& ret
+	std::vector<Vec2<DrawT>>& ret
 ) const {
 	//const auto& v1 = tri.project_v.at(0).v;
 	//const auto& v2 = tri.project_v.at(1).v;
 	//const auto& v3 = tri.project_v.at(2).v;
 
-	//const Vec2<double> v1{
-	//	.x=double(tri.project_v.at(0).v.x),
-	//	.y=double(tri.project_v.at(0).v.y),
+	//const Vec2<CxFixedI16p16> v1{
+	//	.x=CxFixedI16p16(tri.project_v.at(0).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(0).v.y),
 	//};
-	//const Vec2<double> v2{
-	//	.x=double(tri.project_v.at(1).v.x),
-	//	.y=double(tri.project_v.at(1).v.y),
+	//const Vec2<CxFixedI16p16> v2{
+	//	.x=CxFixedI16p16(tri.project_v.at(1).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(1).v.y),
 	//};
-	//const Vec2<double> v3{
-	//	.x=double(tri.project_v.at(2).v.x),
-	//	.y=double(tri.project_v.at(2).v.y),
+	//const Vec2<CxFixedI16p16> v3{
+	//	.x=CxFixedI16p16(tri.project_v.at(2).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(2).v.y),
 	//};
-	double invslope1 = double(v3.x - v1.x) / double(v3.y - v1.y);
-	double invslope2 = double(v3.x - v2.x) / double(v3.y - v2.y);
+	CxFixedI16p16 invslope1 = CxFixedI16p16(v3.x - v1.x) / CxFixedI16p16(v3.y - v1.y);
+	CxFixedI16p16 invslope2 = CxFixedI16p16(v3.x - v2.x) / CxFixedI16p16(v3.y - v2.y);
 
-	double curr_x1 = v3.x;
-	double curr_x2 = v3.x;
+	CxFixedI16p16 curr_x1 = v3.x;
+	CxFixedI16p16 curr_x2 = v3.x;
 
-	printout(
-		"Rast::_calc_flat_top_visib(): ",
-		v1.x, " ", v2.x, " ", v3.x, "\n",
-		v1.y, " ", v2.y, " ", v3.y,
-		"\n"
-	);
+	//printout(
+	//	"Rast::_calc_flat_top_visib(): ",
+	//	v1.x, " ", v2.x, " ", v3.x, "\n",
+	//	v1.y, " ", v2.y, " ", v3.y,
+	//	"\n"
+	//);
 
 	for (
-		int scanline_y = /*std::round*/(v3.y);
+		CxFixedI16p16 scanline_y = /*std::round*/(v3.y);
 		scanline_y>/*std::round*/(v1.y);
-		scanline_y-=(1)
+		scanline_y-=CxFixedI16p16(1)
 	) {
 		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);
 		calc_line_coords(
-			Vec2<int>{
-				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
+			Vec2<CxFixedI16p16>{
+				.x=/*int(std::trunc(*//*int*/(curr_x1)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			Vec2<int>{
-				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
+			Vec2<CxFixedI16p16>{
+				.x=/*int(std::trunc(*//*int*/(curr_x2)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			SCREEN_SIZE_2D,
@@ -239,31 +239,31 @@ void Rast::_calc_flat_bot_visib(
 	const Vec2<DrawT>& v1,
 	const Vec2<DrawT>& v2,
 	const Vec2<DrawT>& v3,
-	std::vector<Vec2<int>>& ret
+	std::vector<Vec2<DrawT>>& ret
 ) const {
 	//std::vector<Vec2<size_t>> ret(SIZE_2D.y * SIZE_2D.x);
 
 	//for (auto& item: ret) {
 	//	item = false;
 	//}
-	//const Vec2<double> v1{
-	//	.x=double(tri.project_v.at(0).v.x),
-	//	.y=double(tri.project_v.at(0).v.y),
+	//const Vec2<CxFixedI16p16> v1{
+	//	.x=CxFixedI16p16(tri.project_v.at(0).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(0).v.y),
 	//};
-	//const Vec2<double> v2{
-	//	.x=double(tri.project_v.at(1).v.x),
-	//	.y=double(tri.project_v.at(1).v.y),
+	//const Vec2<CxFixedI16p16> v2{
+	//	.x=CxFixedI16p16(tri.project_v.at(1).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(1).v.y),
 	//};
-	//const Vec2<double> v3{
-	//	.x=double(tri.project_v.at(2).v.x),
-	//	.y=double(tri.project_v.at(2).v.y),
+	//const Vec2<CxFixedI16p16> v3{
+	//	.x=CxFixedI16p16(tri.project_v.at(2).v.x),
+	//	.y=CxFixedI16p16(tri.project_v.at(2).v.y),
 	//};
 
-	double invslope1 = double(v2.x - v1.x) / double(v2.y - v1.y);
-	double invslope2 = double(v3.x - v1.x) / double(v3.y - v1.y);
+	CxFixedI16p16 invslope1 = CxFixedI16p16(v2.x - v1.x) / CxFixedI16p16(v2.y - v1.y);
+	CxFixedI16p16 invslope2 = CxFixedI16p16(v3.x - v1.x) / CxFixedI16p16(v3.y - v1.y);
 
-	double curr_x1 = v1.x;
-	double curr_x2 = v1.x;
+	CxFixedI16p16 curr_x1 = v1.x;
+	CxFixedI16p16 curr_x2 = v1.x;
 
 	//printout(
 	//	"Rast::_calc_flat_bot_visib(): ",
@@ -274,9 +274,9 @@ void Rast::_calc_flat_bot_visib(
 	//);
 
 	for (
-		int scanline_y=/*std::round*/(v1.y);
+		CxFixedI16p16 scanline_y=/*std::round*/(v1.y);
 		scanline_y<=/*std::round*/(v2.y);
-		scanline_y+=1
+		scanline_y+=CxFixedI16p16(1)
 	) {
 		//printout(
 		//	curr_x1, " ",
@@ -284,7 +284,7 @@ void Rast::_calc_flat_bot_visib(
 		//	scanline_y,
 		//	"\n"
 		//);
-		//drawLine((double)curx1, scanlineY, (double)curx2, scanlineY);
+		//drawLine((CxFixedI16p16)curx1, scanlineY, (CxFixedI16p16)curx2, scanlineY);
 		//calc_line_coords(
 		//	Vec2<int>{
 		//		.x=int(std::trunc(curr_x1)),
@@ -298,12 +298,12 @@ void Rast::_calc_flat_bot_visib(
 		//	ret
 		//);
 		calc_line_coords(
-			Vec2<int>{
-				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
+			Vec2<DrawT>{
+				.x=/*int(std::trunc(*/DrawT(curr_x1)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			Vec2<int>{
-				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
+			Vec2<DrawT>{
+				.x=/*int(std::trunc(*/DrawT(curr_x2)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			SCREEN_SIZE_2D,

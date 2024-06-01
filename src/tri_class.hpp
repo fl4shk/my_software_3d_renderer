@@ -7,7 +7,7 @@
 #include "transform_class.hpp"
 #include "vert_class.hpp"
 
-static constexpr size_t TRI_VERT_SIZE = 3ull;
+static constexpr size_t TRI_VERT_SIZE = 3;
 using TriVert = std::array<Vert, TRI_VERT_SIZE>;
 
 class Tri final {

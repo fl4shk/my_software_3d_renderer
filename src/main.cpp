@@ -13,46 +13,46 @@ int main(int argc, char** argv) {
 	Rast rast;
 	//Transform model(
 	//	// affine
-	//	Vec3<double>{ // rotate
-	//		.x=double(0),
-	//		.y=double(0),
-	//		.z=double(0),
+	//	Vec3<CxFixedI16p16>{ // rotate
+	//		.x=CxFixedI16p16(0),
+	//		.y=CxFixedI16p16(0),
+	//		.z=CxFixedI16p16(0),
 	//	},
-	//	Vec3<double>{ // translate
-	//		.x=double(30),
-	//		.y=double(30),
-	//		.z=double(30),
+	//	Vec3<CxFixedI16p16>{ // translate
+	//		.x=CxFixedI16p16(30),
+	//		.y=CxFixedI16p16(30),
+	//		.z=CxFixedI16p16(30),
 	//	}
 	//);
 	Transform view(
 		// affine
-		Vec3<double>{ // rotate
-			.x=double(0),
-			.y=double(0),
-			.z=double(0),
-		},
-		//Vec3<double>{ // translate
-		//	.x=double(0),
-		//	.y=double(0),
-		//	.z=double(0),
-		//}
-		//Mat3x3<double>{
-		//	.m={
-		//		{
-		//			{1.0, 0.0, 0.0},
-		//			{0.0, 1.0, 0.0},
-		//			{0.0, 0.0, 1.0},
-		//		},
-		//	}
+		//Vec3<CxFixedI16p16>{ // rotate
+		//	.x=CxFixedI16p16(0),
+		//	.y=CxFixedI16p16(0),
+		//	.z=CxFixedI16p16(0),
 		//},
-		//MAT3X3_IDENTITY<double>,
-		Vec3<double>{ // translate
-			.x=double(15.0),
-			.y=double(15.0),
-			.z=double(20.0),
-		}
-		//MAT4X4_IDENTITY<double>
-		//Mat4x4<double>{
+		////Vec3<CxFixedI16p16>{ // translate
+		////	.x=CxFixedI16p16(0),
+		////	.y=CxFixedI16p16(0),
+		////	.z=CxFixedI16p16(0),
+		////}
+		////Mat3x3<CxFixedI16p16>{
+		////	.m={
+		////		{
+		////			{1.0, 0.0, 0.0},
+		////			{0.0, 1.0, 0.0},
+		////			{0.0, 0.0, 1.0},
+		////		},
+		////	}
+		////},
+		////MAT3X3_IDENTITY<CxFixedI16p16>,
+		//Vec3<CxFixedI16p16>{ // translate
+		//	.x=CxFixedI16p16(15.0),
+		//	.y=CxFixedI16p16(15.0),
+		//	.z=CxFixedI16p16(-100.0),
+		//}
+		MAT4X4_IDENTITY<CxFixedI16p16>
+		//Mat4x4<CxFixedI16p16>{
 		//	.m={
 		//		{
 		//			{1.0, 0.0, 0.0, 0.0},
@@ -63,41 +63,64 @@ int main(int argc, char** argv) {
 		//	}
 		//}
 	);
+	const CxFixedI16p16
+		near(0.1),
+		far(100.0);
 	Transform perspective(
-		double(-100), // near
-		double(100) // far
+		near, // near
+		far // far
 	);
+	//Transform perspective(
+	//	MAT4X4_IDENTITY<CxFixedI16p16>
+	//);
 	//TransformMvp mvp{
 	//	.model=&model,
 	//	.view=&view,
 	//	.perspective=&perspective,
 	//};
+	//Mat4x4<CxFixedI16p16> my_tri_model = MAT4X4_IDENTITY<CxFixedI16p16>;
+	Transform my_tri_model;
+	my_tri_model.mat.m.at(0).at(3) = CxFixedI16p16(-30.0);
+	my_tri_model.mat.m.at(1).at(3) = CxFixedI16p16(-30.0);
+	my_tri_model.mat.m.at(2).at(3) = CxFixedI16p16(30.0);
+	//my_tri_model.mat.m.at(3).at(3) = CxFixedI16p16(1.0);
+	my_tri_model.set_rot_scale(
+		Vec3<CxFixedI16p16>{ // rotate
+			.x=CxFixedI16p16(MATH_PI * 0.25), .y=CxFixedI16p16(MATH_PI * 0.25),
+			.z=CxFixedI16p16(0),
+		}
+	);
+	//my_tri_model.set_rot_scale(
+	//	MAT3X3_IDENTITY<CxFixedI16p16>
+	//);
+	my_tri_model.set_to_affine_finish();
 	Texture texture("gfx/obj/wood_block.bmp");
 	Tri tri{
 		.img=&texture,
 		.model=Transform(
-			// affine
-			Vec3<double>{ // rotate
-				.x=double(0),
-				.y=double(0),
-				.z=double(0),
-			},
-			//Mat3x3<double>{
-			//	.m={
-			//	}
+			//// affine
+			//Vec3<CxFixedI16p16>{ // rotate
+			//	.x=CxFixedI16p16(0),
+			//	.y=CxFixedI16p16(0),
+			//	.z=CxFixedI16p16(0),
 			//},
-			Vec3<double>{ // translate
-				.x=double(10.0),
-				.y=double(10.0),
-				.z=double(3.0),
-			},
-			Vec3<double>{ // scale
-				.x=2.0,
-				.y=1.0,
-				.z=1.0,
-			}
-			//MAT4X4_IDENTITY<double>
-			//Mat4x4<double>{
+			////Mat3x3<CxFixedI16p16>{
+			////	.m={
+			////	}
+			////},
+			//Vec3<CxFixedI16p16>{ // translate
+			//	.x=CxFixedI16p16(10.0),
+			//	.y=CxFixedI16p16(10.0),
+			//	.z=CxFixedI16p16(200.0),
+			//},
+			//Vec3<CxFixedI16p16>{ // scale
+			//	.x=CxFixedI16p16(2.0),
+			//	.y=CxFixedI16p16(2.0),
+			//	.z=CxFixedI16p16(2.0),
+			//}
+			//MAT4X4_IDENTITY<CxFixedI16p16>
+			my_tri_model
+			//Mat4x4<CxFixedI16p16>{
 			//	.m={
 			//		{
 			//			{1.0, 0.0, 0.0, 0.0},
@@ -111,35 +134,35 @@ int main(int argc, char** argv) {
 		.v={
 			Vert{
 				.v={
-					.x=double(-1.1),
-					.y=double(-1.1),
-					.z=double(-1.1)
+					.x=CxFixedI16p16(1.1),
+					.y=CxFixedI16p16(1.1),
+					.z=CxFixedI16p16(1.1),
 				},
 				.uv={
-					.x=double(0),
-					.y=double(0),
+					.x=CxFixedI16p16(0),
+					.y=CxFixedI16p16(0),
 				},
 			},
 			Vert{
 				.v={
-					.x=double(-15.1),
-					.y=double(-15.1),
-					.z=double(-1.1)
+					.x=CxFixedI16p16(15.1),
+					.y=CxFixedI16p16(15.1),
+					.z=CxFixedI16p16(1.1),
 				},
 				.uv={
-					.x=double(15),
-					.y=double(0),
+					.x=CxFixedI16p16(15),
+					.y=CxFixedI16p16(0),
 				},
 			},
 			Vert{
 				.v={
-					.x=double(-15.1),
-					.y=double(-5.1),
-					.z=double(-1.1)
+					.x=CxFixedI16p16(15.1),
+					.y=CxFixedI16p16(5.1),
+					.z=CxFixedI16p16(1.1),
 				},
 				.uv={
-					.x=double(15),
-					.y=double(15),
+					.x=CxFixedI16p16(15),
+					.y=CxFixedI16p16(15),
 				},
 			},
 		},
@@ -153,7 +176,7 @@ int main(int argc, char** argv) {
 		view,
 		perspective
 	);
-	std::vector<Vec2<int>> visib;
+	std::vector<Vec2<Rast::DrawT>> visib;
 	rast.calc_visib(
 		tri,
 		visib
@@ -179,11 +202,18 @@ int main(int argc, char** argv) {
 		//	printout("\n");
 		//}
 		//last_y = item.y;
+		const Vec2<int> temp{
+			.x=int(item.x),
+			.y=int(item.y),
+		};
 		if (
-			item.x >= 0 && item.x <= int(SCREEN_SIZE_2D.x) - 1
-			&& item.y >= 0 && item.y <= int(SCREEN_SIZE_2D.y) - 1
+			temp.x >= /*CxFixedI16p16*/(0)
+			&& temp.x <= /*CxFixedI16p16*/int(SCREEN_SIZE_2D.x - 1)
+			&& temp.y >= /*CxFixedI16p16*/(0)
+			&& temp.y <= /*CxFixedI16p16*/int(SCREEN_SIZE_2D.y - 1)
 		) {
-			visib_buf.at(int(item.y) * SCREEN_SIZE_2D.x + int(item.x)) = 1;
+			//printout(temp);
+			visib_buf.at(int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)) = 1;
 		}
 	}
 	//for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
