@@ -214,7 +214,7 @@ void Rast::_calc_flat_top_visib(
 
 	for (
 		CxFixedI16p16 scanline_y = /*std::round*/(v3.y);
-		scanline_y>/*std::round*/(v1.y);
+		scanline_y>=/*std::round*/(v1.y);
 		scanline_y-=CxFixedI16p16(1)
 	) {
 		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);

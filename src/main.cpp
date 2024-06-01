@@ -86,7 +86,8 @@ int main(int argc, char** argv) {
 	//my_tri_model.mat.m.at(3).at(3) = CxFixedI16p16(1.0);
 	my_tri_model.set_rot_scale(
 		Vec3<CxFixedI16p16>{ // rotate
-			.x=CxFixedI16p16(MATH_PI * 0.25), .y=CxFixedI16p16(MATH_PI * 0.25),
+			.x=CxFixedI16p16(0/*MATH_PI * 1.3*/),
+			.y=CxFixedI16p16(0/*MATH_PI * 1.3*/),
 			.z=CxFixedI16p16(0),
 		}
 	);
