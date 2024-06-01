@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 	//};
 	//Mat4x4<CxFixedI16p16> my_tri_model = MAT4X4_IDENTITY<CxFixedI16p16>;
 	Transform my_tri_model;
-	my_tri_model.mat.m.at(0).at(3) = CxFixedI16p16(-30.0);
+	my_tri_model.mat.m.at(0).at(3) = CxFixedI16p16(-20.0);
 	my_tri_model.mat.m.at(1).at(3) = CxFixedI16p16(-30.0);
 	my_tri_model.mat.m.at(2).at(3) = CxFixedI16p16(30.0);
 	//my_tri_model.mat.m.at(3).at(3) = CxFixedI16p16(1.0);

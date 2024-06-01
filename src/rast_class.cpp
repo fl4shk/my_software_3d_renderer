@@ -211,27 +211,44 @@ void Rast::_calc_flat_top_visib(
 	//	v1.y, " ", v2.y, " ", v3.y,
 	//	"\n"
 	//);
+	printout(
+		"Rast::_calc_flat_bot_visib(): ",
+		//v1.x, " ", v2.x, " ", v3.x, "\n",
+		//v1.y, " ", v2.y, " ", v3.y,
+		Vec2<double>{.x=double(v1.x), .y=double(v1.y)}, " ", 
+		Vec2<double>{.x=double(v2.x), .y=double(v2.y)}, " ", 
+		Vec2<double>{.x=double(v3.x), .y=double(v3.y)}, 
+		"\n"
+	);
+	std::vector<Vec2<int>> temp_ret;
 
 	for (
-		CxFixedI16p16 scanline_y = /*std::round*/(v3.y);
-		scanline_y>=/*std::round*/(v1.y);
-		scanline_y-=CxFixedI16p16(1)
+		int scanline_y = /*std::round*/int(v3.y);
+		scanline_y>=/*std::round*/int(v1.y);
+		scanline_y-=int(1)
 	) {
 		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);
 		calc_line_coords(
-			Vec2<CxFixedI16p16>{
-				.x=/*int(std::trunc(*//*int*/(curr_x1)/*))*/,
+			Vec2<int>{
+				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			Vec2<CxFixedI16p16>{
-				.x=/*int(std::trunc(*//*int*/(curr_x2)/*))*/,
+			Vec2<int>{
+				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			SCREEN_SIZE_2D,
-			ret
+			//ret
+			temp_ret
 		);
 		curr_x1 -= invslope1;
 		curr_x2 -= invslope2;
+	}
+	for (const auto& temp_item: temp_ret) {
+		ret.push_back(Vec2<DrawT>{
+			.x=DrawT(temp_item.x),
+			.y=DrawT(temp_item.y),
+		});
 	}
 }
 void Rast::_calc_flat_bot_visib(
@@ -265,18 +282,21 @@ void Rast::_calc_flat_bot_visib(
 	CxFixedI16p16 curr_x1 = v1.x;
 	CxFixedI16p16 curr_x2 = v1.x;
 
-	//printout(
-	//	"Rast::_calc_flat_bot_visib(): ",
-	//	//v1.x, " ", v2.x, " ", v3.x, "\n",
-	//	//v1.y, " ", v2.y, " ", v3.y,
-	//	v1, " ", v2, " ", v3,
-	//	"\n"
-	//);
+	printout(
+		"Rast::_calc_flat_bot_visib(): ",
+		//v1.x, " ", v2.x, " ", v3.x, "\n",
+		//v1.y, " ", v2.y, " ", v3.y,
+		Vec2<double>{.x=double(v1.x), .y=double(v1.y)}, " ", 
+		Vec2<double>{.x=double(v2.x), .y=double(v2.y)}, " ", 
+		Vec2<double>{.x=double(v3.x), .y=double(v3.y)}, 
+		"\n"
+	);
 
+	std::vector<Vec2<int>> temp_ret;
 	for (
-		CxFixedI16p16 scanline_y=/*std::round*/(v1.y);
-		scanline_y<=/*std::round*/(v2.y);
-		scanline_y+=CxFixedI16p16(1)
+		int scanline_y=/*std::round*/int(v1.y);
+		scanline_y<=/*std::round*/int(v2.y);
+		scanline_y+=int(1)
 	) {
 		//printout(
 		//	curr_x1, " ",
@@ -298,19 +318,26 @@ void Rast::_calc_flat_bot_visib(
 		//	ret
 		//);
 		calc_line_coords(
-			Vec2<DrawT>{
-				.x=/*int(std::trunc(*/DrawT(curr_x1)/*))*/,
+			Vec2<int>{
+				.x=/*int(std::trunc(*/int(curr_x1)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
-			Vec2<DrawT>{
-				.x=/*int(std::trunc(*/DrawT(curr_x2)/*))*/,
+			Vec2<int>{
+				.x=/*int(std::trunc(*/int(curr_x2)/*))*/,
 				.y=/*int(std::trunc(*/scanline_y/*))*/,
 			},
 			SCREEN_SIZE_2D,
-			ret
+			//ret
+			temp_ret
 		);
 		curr_x1 += invslope1;
 		curr_x2 += invslope2;
+	}
+	for (const auto& temp_item: temp_ret) {
+		ret.push_back(Vec2<DrawT>{
+			.x=DrawT(temp_item.x),
+			.y=DrawT(temp_item.y),
+		});
 	}
 	//for (const auto& item: ret) {
 	//	printout(
