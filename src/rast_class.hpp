@@ -33,20 +33,20 @@ public:		// functions
 		std::vector<Vec2<DrawT>>& ret
 	) const;
 private:		// functions
-	void _calc_flat_top_visib(
-		//const Tri& tri,
-		const Vec2<DrawT>& v1,
-		const Vec2<DrawT>& v2,
-		const Vec2<DrawT>& v3,
-		std::vector<Vec2<DrawT>>& ret
-	) const;
-	void _calc_flat_bot_visib(
-		//const Tri& tri,
-		const Vec2<DrawT>& v1,
-		const Vec2<DrawT>& v2,
-		const Vec2<DrawT>& v3,
-		std::vector<Vec2<DrawT>>& ret
-	) const;
+	//void _calc_flat_top_visib(
+	//	//const Tri& tri,
+	//	const Vec2<DrawT>& v1,
+	//	const Vec2<DrawT>& v2,
+	//	const Vec2<DrawT>& v3,
+	//	std::vector<Vec2<DrawT>>& ret
+	//) const;
+	//void _calc_flat_bot_visib(
+	//	//const Tri& tri,
+	//	const Vec2<DrawT>& v1,
+	//	const Vec2<DrawT>& v2,
+	//	const Vec2<DrawT>& v3,
+	//	std::vector<Vec2<DrawT>>& ret
+	//) const;
 };
 
 

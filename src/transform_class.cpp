@@ -178,12 +178,12 @@ void Transform::set_perspective(
 		//-((far * near) / (far - near))
 		-((far_dbl * near_dbl) / (far_dbl - near_dbl))
 	);
-	printout(
-		"Transform::set_perspective():\n",
-		double(temp_0), " ",
-		double(temp_1),
-		"\n"
-	);
+	//printout(
+	//	"Transform::set_perspective():\n",
+	//	double(temp_0), " ",
+	//	double(temp_1),
+	//	"\n"
+	//);
 	mat.m.at(2).at(2) = temp_0;
 	mat.m.at(2).at(3) = temp_1;
 	_set_to_perspective_finish();
@@ -241,34 +241,34 @@ Vec3<CxFixedI16p16> Transform::do_project(
 			.y=(almost_ret.y * CxFixedI16p16(SCREEN_SIZE_2D.y)),
 			.z=almost_ret.z,
 		};
-	const Vec3<double>
-		model_v_dbl{
-			.x=double(model_v.x),
-			.y=double(model_v.y),
-			.z=double(model_v.z),
-		},
-		view_v_dbl{
-			.x=double(view_v.x),
-			.y=double(view_v.y),
-			.z=double(view_v.z),
-		},
-		almost_ret_dbl{
-			.x=double(almost_ret.x),
-			.y=double(almost_ret.y),
-			.z=double(almost_ret.z),
-		},
-		ret_dbl{
-			.x=double(ret.x),
-			.y=double(ret.y),
-			.z=double(ret.z),
-		};
-	printout(
-		"model_v: ", model_v_dbl, "\n",
-		"view_v: ", view_v_dbl, "\n",
-		"almost_ret: ", almost_ret_dbl, "\n",
-		"ret: ", ret_dbl, "\n",
-		"\n"
-	);
+	//const Vec3<double>
+	//	model_v_dbl{
+	//		.x=double(model_v.x),
+	//		.y=double(model_v.y),
+	//		.z=double(model_v.z),
+	//	},
+	//	view_v_dbl{
+	//		.x=double(view_v.x),
+	//		.y=double(view_v.y),
+	//		.z=double(view_v.z),
+	//	},
+	//	almost_ret_dbl{
+	//		.x=double(almost_ret.x),
+	//		.y=double(almost_ret.y),
+	//		.z=double(almost_ret.z),
+	//	},
+	//	ret_dbl{
+	//		.x=double(ret.x),
+	//		.y=double(ret.y),
+	//		.z=double(ret.z),
+	//	};
+	//printout(
+	//	"model_v: ", model_v_dbl, "\n",
+	//	"view_v: ", view_v_dbl, "\n",
+	//	"almost_ret: ", almost_ret_dbl, "\n",
+	//	"ret: ", ret_dbl, "\n",
+	//	"\n"
+	//);
  
     // Assuming src.w is always 1 for simplicity
     //a = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + m[0][3];
