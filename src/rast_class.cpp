@@ -213,8 +213,8 @@ void Rast::_calc_flat_top_visib(
 	);
 
 	for (
-		int scanline_y = std::round(v3.y);
-		scanline_y>std::round(v1.y);
+		int scanline_y = /*std::round*/(v3.y);
+		scanline_y>/*std::round*/(v1.y);
 		scanline_y-=(1)
 	) {
 		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);

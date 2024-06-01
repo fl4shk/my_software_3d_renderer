@@ -9,9 +9,9 @@ void calc_line_coords(
 	int y0 = v0.y;
 	int x1 = v1.x;
 	int y1 = v1.y;
-	if (x0 > x1) {
-		//std::swap(x0, x1);
-	}
+	//if (x0 > x1) {
+	//	std::swap(x0, x1);
+	//}
 	//if (y0 > y1) {
 	//	std::swap(y0, y1);
 	//}

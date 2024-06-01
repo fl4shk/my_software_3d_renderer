@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
 				.z=double(3.0),
 			},
 			Vec3<double>{ // scale
-				.x=1.0,
+				.x=2.0,
 				.y=1.0,
 				.z=1.0,
 			}
