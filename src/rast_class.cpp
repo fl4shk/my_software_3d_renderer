@@ -118,11 +118,11 @@ void Rast::calc_visib(
 			//		(v3.x) - (v1.x)
 			//	)
 			//)),
-			.x=DrawT(/*int*/(
+			.x=DrawT(int(
 				v1.x
 				+ (
-					(CxFixedI16p16)(v2.y - v1.y) 
-					/ (CxFixedI16p16)(v3.y - v1.y)
+					CxFixedI16p16(v2.y - v1.y) 
+					/ CxFixedI16p16(v3.y - v1.y)
 				) * (
 					v3.x - v1.x
 				)
