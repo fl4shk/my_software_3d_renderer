@@ -47,7 +47,8 @@ using liborangepower::math::Vec3;
 //using liborangepower::math::MyCxFixedPt;
 using liborangepower::math::CxFixedI24p8;
 using liborangepower::math::CxFixedI20p12;
-using MyCxFixedPt = liborangepower::math::CxFixedI16p16;
+//using MyCxFixedPt = liborangepower::math::CxFixedI16p16;
+using MyCxFixedPt = double;
 //using liborangepower::math::MyCxFixedPt;
 using liborangepower::math::CxFixedPt;
 namespace concepts = liborangepower::concepts;
@@ -75,11 +76,11 @@ static constexpr std::array<Vec2<MyCxFixedPt>, 4>
 			.y=MyCxFixedPt(0),
 		},
 		Vec2<MyCxFixedPt>{
-			.x=MyCxFixedPt(0),
+			.x=MyCxFixedPt(SCREEN_SIZE_2D.x - 1),
 			.y=MyCxFixedPt(SCREEN_SIZE_2D.y - 1),
 		},
 		Vec2<MyCxFixedPt>{
-			.x=MyCxFixedPt(SCREEN_SIZE_2D.x - 1),
+			.x=MyCxFixedPt(0),
 			.y=MyCxFixedPt(SCREEN_SIZE_2D.y - 1),
 		},
 	};

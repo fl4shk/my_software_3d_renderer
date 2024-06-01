@@ -26,7 +26,7 @@ public:		// functions
 		const Transform& view,
 		const Transform& perspective
 	);
-	void do_clip();
+	//void do_clip();
 };
 
 //using TriDrawVert = std::array<Vec2<i32>, TRI_VERT_SIZE>;

@@ -25,6 +25,6 @@ void Tri::do_project(
 	}
 	//printout("\n");
 }
-void Tri::do_clip() {
-	Clip::clip(*this);
-}
+//void Tri::do_clip() {
+//	Clip::clip(*this);
+//}

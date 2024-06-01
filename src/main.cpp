@@ -146,8 +146,8 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=MyCxFixedPt(15.1),
-					.y=MyCxFixedPt(15.1),
+					.x=MyCxFixedPt(35/*15.1*/),
+					.y=MyCxFixedPt(35/*15.1*/),
 					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
