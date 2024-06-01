@@ -12,7 +12,7 @@ class Rast final {
 public:		// types
 	//using TriCRef = const Tri&;
 	//using TriAtFunc = TriCRef (*)(size_t idx);
-	using DrawT = CxFixedI16p16;
+	using DrawT = MyCxFixedPt;
 private:		// variables
 	//std::vector<Tri*> _tri_vec;
 	//TriAtFunc _tri_at_func=nullptr;

@@ -44,11 +44,11 @@ using namespace liborangepower::strings;
 using namespace liborangepower::containers;
 using liborangepower::math::Vec2;
 using liborangepower::math::Vec3;
-//using liborangepower::math::CxFixedI16p16;
+//using liborangepower::math::MyCxFixedPt;
 using liborangepower::math::CxFixedI24p8;
 using liborangepower::math::CxFixedI20p12;
-using liborangepower::math::CxFixedI16p16;
-//using liborangepower::math::CxFixedI16p16;
+using MyCxFixedPt = liborangepower::math::CxFixedI16p16;
+//using liborangepower::math::MyCxFixedPt;
 using liborangepower::math::CxFixedPt;
 namespace concepts = liborangepower::concepts;
 namespace sdl = liborangepower::sdl;
@@ -63,6 +63,25 @@ static constexpr Vec2<size_t>
 		.y=480,
 		//.x=32,
 		//.y=20,
+	};
+static constexpr std::array<Vec2<MyCxFixedPt>, 4>
+	SCREEN_POLYGON{
+		Vec2<MyCxFixedPt>{
+			.x=MyCxFixedPt(0),
+			.y=MyCxFixedPt(0),
+		},
+		Vec2<MyCxFixedPt>{
+			.x=MyCxFixedPt(SCREEN_SIZE_2D.x - 1),
+			.y=MyCxFixedPt(0),
+		},
+		Vec2<MyCxFixedPt>{
+			.x=MyCxFixedPt(0),
+			.y=MyCxFixedPt(SCREEN_SIZE_2D.y - 1),
+		},
+		Vec2<MyCxFixedPt>{
+			.x=MyCxFixedPt(SCREEN_SIZE_2D.x - 1),
+			.y=MyCxFixedPt(SCREEN_SIZE_2D.y - 1),
+		},
 	};
 
 #endif		// src_misc_includes_hpp

@@ -4,32 +4,32 @@
 #include "misc_includes.hpp"
 #include "rgb444_class.hpp"
 
-constexpr inline CxFixedI16p16 bary_lerp(
-	const Vec2<CxFixedI16p16>& a,
-	const Vec2<CxFixedI16p16>& b, 
-	const Vec2<CxFixedI16p16>& t
+constexpr inline MyCxFixedPt bary_lerp(
+	const Vec2<MyCxFixedPt>& a,
+	const Vec2<MyCxFixedPt>& b, 
+	const Vec2<MyCxFixedPt>& t
 ) {
 	return (t.x - a.x) * (b.y - a.y) - (t.y - a.y) * (b.x - a.x);
 }
 //class Vec4d final {
 //public:		// varaibles
-//	Vec3<CxFixedI16p16>
+//	Vec3<MyCxFixedPt>
 //		xyz{
 //			.x=0.0,
 //			.y=0.0,
 //			.z=0.0,
 //		};
-//	CxFixedI16p16
+//	MyCxFixedPt
 //		w=0.0;
 //};
-class Vertex/*: public Vec3<CxFixedI16p16>*/ {
+class Vertex/*: public Vec3<MyCxFixedPt>*/ {
 public:		// variables
-	//Vec2<CxFixedI16p16>
+	//Vec2<MyCxFixedPt>
 	//	uv{
 	//		.x=0.0,
 	//		.y=0.0,
 	//	};
-	Vec3<CxFixedI16p16>
+	Vec3<MyCxFixedPt>
 		pos{
 			.x=0.0,
 			.y=0.0,

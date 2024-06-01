@@ -20,11 +20,13 @@ public:		// variables
 	TriVert
 		v,
 		project_v;
+	std::vector<Vec2<MyCxFixedPt>> clip_vec;
 public:		// functions
 	void do_project(
 		const Transform& view,
 		const Transform& perspective
 	);
+	void do_clip();
 };
 
 //using TriDrawVert = std::array<Vec2<i32>, TRI_VERT_SIZE>;

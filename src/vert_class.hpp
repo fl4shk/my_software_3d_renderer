@@ -5,8 +5,8 @@
 
 class Vert final {
 public:		// variables
-	Vec3<CxFixedI16p16> v;
-	Vec2<CxFixedI16p16> uv;
+	Vec3<MyCxFixedPt> v;
+	Vec2<MyCxFixedPt> uv;
 };
 
 #endif		// src_vert_class_hpp

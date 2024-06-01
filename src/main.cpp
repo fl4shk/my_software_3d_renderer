@@ -13,30 +13,30 @@ int main(int argc, char** argv) {
 	Rast rast;
 	//Transform model(
 	//	// affine
-	//	Vec3<CxFixedI16p16>{ // rotate
-	//		.x=CxFixedI16p16(0),
-	//		.y=CxFixedI16p16(0),
-	//		.z=CxFixedI16p16(0),
+	//	Vec3<MyCxFixedPt>{ // rotate
+	//		.x=MyCxFixedPt(0),
+	//		.y=MyCxFixedPt(0),
+	//		.z=MyCxFixedPt(0),
 	//	},
-	//	Vec3<CxFixedI16p16>{ // translate
-	//		.x=CxFixedI16p16(30),
-	//		.y=CxFixedI16p16(30),
-	//		.z=CxFixedI16p16(30),
+	//	Vec3<MyCxFixedPt>{ // translate
+	//		.x=MyCxFixedPt(30),
+	//		.y=MyCxFixedPt(30),
+	//		.z=MyCxFixedPt(30),
 	//	}
 	//);
 	Transform view(
 		// affine
-		//Vec3<CxFixedI16p16>{ // rotate
-		//	.x=CxFixedI16p16(0),
-		//	.y=CxFixedI16p16(0),
-		//	.z=CxFixedI16p16(0),
+		//Vec3<MyCxFixedPt>{ // rotate
+		//	.x=MyCxFixedPt(0),
+		//	.y=MyCxFixedPt(0),
+		//	.z=MyCxFixedPt(0),
 		//},
-		////Vec3<CxFixedI16p16>{ // translate
-		////	.x=CxFixedI16p16(0),
-		////	.y=CxFixedI16p16(0),
-		////	.z=CxFixedI16p16(0),
+		////Vec3<MyCxFixedPt>{ // translate
+		////	.x=MyCxFixedPt(0),
+		////	.y=MyCxFixedPt(0),
+		////	.z=MyCxFixedPt(0),
 		////}
-		////Mat3x3<CxFixedI16p16>{
+		////Mat3x3<MyCxFixedPt>{
 		////	.m={
 		////		{
 		////			{1.0, 0.0, 0.0},
@@ -45,14 +45,14 @@ int main(int argc, char** argv) {
 		////		},
 		////	}
 		////},
-		////MAT3X3_IDENTITY<CxFixedI16p16>,
-		//Vec3<CxFixedI16p16>{ // translate
-		//	.x=CxFixedI16p16(15.0),
-		//	.y=CxFixedI16p16(15.0),
-		//	.z=CxFixedI16p16(-100.0),
+		////MAT3X3_IDENTITY<MyCxFixedPt>,
+		//Vec3<MyCxFixedPt>{ // translate
+		//	.x=MyCxFixedPt(15.0),
+		//	.y=MyCxFixedPt(15.0),
+		//	.z=MyCxFixedPt(-100.0),
 		//}
-		MAT4X4_IDENTITY<CxFixedI16p16>
-		//Mat4x4<CxFixedI16p16>{
+		MAT4X4_IDENTITY<MyCxFixedPt>
+		//Mat4x4<MyCxFixedPt>{
 		//	.m={
 		//		{
 		//			{1.0, 0.0, 0.0, 0.0},
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 		//	}
 		//}
 	);
-	const CxFixedI16p16
+	const MyCxFixedPt
 		near(0.1),
 		far(100.0);
 	Transform perspective(
@@ -71,28 +71,28 @@ int main(int argc, char** argv) {
 		far // far
 	);
 	//Transform perspective(
-	//	MAT4X4_IDENTITY<CxFixedI16p16>
+	//	MAT4X4_IDENTITY<MyCxFixedPt>
 	//);
 	//TransformMvp mvp{
 	//	.model=&model,
 	//	.view=&view,
 	//	.perspective=&perspective,
 	//};
-	//Mat4x4<CxFixedI16p16> my_tri_model = MAT4X4_IDENTITY<CxFixedI16p16>;
+	//Mat4x4<MyCxFixedPt> my_tri_model = MAT4X4_IDENTITY<MyCxFixedPt>;
 	Transform my_tri_model;
-	my_tri_model.mat.m.at(0).at(3) = CxFixedI16p16(-20.0);
-	my_tri_model.mat.m.at(1).at(3) = CxFixedI16p16(-30.0);
-	my_tri_model.mat.m.at(2).at(3) = CxFixedI16p16(30.0);
-	//my_tri_model.mat.m.at(3).at(3) = CxFixedI16p16(1.0);
+	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(-20.0);
+	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(-30.0);
+	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(30.0);
+	//my_tri_model.mat.m.at(3).at(3) = MyCxFixedPt(1.0);
 	my_tri_model.set_rot_scale(
-		Vec3<CxFixedI16p16>{ // rotate
-			.x=CxFixedI16p16(0/*MATH_PI * 1.3*/),
-			.y=CxFixedI16p16(0/*MATH_PI * 1.3*/),
-			.z=CxFixedI16p16(0),
+		Vec3<MyCxFixedPt>{ // rotate
+			.x=MyCxFixedPt(0/*MATH_PI * 1.3*/),
+			.y=MyCxFixedPt(0/*MATH_PI * 1.3*/),
+			.z=MyCxFixedPt(0),
 		}
 	);
 	//my_tri_model.set_rot_scale(
-	//	MAT3X3_IDENTITY<CxFixedI16p16>
+	//	MAT3X3_IDENTITY<MyCxFixedPt>
 	//);
 	my_tri_model.set_to_affine_finish();
 	Texture texture("gfx/obj/wood_block.bmp");
@@ -100,28 +100,28 @@ int main(int argc, char** argv) {
 		.img=&texture,
 		.model=Transform(
 			//// affine
-			//Vec3<CxFixedI16p16>{ // rotate
-			//	.x=CxFixedI16p16(0),
-			//	.y=CxFixedI16p16(0),
-			//	.z=CxFixedI16p16(0),
+			//Vec3<MyCxFixedPt>{ // rotate
+			//	.x=MyCxFixedPt(0),
+			//	.y=MyCxFixedPt(0),
+			//	.z=MyCxFixedPt(0),
 			//},
-			////Mat3x3<CxFixedI16p16>{
+			////Mat3x3<MyCxFixedPt>{
 			////	.m={
 			////	}
 			////},
-			//Vec3<CxFixedI16p16>{ // translate
-			//	.x=CxFixedI16p16(10.0),
-			//	.y=CxFixedI16p16(10.0),
-			//	.z=CxFixedI16p16(200.0),
+			//Vec3<MyCxFixedPt>{ // translate
+			//	.x=MyCxFixedPt(10.0),
+			//	.y=MyCxFixedPt(10.0),
+			//	.z=MyCxFixedPt(200.0),
 			//},
-			//Vec3<CxFixedI16p16>{ // scale
-			//	.x=CxFixedI16p16(2.0),
-			//	.y=CxFixedI16p16(2.0),
-			//	.z=CxFixedI16p16(2.0),
+			//Vec3<MyCxFixedPt>{ // scale
+			//	.x=MyCxFixedPt(2.0),
+			//	.y=MyCxFixedPt(2.0),
+			//	.z=MyCxFixedPt(2.0),
 			//}
-			//MAT4X4_IDENTITY<CxFixedI16p16>
+			//MAT4X4_IDENTITY<MyCxFixedPt>
 			my_tri_model
-			//Mat4x4<CxFixedI16p16>{
+			//Mat4x4<MyCxFixedPt>{
 			//	.m={
 			//		{
 			//			{1.0, 0.0, 0.0, 0.0},
@@ -135,35 +135,35 @@ int main(int argc, char** argv) {
 		.v={
 			Vert{
 				.v={
-					.x=CxFixedI16p16(1.1),
-					.y=CxFixedI16p16(1.1),
-					.z=CxFixedI16p16(1.1),
+					.x=MyCxFixedPt(1.1),
+					.y=MyCxFixedPt(1.1),
+					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
-					.x=CxFixedI16p16(0),
-					.y=CxFixedI16p16(0),
+					.x=MyCxFixedPt(0),
+					.y=MyCxFixedPt(0),
 				},
 			},
 			Vert{
 				.v={
-					.x=CxFixedI16p16(15.1),
-					.y=CxFixedI16p16(15.1),
-					.z=CxFixedI16p16(1.1),
+					.x=MyCxFixedPt(15.1),
+					.y=MyCxFixedPt(15.1),
+					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
-					.x=CxFixedI16p16(15),
-					.y=CxFixedI16p16(0),
+					.x=MyCxFixedPt(15),
+					.y=MyCxFixedPt(0),
 				},
 			},
 			Vert{
 				.v={
-					.x=CxFixedI16p16(15.1),
-					.y=CxFixedI16p16(5.1),
-					.z=CxFixedI16p16(1.1),
+					.x=MyCxFixedPt(15.1),
+					.y=MyCxFixedPt(5.1),
+					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
-					.x=CxFixedI16p16(15),
-					.y=CxFixedI16p16(15),
+					.x=MyCxFixedPt(15),
+					.y=MyCxFixedPt(15),
 				},
 			},
 		},
@@ -177,6 +177,7 @@ int main(int argc, char** argv) {
 		view,
 		perspective
 	);
+	tri.do_clip();
 	std::vector<Vec2<Rast::DrawT>> visib;
 	rast.calc_visib(
 		tri,
@@ -208,10 +209,10 @@ int main(int argc, char** argv) {
 			.y=int(item.y),
 		};
 		if (
-			temp.x >= /*CxFixedI16p16*/(0)
-			&& temp.x <= /*CxFixedI16p16*/int(SCREEN_SIZE_2D.x - 1)
-			&& temp.y >= /*CxFixedI16p16*/(0)
-			&& temp.y <= /*CxFixedI16p16*/int(SCREEN_SIZE_2D.y - 1)
+			temp.x >= /*MyCxFixedPt*/(0)
+			&& temp.x <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.x - 1)
+			&& temp.y >= /*MyCxFixedPt*/(0)
+			&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
 		) {
 			//printout(temp);
 			visib_buf.at(int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)) = 1;

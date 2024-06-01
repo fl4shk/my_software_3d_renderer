@@ -1,5 +1,5 @@
 #include "tri_class.hpp"
-
+#include "clip_class.hpp"
 
 void Tri::do_project(
 	const Transform& view,
@@ -24,4 +24,7 @@ void Tri::do_project(
 		//);
 	}
 	//printout("\n");
+}
+void Tri::do_clip() {
+	Clip::clip(*this);
 }

@@ -112,8 +112,8 @@ Rast::~Rast() {
 //			//.x=DrawT(int(
 //			//	/*int*/(v1.x)
 //			//	+ (
-//			//		(CxFixedI16p16)((v2.y) - (v1.y))
-//			//		/ (CxFixedI16p16)((v3.y) - (v1.y))
+//			//		(MyCxFixedPt)((v2.y) - (v1.y))
+//			//		/ (MyCxFixedPt)((v3.y) - (v1.y))
 //			//	) * (
 //			//		(v3.x) - (v1.x)
 //			//	)
@@ -121,8 +121,8 @@ Rast::~Rast() {
 //			.x=DrawT(int(
 //				v1.x
 //				+ (
-//					CxFixedI16p16(v2.y - v1.y) 
-//					/ CxFixedI16p16(v3.y - v1.y)
+//					MyCxFixedPt(v2.y - v1.y) 
+//					/ MyCxFixedPt(v3.y - v1.y)
 //				) * (
 //					v3.x - v1.x
 //				)
@@ -187,17 +187,17 @@ Rast::~Rast() {
 //	//const auto& v2 = tri.project_v.at(1).v;
 //	//const auto& v3 = tri.project_v.at(2).v;
 //
-//	//const Vec2<CxFixedI16p16> v1{
-//	//	.x=CxFixedI16p16(tri.project_v.at(0).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(0).v.y),
+//	//const Vec2<MyCxFixedPt> v1{
+//	//	.x=MyCxFixedPt(tri.project_v.at(0).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(0).v.y),
 //	//};
-//	//const Vec2<CxFixedI16p16> v2{
-//	//	.x=CxFixedI16p16(tri.project_v.at(1).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(1).v.y),
+//	//const Vec2<MyCxFixedPt> v2{
+//	//	.x=MyCxFixedPt(tri.project_v.at(1).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(1).v.y),
 //	//};
-//	//const Vec2<CxFixedI16p16> v3{
-//	//	.x=CxFixedI16p16(tri.project_v.at(2).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(2).v.y),
+//	//const Vec2<MyCxFixedPt> v3{
+//	//	.x=MyCxFixedPt(tri.project_v.at(2).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(2).v.y),
 //	//};
 //	double invslope1 = double(v3.x - v1.x) / double(v3.y - v1.y);
 //	double invslope2 = double(v3.x - v2.x) / double(v3.y - v2.y);
@@ -263,17 +263,17 @@ Rast::~Rast() {
 //	//for (auto& item: ret) {
 //	//	item = false;
 //	//}
-//	//const Vec2<CxFixedI16p16> v1{
-//	//	.x=CxFixedI16p16(tri.project_v.at(0).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(0).v.y),
+//	//const Vec2<MyCxFixedPt> v1{
+//	//	.x=MyCxFixedPt(tri.project_v.at(0).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(0).v.y),
 //	//};
-//	//const Vec2<CxFixedI16p16> v2{
-//	//	.x=CxFixedI16p16(tri.project_v.at(1).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(1).v.y),
+//	//const Vec2<MyCxFixedPt> v2{
+//	//	.x=MyCxFixedPt(tri.project_v.at(1).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(1).v.y),
 //	//};
-//	//const Vec2<CxFixedI16p16> v3{
-//	//	.x=CxFixedI16p16(tri.project_v.at(2).v.x),
-//	//	.y=CxFixedI16p16(tri.project_v.at(2).v.y),
+//	//const Vec2<MyCxFixedPt> v3{
+//	//	.x=MyCxFixedPt(tri.project_v.at(2).v.x),
+//	//	.y=MyCxFixedPt(tri.project_v.at(2).v.y),
 //	//};
 //
 //	double invslope1 = double(v2.x - v1.x) / double(v2.y - v1.y);
@@ -304,7 +304,7 @@ Rast::~Rast() {
 //		//	scanline_y,
 //		//	"\n"
 //		//);
-//		//drawLine((CxFixedI16p16)curx1, scanlineY, (CxFixedI16p16)curx2, scanlineY);
+//		//drawLine((MyCxFixedPt)curx1, scanlineY, (MyCxFixedPt)curx2, scanlineY);
 //		//calc_line_coords(
 //		//	Vec2<int>{
 //		//		.x=int(std::trunc(curr_x1)),
