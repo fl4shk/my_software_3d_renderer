@@ -17,13 +17,13 @@ using TriVert = std::array<Vert, TRI_VERT_SIZE>;
 //) {
 //    return (t.x - a.x) * (b.y - a.y) - (t.y - a.y) * (b.x - a.x);
 //}
-constexpr inline MyCxFixedPt my_lerp(
-	MyCxFixedPt t0,
-	MyCxFixedPt t1,
-	MyCxFixedPt alpha
-) {
-	return t0 * alpha + t1 * (1 - alpha);
-}
+//constexpr inline MyCxFixedPt my_lerp(
+//	MyCxFixedPt t0,
+//	MyCxFixedPt t1,
+//	MyCxFixedPt alpha
+//) {
+//	return t0 * alpha + t1 * (1 - alpha);
+//}
 class Tri final {
 //private:		// variables
 //	//sdl::Surface* _img=nullptr;
@@ -35,10 +35,11 @@ public:		// variables
 		v,
 		proj_v,
 		screen_v;
-	std::array<MyCxFixedPt, TRI_VERT_SIZE> inv_z_arr;
+	std::array<MyCxFixedPt, TRI_VERT_SIZE> rw_arr;
+	//std::array<Vec2<MyCxFixedPt>, TRI_VERT_SIZE> persp_v
 	//std::vector<Vec2<MyCxFixedPt>> clip_vec;
 public:		// functions
-	void do_project(
+	void do_project_etc(
 		const Transform& view,
 		const Transform& perspective
 	);

@@ -243,8 +243,8 @@ Vec4<MyCxFixedPt> Transform::do_project(
 		ret{
 			.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
 			.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
-			.z=-almost_ret.z,
-			.w=-almost_ret.w,
+			.z=almost_ret.z,
+			.w=almost_ret.w,
 		};
 	//const Vec3<double>
 	//	model_v_dbl{

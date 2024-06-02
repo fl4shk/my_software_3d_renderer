@@ -379,14 +379,15 @@ void Rast::calc_visib(
 	//	ret.at(k) = false;
 	//}
 	//--------
+	//auto temp_v = tri.proj_v;
 	// 28.4 fixed-point coordinates
-    const int Y1 = std::round(16.0 * double(int(tri.proj_v.at(0).v.y)));
-    const int Y2 = std::round(16.0 * double(int(tri.proj_v.at(1).v.y)));
-    const int Y3 = std::round(16.0 * double(int(tri.proj_v.at(2).v.y)));
+    const int Y1 = std::round(16.0 * double(int(tri.screen_v.at(0).v.y)));
+    const int Y2 = std::round(16.0 * double(int(tri.screen_v.at(1).v.y)));
+    const int Y3 = std::round(16.0 * double(int(tri.screen_v.at(2).v.y)));
 
-    const int X1 = std::round(16.0 * double(int(tri.proj_v.at(0).v.x)));
-    const int X2 = std::round(16.0 * double(int(tri.proj_v.at(1).v.x)));
-    const int X3 = std::round(16.0 * double(int(tri.proj_v.at(2).v.x)));
+    const int X1 = std::round(16.0 * double(int(tri.screen_v.at(0).v.x)));
+    const int X2 = std::round(16.0 * double(int(tri.screen_v.at(1).v.x)));
+    const int X3 = std::round(16.0 * double(int(tri.screen_v.at(2).v.x)));
     //const std::array<Vec2<int>, 3> coords{
 	//	{
 	//		{.x=X1, .y=Y1},
@@ -426,17 +427,17 @@ void Rast::calc_visib(
     int maxx = (std::max(std::max(X1, X2), X3) + 0xF) >> 4;
     int miny = (std::min(std::min(Y1, Y2), Y3) + 0xF) >> 4;
     int maxy = (std::max(std::max(Y1, Y2), Y3) + 0xF) >> 4;
-    if (minx < MyCxFixedPt(0)) {
-		minx = MyCxFixedPt(0);
+    if (minx < (0)) {
+		minx = (0);
     }
-    if (maxx > MyCxFixedPt(SCREEN_SIZE_2D.x - 1)) {
-		maxx = MyCxFixedPt(SCREEN_SIZE_2D.x - 1);
+    if (maxx > (SCREEN_SIZE_2D.x - 1)) {
+		maxx = (SCREEN_SIZE_2D.x - 1);
     }
-    if (miny < MyCxFixedPt(0)) {
-		miny = MyCxFixedPt(0);
+    if (miny < (0)) {
+		miny = (0);
     }
-    if (maxy > MyCxFixedPt(SCREEN_SIZE_2D.y - 1)) {
-		maxy = MyCxFixedPt(SCREEN_SIZE_2D.y - 1);
+    if (maxy > (SCREEN_SIZE_2D.y - 1)) {
+		maxy = (SCREEN_SIZE_2D.y - 1);
     }
 
     // Block size, standard 8x8 (must be power of two)
@@ -475,6 +476,19 @@ void Rast::calc_visib(
     if (DY31 < 0 || (DY31 == 0 && DX31 > 0)) {
 		++C3;
 	}
+    //auto area = [](
+	//	const Vec2<MyCxFixedPt>& p0,
+	//	const Vec2<MyCxFixedPt>& p1,
+	//	const Vec2<MyCxFixedPt>& p2
+	//) {
+	//	return (p1 - p0).zcross((p2 - p0));
+	//};
+    //auto interpolate = [](
+	//	const auto a[3], auto p, const Vec3<MyCxFixedPt>& coord
+	//) {
+	//	return coord.x*a[0].*p + coord.y*a[1].*p + coord.z*a[2].*p;
+	//};
+
 	auto do_push_back = [&](
 		const Vec2<DrawT>& v
 	) -> void {
@@ -482,9 +496,175 @@ void Rast::calc_visib(
 			.x=DrawT(v.x), /// DrawT(SCREEN_SIZE_2D.x),
 			.y=DrawT(v.y), /// DrawT(SCREEN_SIZE_2D.y),
 		};
-		const Vert& vt0 = tri.proj_v.at(0);
-		const Vert& vt1 = tri.proj_v.at(1);
-		const Vert& vt2 = tri.proj_v.at(2);
+		//const Vert& pvt0 = tri.proj_v.at(0);
+		//const Vert& pvt1 = tri.proj_v.at(1);
+		//const Vert& pvt2 = tri.proj_v.at(2);
+		const Vert& svt0 = tri.screen_v.at(0);
+		const Vert& svt1 = tri.screen_v.at(1);
+		const Vert& svt2 = tri.screen_v.at(2);
+
+		const MyCxFixedPt
+			x = v.x,
+			y = v.y,
+			rwa = tri.rw_arr.at(0), //MyCxFixedPt(1) / vt0.v.w,
+			rwb = tri.rw_arr.at(1), //MyCxFixedPt(1) / vt1.v.w,
+			rwc = tri.rw_arr.at(2), //MyCxFixedPt(1) / vt2.v.w,
+			xa = svt0.v.x, // * rw0,
+			ya = svt0.v.y, // * rw0,
+			xb = svt1.v.x, // * rw1,
+			yb = svt1.v.y, // * rw1,
+			xc = svt2.v.x, // * rw2,
+			yc = svt2.v.y, // * rw2,
+			ua = svt0.uv.x, // * rwa,
+			ub = svt1.uv.x, // * rwa,
+			uc = svt2.uv.x, // * rwb,
+			va = svt0.uv.y, // * rwb,
+			vb = svt1.uv.y, // * rwc,
+			vc = svt2.uv.y; // * rwc;
+		//printout(
+		//	"xy: ",
+		//	"{", xa, " ", ya, "} ",
+		//	"{", xb, " ", yb, "} ",
+		//	"{", xc, " ", yc, "} ",
+		//	"\n",
+		//	"uv: ",
+		//	"{", ua, " ", va, "} ",
+		//	"{", ub, " ", vb, "} ",
+		//	"{", uc, " ", vc, "} ",
+		//	"\n"
+		//);
+
+		const std::array<std::array<MyCxFixedPt, 2>, 2>
+			b_numer{
+				{
+					{xa - xc, x - xc},
+					{ya - yc, y - yc},
+				}
+			},
+			c_numer{
+				{
+					{xb - xa, x - xa},
+					{yb - ya, y - ya},
+				}
+			},
+			denom{
+				{
+					{xb - xa, xc - xa},
+					{yb - ya, yc - ya},
+				}
+			};
+
+		// determinant for a 2x2 matrix
+		auto det = [](
+			const std::array<std::array<MyCxFixedPt, 2>, 2>& mat2x2
+		) -> MyCxFixedPt {
+			return (
+				mat2x2[0][0] * mat2x2[1][1]
+				- mat2x2[0][1] * mat2x2[1][0]
+			);
+		};
+		const MyCxFixedPt
+			b_numer_det = det(b_numer),
+			c_numer_det = det(c_numer),
+			denom_det = det(denom),
+			one_over_denom_det = MyCxFixedPt(1) / denom_det,
+			B = b_numer_det * one_over_denom_det,
+			C = c_numer_det * one_over_denom_det,
+			A = MyCxFixedPt(1) - B - C;
+		//printout(
+		//	"b_numer",
+		//	"{"
+		//);
+		//for (size_t j=0; j<b_numer.size(); ++j) {
+		//	printout("{");
+		//	for (size_t i=0; i<b_numer.at(j).size(); ++i) {
+		//		printout(
+		//			double(b_numer.at(j).at(i)), " "
+		//		);
+		//	}
+		//	printout("}");
+		//}
+		//printout(
+		//	"}",
+		//	"\n"
+		//);
+		//printout(
+		//	"c_numer",
+		//	"{"
+		//);
+		//for (size_t j=0; j<c_numer.size(); ++j) {
+		//	printout("{");
+		//	for (size_t i=0; i<c_numer.at(j).size(); ++i) {
+		//		printout(
+		//			double(c_numer.at(j).at(i)), " "
+		//		);
+		//	}
+		//	printout("}");
+		//}
+		//printout(
+		//	"}",
+		//	"\n"
+		//);
+		//printout(
+		//	"denom",
+		//	"{"
+		//);
+		//for (size_t j=0; j<denom.size(); ++j) {
+		//	printout("{");
+		//	for (size_t i=0; i<denom.at(j).size(); ++i) {
+		//		printout(
+		//			double(denom.at(j).at(i)), " "
+		//		);
+		//	}
+		//	printout("}");
+		//}
+		//printout(
+		//	"}",
+		//	"\n"
+		//);
+		//printout(
+		//	double(b_numer_det), " ",
+		//	double(c_numer_det), " ",
+		//	double(denom_det), " ",
+		//	double(one_over_denom_det),
+		//	"\n"
+		//);
+		if (
+			A < MyCxFixedPt(0) || A > MyCxFixedPt(1)
+			|| B < MyCxFixedPt(0) || B > MyCxFixedPt(1)
+			|| C < MyCxFixedPt(0) || C > MyCxFixedPt(1)
+		) {
+			return;
+		}
+		const MyCxFixedPt
+			interp_rw = A * rwa + B * rwb + C * rwc;
+		const Vec2<MyCxFixedPt>
+			uv{
+				.x=(A * ua + B * ub + C * uc) / interp_rw,
+				.y=(A * va + B * vb + C * vc) / interp_rw,
+			};
+		printout(
+			"uv:",
+			Vec2<double>{
+				.x=double(uv.x),
+				.y=double(uv.y),
+			},
+			"\n"
+		);
+
+		//printout(
+		//	"{", xa, " ", ya, "} ",
+		//	"{", xb, " ", yb, "} ",
+		//	"{", xc, " ", yc, "}\n"
+		//);
+		//printout(
+		//	"{",
+		//		double(A), " ",
+		//		double(B), " ",
+		//		double(C),
+		//	"}",
+		//	"\n"
+		//);
 		////const double rw0 = (
 		////	double(1.0) / vt0.v.w
 		////);
@@ -554,10 +734,11 @@ void Rast::calc_visib(
 			//to_push
 			VertTextureCoords{
 				.v=v,
-				.uv={
-					.x=my_u,
-					.y=my_v,
-				}
+				.uv=uv,
+				//.uv={
+				//	.x=uv.x, //A * xa + B * xb + C * xc,
+				//	.y=uv.y, //A * ya + B * yb + C * yc,
+				//}
 			}
 			//Vec4<DrawT>{
 			//	.x=v.x,
@@ -565,6 +746,7 @@ void Rast::calc_visib(
 			//	//.z=
 			//}
 		);
+		//printout("\n");
 	};
 
     // Loop through blocks

@@ -28,11 +28,11 @@ Uint32 Texture::at_u32(const Vec2<size_t>& uv) {
 		(
 			Uint32(col.a) << 24ul
 		) | (
-			Uint32(col.b) << 16ul
+			Uint32(col.r) << 16ul
 		) | (
 			Uint32(col.g) << 8ul
 		) | (
-			Uint32(col.r) << 0ul
+			Uint32(col.b) << 0ul
 		)
 	);
 }

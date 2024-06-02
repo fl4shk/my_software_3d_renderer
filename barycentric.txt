@@ -34,7 +34,6 @@ triangle is made of a certain substance which is evenly distributed
 throughout the triangle, then these values of A, B, C would give us the
 center of gravity.
 
-
 --------
 non-needed stuff below
 --------
