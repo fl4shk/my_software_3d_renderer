@@ -41,18 +41,18 @@ int main(int argc, char** argv) {
 			.y=tri_base_height.y / MyCxFixedPt(2),
 		};
 	Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	view_mat.m.at(0).at(3) = (
+	view_mat.m.at(0).at(3) = MyCxFixedPt(
 		//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 		0.0
 	);
-	view_mat.m.at(1).at(3) = (
+	view_mat.m.at(1).at(3) = MyCxFixedPt(
 		//HALF_SCREEN_SIZE_2D.y - tri_half_base_height.x
 		0.0
 	);
-	view_mat.m.at(2).at(3) = (
+	view_mat.m.at(2).at(3) = MyCxFixedPt(
 		//MyCxFixedPt(near) + MyCxFixedPt(0.1)
 		//MyCxFixedPt(1.00)
-		MyCxFixedPt(0.100)
+		0.100
 	);
 	Transform view(
 		view_mat
@@ -148,7 +148,7 @@ int main(int argc, char** argv) {
 			Vert{
 				.v={
 					.x=-tri_half_base_height.x,
-					.y=+tri_half_base_height.y,
+					.y=tri_half_base_height.y,
 					.z=MyCxFixedPt(0.0),
 				},
 				.uv={

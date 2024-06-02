@@ -503,12 +503,19 @@ void Rast::calc_visib(
 		const Vert& svt1 = tri.screen_v.at(1);
 		const Vert& svt2 = tri.screen_v.at(2);
 
+		const MyRwCxFixedPt
+			rwa = tri.rw_arr.at(0),
+			rwb = tri.rw_arr.at(1),
+			rwc = tri.rw_arr.at(2);
 		const MyCxFixedPt
 			x = v.x,
 			y = v.y,
-			rwa = tri.rw_arr.at(0), //MyCxFixedPt(1) / vt0.v.w,
-			rwb = tri.rw_arr.at(1), //MyCxFixedPt(1) / vt1.v.w,
-			rwc = tri.rw_arr.at(2), //MyCxFixedPt(1) / vt2.v.w,
+			//rwa = tri.rw_arr.at(0), //MyCxFixedPt(1) / vt0.v.w,
+			//rwb = tri.rw_arr.at(1), //MyCxFixedPt(1) / vt1.v.w,
+			//rwc = tri.rw_arr.at(2), //MyCxFixedPt(1) / vt2.v.w,
+			//wa = svt0.v.w,
+			//wb = svt1.v.w,
+			//wc = svt2.v.w,
 			xa = svt0.v.x, // * rw0,
 			ya = svt0.v.y, // * rw0,
 			xb = svt1.v.x, // * rw1,
@@ -566,11 +573,23 @@ void Rast::calc_visib(
 		const MyCxFixedPt
 			b_numer_det = det(b_numer),
 			c_numer_det = det(c_numer),
-			denom_det = det(denom),
-			one_over_denom_det = MyCxFixedPt(1) / denom_det,
-			B = b_numer_det * one_over_denom_det,
-			C = c_numer_det * one_over_denom_det,
+			denom_det = det(denom);
+			//one_over_denom_det = MyCxFixedPt(1) / denom_det,
+			//B = b_numer_det * one_over_denom_det,
+			//C = c_numer_det * one_over_denom_det,
+			//A = MyCxFixedPt(1) - B - C;
+		MyRwCxFixedPt one_over_denom_det;
+		one_over_denom_det.data = (
+			i64(
+				denom_det.recip_ldbl()
+				* (1 << MyRwCxFixedPt::FRAC_WIDTH)
+			)
+		);
+		const MyCxFixedPt
+			B = mult_cx_rw(b_numer_det, one_over_denom_det),
+			C = mult_cx_rw(c_numer_det, one_over_denom_det),
 			A = MyCxFixedPt(1) - B - C;
+
 		//printout(
 		//	"b_numer",
 		//	"{"
@@ -637,11 +656,33 @@ void Rast::calc_visib(
 			return;
 		}
 		const MyCxFixedPt
-			interp_rw = A * rwa + B * rwb + C * rwc;
+			//interp_rw = A * rwa + B * rwb + C * rwc;
+			interp_rw = (
+				mult_cx_rw(A, rwa)
+				+ mult_cx_rw(B, rwb)
+				+ mult_cx_rw(C, rwc)
+			);
+			//interp_rw = A / wa + B / wb + C / wc;
+		MyRwCxFixedPt one_over_interp_rw;
+		one_over_interp_rw.data = (
+			i64(
+				interp_rw.recip_ldbl()
+				* (1 << MyRwCxFixedPt::FRAC_WIDTH)
+			)
+		);
+		
 		const Vec2<MyCxFixedPt>
 			uv{
-				.x=(A * ua + B * ub + C * uc) / interp_rw,
-				.y=(A * va + B * vb + C * vc) / interp_rw,
+				//.x=(A * ua + B * ub + C * uc) / interp_rw,
+				//.y=(A * va + B * vb + C * vc) / interp_rw,
+				.x=mult_cx_rw(
+					(A * ua + B * ub + C * uc),
+					one_over_interp_rw
+				),
+				.y=mult_cx_rw(
+					(A * va + B * vb + C * vc),
+					one_over_interp_rw
+				),
 			};
 		//printout(
 		//	"uv:",

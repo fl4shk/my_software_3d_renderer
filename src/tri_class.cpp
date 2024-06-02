@@ -12,34 +12,57 @@ void Tri::do_project_etc(
 			v.at(i).v
 		);
 		proj_v.at(i).uv = v.at(i).uv;
-		rw_arr.at(i) = (MyCxFixedPt(1) / proj_v.at(i).v.w);
+		rw_arr.at(i).data = (
+			i64(
+				proj_v.at(i).v.w.recip_ldbl()
+				* (1 << MyRwCxFixedPt::FRAC_WIDTH)
+				//i64(MyRwCxFixedPt(1).data)
+				/// (
+				//	i64(proj_v.at(i).v.w.data)
+				//	<< i64(abs(
+				//		i64(MyRwCxFixedPt::FRAC_WIDTH)
+				//		- i64(MyCxFixedPt::FRAC_WIDTH)
+				//	))
+				//)
+			)
+		);
 		screen_v.at(i).v.x = (
 			(
-				proj_v.at(i).v.x 
-				//* HALF_SCREEN_SIZE_2D.x
-				//+ HALF_SCREEN_SIZE_2D.x
-				////* MyCxFixedPt(SCREEN_SIZE_2D.x)
-			) 
-			* rw_arr.at(i)
+				//(
+				//	(
+				//		i64(proj_v.at(i).v.x.data)
+				//		* i64(rw_arr.at(i).data)
+				//	) >> MY_RW_FRAC_SHIFT
+				//)
+				///// (proj_v.at(i).v.w)
+				//	//+ (HALF_SCREEN_SIZE_2D.x)
+				mult_cx_rw(proj_v.at(i).v.x, rw_arr.at(i))
 				+ HALF_SCREEN_SIZE_2D.x
+			)
 		);
 		screen_v.at(i).v.y = (
-			(
-				proj_v.at(i).v.y 
-				//* HALF_SCREEN_SIZE_2D.y
-				//+ HALF_SCREEN_SIZE_2D.y
-			)
-				* rw_arr.at(i)
-				+ HALF_SCREEN_SIZE_2D.y
+			//(
+			//	proj_v.at(i).v.y 
+			//	//* HALF_SCREEN_SIZE_2D.y
+			//	//+ HALF_SCREEN_SIZE_2D.y
+			//)
+			/// (proj_v.at(i).v.w)
+			mult_cx_rw(proj_v.at(i).v.y, rw_arr.at(i))
+				//* rw_arr.at(i)
+			+ HALF_SCREEN_SIZE_2D.y
 				////* MyCxFixedPt(SCREEN_SIZE_2D.y)
 		);
 		screen_v.at(i).v.z = proj_v.at(i).v.z;
 		screen_v.at(i).v.w = proj_v.at(i).v.w;
 		screen_v.at(i).uv.x = (
-			proj_v.at(i).uv.x * rw_arr.at(i)
+			//proj_v.at(i).uv.x //* rw_arr.at(i)
+			/// (proj_v.at(i).v.w)
+			mult_cx_rw(proj_v.at(i).uv.x, rw_arr.at(i))
 		);
 		screen_v.at(i).uv.y = (
-			proj_v.at(i).uv.y * rw_arr.at(i)
+			//proj_v.at(i).uv.y //* rw_arr.at(i)
+			/// (proj_v.at(i).v.w)
+			mult_cx_rw(proj_v.at(i).uv.y, rw_arr.at(i))
 		);
 	}
 	//printout("Tri::do_project():\n");

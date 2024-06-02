@@ -48,11 +48,28 @@ using liborangepower::math::Vec3;
 using liborangepower::math::CxFixedI24p8;
 using liborangepower::math::CxFixedI20p12;
 using liborangepower::math::CxFixedI16p16;
-//using MyCxFixedPt = CxFixedI16p16;
-//using MyCxFixedPt = CxFixedI20p12;
-using MyCxFixedPt = double;
-//using liborangepower::math::MyCxFixedPt;
 using liborangepower::math::CxFixedPt;
+//using MyCxFixedPt = CxFixedI16p16;
+//using MyCxFixedPt = CxFixedPt<i32, 14>;
+//using MyCxFixedPt = CxFixedI20p12;
+//using MyCxFixedPt = double;
+using MyCxFixedPt = CxFixedPt<i32, 10>;
+using MyRwCxFixedPt = CxFixedPt<i32, 28>;
+//static constexpr size_t MY_RW_FRAC_SHIFT = (
+//	i64(MyRwCxFixedPt::FRAC_WIDTH) - i64(MyCxFixedPt::FRAC_WIDTH)
+//);
+constexpr inline MyCxFixedPt mult_cx_rw(
+	MyCxFixedPt a, MyRwCxFixedPt rw
+) {
+	MyCxFixedPt ret;
+	ret.data = (
+		(i64(a.data) * i64(rw.data))
+		>> MyRwCxFixedPt::FRAC_WIDTH
+		// the two fractional widths are added to one another
+	);
+	return ret;
+}
+//using liborangepower::math::MyCxFixedPt;
 namespace concepts = liborangepower::concepts;
 namespace sdl = liborangepower::sdl;
 

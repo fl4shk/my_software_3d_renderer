@@ -35,7 +35,8 @@ public:		// variables
 		v,
 		proj_v,
 		screen_v;
-	std::array<MyCxFixedPt, TRI_VERT_SIZE> rw_arr;
+	std::array<MyRwCxFixedPt, TRI_VERT_SIZE> rw_arr;
+	//std::array<MyCxFixedPt, TRI_VERT_SIZE> rw_arr;
 	//std::array<Vec2<MyCxFixedPt>, TRI_VERT_SIZE> persp_v
 	//std::vector<Vec2<MyCxFixedPt>> clip_vec;
 public:		// functions
