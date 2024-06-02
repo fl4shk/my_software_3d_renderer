@@ -1,8 +1,9 @@
 #include "rast_class.hpp"
 #include "my_display_class.hpp"
 #include <stdexcept>
-#include <algorithm>
-#include <functional>
+//#include <algorithm>
+//#include <functional>
+#include <cmath>
 
 
 Rast::Rast() {
@@ -349,8 +350,9 @@ Rast::~Rast() {
 void Rast::calc_visib(
 	//size_t tri_idx
 	const Tri& tri,
-	std::vector<Vec2<DrawT>>& ret
+	std::vector<VertTextureCoords>& ret,
 	//const TriDraw& tri_draw
+	MyCxFixedPt near
 ) const {
 	//--------
 	//if (_tri_at_func == nullptr) {
@@ -378,13 +380,13 @@ void Rast::calc_visib(
 	//}
 	//--------
 	// 28.4 fixed-point coordinates
-    const int Y1 = std::round(16.0 * double(int(tri.project_v.at(0).v.y)));
-    const int Y2 = std::round(16.0 * double(int(tri.project_v.at(1).v.y)));
-    const int Y3 = std::round(16.0 * double(int(tri.project_v.at(2).v.y)));
+    const int Y1 = std::round(16.0 * double(int(tri.proj_v.at(0).v.y)));
+    const int Y2 = std::round(16.0 * double(int(tri.proj_v.at(1).v.y)));
+    const int Y3 = std::round(16.0 * double(int(tri.proj_v.at(2).v.y)));
 
-    const int X1 = std::round(16.0 * double(int(tri.project_v.at(0).v.x)));
-    const int X2 = std::round(16.0 * double(int(tri.project_v.at(1).v.x)));
-    const int X3 = std::round(16.0 * double(int(tri.project_v.at(2).v.x)));
+    const int X1 = std::round(16.0 * double(int(tri.proj_v.at(0).v.x)));
+    const int X2 = std::round(16.0 * double(int(tri.proj_v.at(1).v.x)));
+    const int X3 = std::round(16.0 * double(int(tri.proj_v.at(2).v.x)));
     //const std::array<Vec2<int>, 3> coords{
 	//	{
 	//		{.x=X1, .y=Y1},
@@ -424,6 +426,18 @@ void Rast::calc_visib(
     int maxx = (std::max(std::max(X1, X2), X3) + 0xF) >> 4;
     int miny = (std::min(std::min(Y1, Y2), Y3) + 0xF) >> 4;
     int maxy = (std::max(std::max(Y1, Y2), Y3) + 0xF) >> 4;
+    if (minx < MyCxFixedPt(0)) {
+		minx = MyCxFixedPt(0);
+    }
+    if (maxx > MyCxFixedPt(SCREEN_SIZE_2D.x - 1)) {
+		maxx = MyCxFixedPt(SCREEN_SIZE_2D.x - 1);
+    }
+    if (miny < MyCxFixedPt(0)) {
+		miny = MyCxFixedPt(0);
+    }
+    if (maxy > MyCxFixedPt(SCREEN_SIZE_2D.y - 1)) {
+		maxy = MyCxFixedPt(SCREEN_SIZE_2D.y - 1);
+    }
 
     // Block size, standard 8x8 (must be power of two)
     const int q = 8;
@@ -461,6 +475,97 @@ void Rast::calc_visib(
     if (DY31 < 0 || (DY31 == 0 && DX31 > 0)) {
 		++C3;
 	}
+	auto do_push_back = [&](
+		const Vec2<DrawT>& v
+	) -> void {
+		const Vec2<DrawT> temp_v{
+			.x=DrawT(v.x), /// DrawT(SCREEN_SIZE_2D.x),
+			.y=DrawT(v.y), /// DrawT(SCREEN_SIZE_2D.y),
+		};
+		const Vert& vt0 = tri.proj_v.at(0);
+		const Vert& vt1 = tri.proj_v.at(1);
+		const Vert& vt2 = tri.proj_v.at(2);
+		////const double rw0 = (
+		////	double(1.0) / vt0.v.w
+		////);
+		////const double rw1 = (
+		////	double(1.0) / vt1.v.w
+		////);
+		////const double rw2 = (
+		////	double(1.0) / vt2.v.w
+		////);
+		//const double
+		//	lerp0 = double(bary_lerp(vt0.v2(), vt1.v2(), temp_v)),
+		//	lerp1 = double(bary_lerp(vt1.v2(), vt2.v2(), temp_v)),
+		//	lerp2 = double(bary_lerp(vt2.v2(), vt0.v2(), temp_v));
+		////printout(
+		////	lerp0, " ",
+		////	lerp1, " ",
+		////	lerp2,
+		////	"\n"
+		////);
+		//const double rz = (
+		//	double(/*MyCxFixedPt*/(1.) )
+		//	/ (
+		//		lerp0 * -double(vt0.v.w)
+		//		+ lerp1 * -double(vt1.v.w)
+		//		+ lerp2 * -double(vt2.v.w)
+		//	)
+		//);
+		//const double my_u = (
+		//	rz * (
+		//		lerp0 * double(vt0.uv.x)
+		//		+ lerp1 * double(vt1.uv.x)
+		//		+ lerp2 * double(vt2.uv.x)
+		//	)
+		//);
+		//const double my_v = (
+		//	rz
+		//	* (
+		//		lerp0 * double(vt0.uv.y)
+		//		+ lerp1 * double(vt1.uv.y)
+		//		+ lerp2 * double(vt2.uv.y)
+		//	)
+		//);
+		//printout(
+		//	"do_push_back(): ",
+		//	"{",
+		//		double(vt0.v.w), " ",
+		//		double(vt1.v.w), " ",
+		//		double(vt2.v.w),
+		//	"}", " ",
+		//	rz, " ",
+		//	"{", lerp0, " ", lerp1, " ", lerp2, "}", " ",
+		//	Vec2<double>{
+		//		.x=double(temp_v.x),
+		//		.y=double(temp_v.y),
+		//	},
+		//	" ",
+		//	Vec2<double>{
+		//		.x=double(v.x),
+		//		.y=double(v.y),
+		//	},
+		//	" ",
+		//	double(my_u), " ",
+		//	double(my_v),
+		//	"\n"
+		//);
+		ret.push_back(
+			//to_push
+			VertTextureCoords{
+				.v=v,
+				.uv={
+					.x=my_u,
+					.y=my_v,
+				}
+			}
+			//Vec4<DrawT>{
+			//	.x=v.x,
+			//	.y=v.y,
+			//	//.z=
+			//}
+		);
+	};
 
     // Loop through blocks
     for (int y = miny; y < maxy; y += q) {
@@ -582,7 +687,7 @@ void Rast::calc_visib(
                         //++to_push_idx;
                         //buf[ix] = true;
                         //col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
-                        ret.push_back(
+                        do_push_back(
 							//to_push
 							Vec2<DrawT>{
 								.x=DrawT(ix),
@@ -627,7 +732,7 @@ void Rast::calc_visib(
 							//buf[ix] = true;
 							//col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
 							//ret.push_back(to_push);
-							ret.push_back(
+							do_push_back(
 								//to_push
 								Vec2<DrawT>{
 									.x=DrawT(ix),

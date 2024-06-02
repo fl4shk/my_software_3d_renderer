@@ -5,6 +5,7 @@
 #include "tri_class.hpp"
 #include "transform_class.hpp"
 #include "line_drawing_funcs.hpp"
+#include "vert_class.hpp"
 
 class MyDisplay;
 
@@ -30,7 +31,8 @@ public:		// functions
 	//std::vector<std::vector<bool>> 
 	void calc_visib(
 		const Tri& tri,
-		std::vector<Vec2<DrawT>>& ret
+		std::vector<VertTextureCoords>& ret,
+		MyCxFixedPt near
 	) const;
 private:		// functions
 	//void _calc_flat_top_visib(

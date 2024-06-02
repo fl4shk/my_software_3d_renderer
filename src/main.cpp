@@ -80,9 +80,9 @@ int main(int argc, char** argv) {
 	//};
 	//Mat4x4<MyCxFixedPt> my_tri_model = MAT4X4_IDENTITY<MyCxFixedPt>;
 	Transform my_tri_model;
-	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(-20.0);
-	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(-30.0);
-	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(30.0);
+	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(20.0);
+	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(30.0);
+	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(10.0);
 	//my_tri_model.mat.m.at(3).at(3) = MyCxFixedPt(1.0);
 	my_tri_model.set_rot_scale(
 		Vec3<MyCxFixedPt>{ // rotate
@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
 					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
-					.x=MyCxFixedPt(15),
+					.x=MyCxFixedPt(15 / 15),
 					.y=MyCxFixedPt(0),
 				},
 			},
@@ -162,12 +162,12 @@ int main(int argc, char** argv) {
 					.z=MyCxFixedPt(1.1),
 				},
 				.uv={
-					.x=MyCxFixedPt(15),
-					.y=MyCxFixedPt(15),
+					.x=MyCxFixedPt(15 / 15),
+					.y=MyCxFixedPt(15 / 15),
 				},
 			},
 		},
-		.project_v={
+		.proj_v={
 			Vert(),
 			Vert(),
 			Vert(),
@@ -177,11 +177,12 @@ int main(int argc, char** argv) {
 		view,
 		perspective
 	);
-	tri.do_clip();
-	std::vector<Vec2<Rast::DrawT>> visib;
+	//tri.do_clip();
+	std::vector<VertTextureCoords> visib;
 	rast.calc_visib(
 		tri,
-		visib
+		visib,
+		near
 	);
 	//calc_line_coords(
 	//	Vec2<int>{
@@ -195,8 +196,20 @@ int main(int argc, char** argv) {
 	//	SIZE_2D,
 	//	visib
 	//);
-	std::array<u8, SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x> visib_buf;
-	visib_buf.fill(false);
+	std::array<
+		std::pair<u8, Vec2<MyCxFixedPt>>,
+		SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x
+	> visib_buf;
+	//visib_buf.fill(false);
+	visib_buf.fill(
+		std::make_pair<u8, Vec2<MyCxFixedPt>>(
+			false,
+			{
+				.x=MyCxFixedPt(0),
+				.y=MyCxFixedPt(0),
+			}
+		)
+	);
 	//int last_y = 0;
 	for (const auto& item: visib) {
 		//printout(item, " ");
@@ -205,8 +218,8 @@ int main(int argc, char** argv) {
 		//}
 		//last_y = item.y;
 		const Vec2<int> temp{
-			.x=int(item.x),
-			.y=int(item.y),
+			.x=int(item.v.x),
+			.y=int(item.v.y),
 		};
 		if (
 			temp.x >= /*MyCxFixedPt*/(0)
@@ -215,7 +228,19 @@ int main(int argc, char** argv) {
 			&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
 		) {
 			//printout(temp);
-			visib_buf.at(int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)) = 1;
+			auto& my_visib = visib_buf.at(
+				int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)
+			);
+			my_visib.first = true;
+			my_visib.second = item.uv;
+			printout(
+				temp, ": ",
+				Vec2<double>{
+					.x=item.uv.x,
+					.y=item.uv.y,
+				},
+				"\n"
+			);
 		}
 	}
 	//for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
@@ -249,13 +274,30 @@ int main(int argc, char** argv) {
 		disp.handle_sdl_events();
 		for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
 			for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
-				if (visib_buf.at(j * SCREEN_SIZE_2D.x + i)) {
+				const auto& my_visib = (
+					visib_buf.at(j * SCREEN_SIZE_2D.x + i)
+				);
+				if (my_visib.first) {
+					//printout(
+					//	"my_visib.first: ",
+					//	Vec2<size_t>(i, j), " ",
+					//	double(my_visib.second.x), " ",
+					//	double(my_visib.second.y),
+					//	"\n"
+					//);
 					disp.set(
 						Vec2<size_t>{
 							.x=i,
 							.y=j,
 						},
-						0xfffffff
+						//0xfffffff
+						//my_visib.second,
+						tri.img->at_u32(
+							Vec2<size_t>{
+								.x=size_t(my_visib.second.x * 16),
+								.y=size_t(my_visib.second.y * 16),
+							}
+						)
 					);
 					//printout(
 					//	//uint32_t(visib.at(j * SIZE_2D.x + i)),

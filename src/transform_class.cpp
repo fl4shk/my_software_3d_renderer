@@ -190,10 +190,10 @@ void Transform::set_perspective(
 	//printout("Transform::set_perspective(): 1\n");
 	//printout(mat);
 }
-Vec3<MyCxFixedPt> Transform::do_project(
+Vec4<MyCxFixedPt> Transform::do_project(
 	const Transform& model,
 	const Transform& view,
-	const Vec3<MyCxFixedPt>& v
+	const Vec4<MyCxFixedPt>& v
 ) const {
 	//--------
 	//Vec3<MyCxFixedPt> ret;
@@ -232,14 +232,19 @@ Vec3<MyCxFixedPt> Transform::do_project(
 	//	"mvp:\n", mvp_dbl, "\n"
 	//);
 	//const auto& m = mvp.m;
-	const Vec3<MyCxFixedPt>
-		model_v = model.mat.mult_homogeneous(v),
+	const Vec4<MyCxFixedPt>
+		model_v = model.mat.mult_homogeneous(
+			//Vec4<MyCxFixedPt>::build_homogeneous(v)
+			v
+		),
 		view_v = view.mat.mult_homogeneous(model_v),
-		almost_ret = mat.mult_homogeneous(view_v),
+		//almost_ret = mat.mult_homogeneous(view_v),
+		almost_ret = mat * view_v,
 		ret{
-			.x=(almost_ret.x * MyCxFixedPt(SCREEN_SIZE_2D.x)),
-			.y=(almost_ret.y * MyCxFixedPt(SCREEN_SIZE_2D.y)),
-			.z=almost_ret.z,
+			.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
+			.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
+			.z=-almost_ret.z,
+			.w=-almost_ret.w,
 		};
 	//const Vec3<double>
 	//	model_v_dbl{

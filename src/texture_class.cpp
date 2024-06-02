@@ -11,7 +11,7 @@ void Texture::load(const std::string& fname) {
 SDL_Color Texture::at(const Vec2<size_t>& uv) {
 	SDL_LockSurface(_img);
 
-	SDL_PixelFormat* fmt = nullptr;
+	SDL_PixelFormat* fmt = _img->format;
 	SDL_Color col;
 	Uint8 idx = 0;
 	idx = ((Uint8*)_img->pixels)[

@@ -10,6 +10,20 @@
 static constexpr size_t TRI_VERT_SIZE = 3;
 using TriVert = std::array<Vert, TRI_VERT_SIZE>;
 
+//constexpr inline MyCxFixedPt bary_lerp(
+//	const Vec2<MyCxFixedPt>& a,
+//	const Vec2<MyCxFixedPt>& b,
+//	const Vec2<MyCxFixedPt>& t
+//) {
+//    return (t.x - a.x) * (b.y - a.y) - (t.y - a.y) * (b.x - a.x);
+//}
+constexpr inline MyCxFixedPt my_lerp(
+	MyCxFixedPt t0,
+	MyCxFixedPt t1,
+	MyCxFixedPt alpha
+) {
+	return t0 * alpha + t1 * (1 - alpha);
+}
 class Tri final {
 //private:		// variables
 //	//sdl::Surface* _img=nullptr;
@@ -19,8 +33,10 @@ public:		// variables
 	Transform model;
 	TriVert
 		v,
-		project_v;
-	std::vector<Vec2<MyCxFixedPt>> clip_vec;
+		proj_v,
+		screen_v;
+	std::array<MyCxFixedPt, TRI_VERT_SIZE> inv_z_arr;
+	//std::vector<Vec2<MyCxFixedPt>> clip_vec;
 public:		// functions
 	void do_project(
 		const Transform& view,

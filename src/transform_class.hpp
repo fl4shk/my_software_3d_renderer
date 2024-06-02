@@ -71,10 +71,10 @@ public:		// functions
 		MyCxFixedPt far,
 		MyCxFixedPt fov=DEFAULT_FOV
 	);
-	Vec3<MyCxFixedPt> do_project(
+	Vec4<MyCxFixedPt> do_project(
 		const Transform& model,
 		const Transform& view,
-		const Vec3<MyCxFixedPt>& v
+		const Vec4<MyCxFixedPt>& v
 	) const;
 
 	void set_to_affine_finish();
