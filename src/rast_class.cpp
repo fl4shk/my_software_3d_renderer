@@ -643,14 +643,14 @@ void Rast::calc_visib(
 				.x=(A * ua + B * ub + C * uc) / interp_rw,
 				.y=(A * va + B * vb + C * vc) / interp_rw,
 			};
-		printout(
-			"uv:",
-			Vec2<double>{
-				.x=double(uv.x),
-				.y=double(uv.y),
-			},
-			"\n"
-		);
+		//printout(
+		//	"uv:",
+		//	Vec2<double>{
+		//		.x=double(uv.x),
+		//		.y=double(uv.y),
+		//	},
+		//	"\n"
+		//);
 
 		//printout(
 		//	"{", xa, " ", ya, "} ",
