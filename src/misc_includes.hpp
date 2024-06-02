@@ -65,6 +65,11 @@ static constexpr Vec2<size_t>
 		//.x=32,
 		//.y=20,
 	};
+static constexpr Vec2<MyCxFixedPt>
+	HALF_SCREEN_SIZE_2D{
+		.x=MyCxFixedPt(SCREEN_SIZE_2D.x) / MyCxFixedPt(2),
+		.y=MyCxFixedPt(SCREEN_SIZE_2D.y) / MyCxFixedPt(2),
+	};
 static constexpr std::array<Vec2<MyCxFixedPt>, 4>
 	SCREEN_POLYGON{
 		Vec2<MyCxFixedPt>{

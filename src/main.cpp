@@ -80,9 +80,9 @@ int main(int argc, char** argv) {
 	//};
 	//Mat4x4<MyCxFixedPt> my_tri_model = MAT4X4_IDENTITY<MyCxFixedPt>;
 	Transform my_tri_model;
-	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(-200.0);
-	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(-200.0);
-	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(0.500);
+	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(0.0);
+	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(0.0);
+	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(0.000);
 	//my_tri_model.mat.m.at(3).at(3) = MyCxFixedPt(1.0);
 	my_tri_model.set_rot_scale(
 		Vec3<MyCxFixedPt>{ // rotate
@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
 			Vert{
 				.v={
 					.x=MyCxFixedPt(0.1),
-					.y=MyCxFixedPt(55.1),
+					.y=MyCxFixedPt(10.1),
 					.z=MyCxFixedPt(my_z),
 				},
 				.uv={
@@ -153,8 +153,8 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=MyCxFixedPt(55.1/*15.1*/),
-					.y=MyCxFixedPt(55.1/*15.1*/),
+					.x=MyCxFixedPt(10.1/*15.1*/),
+					.y=MyCxFixedPt(10.1/*15.1*/),
 					.z=MyCxFixedPt(my_z),
 				},
 				.uv={
