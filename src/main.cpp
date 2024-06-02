@@ -24,51 +24,38 @@ int main(int argc, char** argv) {
 	//		.z=MyCxFixedPt(30),
 	//	}
 	//);
-	Transform view(
-		// affine
-		//Vec3<MyCxFixedPt>{ // rotate
-		//	.x=MyCxFixedPt(0),
-		//	.y=MyCxFixedPt(0),
-		//	.z=MyCxFixedPt(0),
-		//},
-		////Vec3<MyCxFixedPt>{ // translate
-		////	.x=MyCxFixedPt(0),
-		////	.y=MyCxFixedPt(0),
-		////	.z=MyCxFixedPt(0),
-		////}
-		////Mat3x3<MyCxFixedPt>{
-		////	.m={
-		////		{
-		////			{1.0, 0.0, 0.0},
-		////			{0.0, 1.0, 0.0},
-		////			{0.0, 0.0, 1.0},
-		////		},
-		////	}
-		////},
-		////MAT3X3_IDENTITY<MyCxFixedPt>,
-		//Vec3<MyCxFixedPt>{ // translate
-		//	.x=MyCxFixedPt(15.0),
-		//	.y=MyCxFixedPt(15.0),
-		//	.z=MyCxFixedPt(-100.0),
-		//}
-		MAT4X4_IDENTITY<MyCxFixedPt>
-		//Mat4x4<MyCxFixedPt>{
-		//	.m={
-		//		{
-		//			{1.0, 0.0, 0.0, 0.0},
-		//			{0.0, 1.0, 0.0, 0.0},
-		//			{0.0, 0.0, 1.0, 0.0},
-		//			{0.0, 0.0, 0.0, 1.0},
-		//		},
-		//	}
-		//}
-	);
 	const MyCxFixedPt
 		near(0.1),
 		far(100.0);
 	Transform perspective(
 		near, // near
 		far // far
+	);
+	const Vec2<MyCxFixedPt>
+		tri_base_height{
+			.x=MyCxFixedPt(50.0),
+			.y=MyCxFixedPt(50.0),
+		},
+		tri_half_base_height{
+			.x=tri_base_height.x / MyCxFixedPt(2),
+			.y=tri_base_height.y / MyCxFixedPt(2),
+		};
+	Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
+	view_mat.m.at(0).at(3) = (
+		//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
+		0.0
+	);
+	view_mat.m.at(1).at(3) = (
+		//HALF_SCREEN_SIZE_2D.y - tri_half_base_height.x
+		0.0
+	);
+	view_mat.m.at(2).at(3) = (
+		//MyCxFixedPt(near) + MyCxFixedPt(0.1)
+		//MyCxFixedPt(1.00)
+		MyCxFixedPt(0.100)
+	);
+	Transform view(
+		view_mat
 	);
 	//Transform perspective(
 	//	MAT4X4_IDENTITY<MyCxFixedPt>
@@ -79,29 +66,36 @@ int main(int argc, char** argv) {
 	//	.perspective=&perspective,
 	//};
 	//Mat4x4<MyCxFixedPt> my_tri_model = MAT4X4_IDENTITY<MyCxFixedPt>;
+	Vec3<MyCxFixedPt> tri_pos{
+		//.x=HALF_SCREEN_SIZE_2D.x,
+		//.y=HALF_SCREEN_SIZE_2D.y,
+		.x=MyCxFixedPt(0),
+		.y=MyCxFixedPt(0),
+		.z=MyCxFixedPt(-0.50),
+	};
 	Transform my_tri_model;
-	my_tri_model.mat.m.at(0).at(3) = MyCxFixedPt(0.0);
-	my_tri_model.mat.m.at(1).at(3) = MyCxFixedPt(0.0);
-	my_tri_model.mat.m.at(2).at(3) = MyCxFixedPt(0.000);
-	//my_tri_model.mat.m.at(3).at(3) = MyCxFixedPt(1.0);
+	my_tri_model.mat.set_translate(tri_pos);
 	my_tri_model.set_rot_scale(
-		Vec3<MyCxFixedPt>{ // rotate
-			.x=MyCxFixedPt(0/*MATH_PI * 1.3*/),
-			.y=MyCxFixedPt(0/*MATH_PI * 1.3*/),
-			.z=MyCxFixedPt(0),
-		},
-		Vec3<MyCxFixedPt>{ // scale
-			.x=MyCxFixedPt(1),
-			.y=MyCxFixedPt(1),
-			.z=MyCxFixedPt(1),
-		}
+		//Vec3<MyCxFixedPt>{ // rotate
+		//	.x=MyCxFixedPt(MATH_PI * 0.5/*0*//*MATH_PI * 1.3*/),
+		//	.y=MyCxFixedPt(0/*MATH_PI * 1.3*/),
+		//	.z=MyCxFixedPt(0),
+		//}
+		//Vec3<MyCxFixedPt>{ // scale
+		//	.x=MyCxFixedPt(4.00),
+		//	.y=MyCxFixedPt(4.00),
+		//	.z=MyCxFixedPt(1.0),
+		//}
+		MAT3X3_IDENTITY<MyCxFixedPt>
+		//* MyCxFixedPt(0.10)
+		//* MyCxFixedPt(1 / 3.0)
 	);
 	//my_tri_model.set_rot_scale(
 	//	MAT3X3_IDENTITY<MyCxFixedPt>
 	//);
 	my_tri_model.set_to_affine_finish();
 	const MyCxFixedPt
-		my_z = MyCxFixedPt(1.1);
+		my_z = MyCxFixedPt(0.0);
 	Texture texture("gfx/obj/wood_block.bmp");
 	Tri tri{
 		.img=&texture,
@@ -142,9 +136,9 @@ int main(int argc, char** argv) {
 		.v={
 			Vert{
 				.v={
-					.x=MyCxFixedPt(0.1),
-					.y=MyCxFixedPt(10.1),
-					.z=MyCxFixedPt(my_z),
+					.x=-tri_half_base_height.x,
+					.y=-tri_half_base_height.y,
+					.z=MyCxFixedPt(0.0),
 				},
 				.uv={
 					.x=MyCxFixedPt(0.1 / 16.0),
@@ -153,9 +147,9 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=MyCxFixedPt(10.1/*15.1*/),
-					.y=MyCxFixedPt(10.1/*15.1*/),
-					.z=MyCxFixedPt(my_z),
+					.x=-tri_half_base_height.x,
+					.y=+tri_half_base_height.y,
+					.z=MyCxFixedPt(0.0),
 				},
 				.uv={
 					.x=MyCxFixedPt(15.0 / 16.0),
@@ -164,9 +158,9 @@ int main(int argc, char** argv) {
 			},
 			Vert{
 				.v={
-					.x=MyCxFixedPt(0.1),
-					.y=MyCxFixedPt(0.1),
-					.z=MyCxFixedPt(my_z),
+					.x=tri_half_base_height.x,
+					.y=tri_half_base_height.y,
+					.z=MyCxFixedPt(0.0),
 				},
 				.uv={
 					.x=MyCxFixedPt(15.0 / 16.0),
@@ -179,106 +173,79 @@ int main(int argc, char** argv) {
 			Vert(),
 			Vert(),
 		},
+		.screen_v{
+			Vert(),
+			Vert(),
+			Vert(),
+		},
 	};
-	tri.do_project_etc(
-		view,
-		perspective
-	);
-	//tri.do_clip();
-	std::vector<VertTextureCoords> visib;
-	rast.calc_visib(
-		tri,
-		visib,
-		near
-	);
-	//calc_line_coords(
-	//	Vec2<int>{
-	//		.x=int(tri.project_v.at(0).v.x),
-	//		.y=int(tri.project_v.at(0).v.y),
-	//	},
-	//	Vec2<int>{
-	//		.x=int(tri.project_v.at(1).v.x),
-	//		.y=int(tri.project_v.at(1).v.y),
-	//	},
-	//	SIZE_2D,
-	//	visib
-	//);
-	std::array<
-		std::pair<u8, Vec2<MyCxFixedPt>>,
-		SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x
-	> visib_buf;
-	//visib_buf.fill(false);
-	visib_buf.fill(
-		std::make_pair<u8, Vec2<MyCxFixedPt>>(
-			false,
-			{
-				.x=MyCxFixedPt(0),
-				.y=MyCxFixedPt(0),
-			}
-		)
-	);
-	//int last_y = 0;
-	for (const auto& item: visib) {
-		//printout(item, " ");
-		//if (last_y != item.y) {
-		//	printout("\n");
-		//}
-		//last_y = item.y;
-		const Vec2<int> temp{
-			.x=int(item.v.x),
-			.y=int(item.v.y),
-		};
-		if (
-			temp.x >= /*MyCxFixedPt*/(0)
-			&& temp.x <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.x - 1)
-			&& temp.y >= /*MyCxFixedPt*/(0)
-			&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
-		) {
-			//printout(temp);
-			auto& my_visib = visib_buf.at(
-				int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)
-			);
-			my_visib.first = true;
-			my_visib.second = item.uv;
-			//printout(
-			//	temp, ": ",
-			//	Vec2<double>{
-			//		.x=item.uv.x,
-			//		.y=item.uv.y,
-			//	},
-			//	"\n"
-			//);
-		}
-	}
-	//for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
-	//	for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
-	//		if (visib_buf.at(j * SCREEN_SIZE_2D.x + i)) {
-	//			//disp.set(
-	//			//	Vec2<size_t>{
-	//			//		.x=i,
-	//			//		.y=j,
-	//			//	},
-	//			//	0xfffffff
-	//			//);
-	//			printout(
-	//				//uint32_t(visib.at(j * SIZE_2D.x + i)),
-	//				//"visib: ",
-	//				//Vec2<size_t>{.x=i, .y=j},
-	//				//"\n"
-	//				1
-	//			);
-	//		} else {
-	//			printout(" ");
-	//		}
-	//	}
-	//	printout("\n");
-	//}
-	//printout("\n");
 	for (;;) {
 		if (disp.do_exit()) {
 			break;
 		}
 		disp.handle_sdl_events();
+		my_tri_model.set_translate(tri_pos);
+		const auto n_view = view.look_at(
+			my_tri_model
+		);
+		tri.do_project_etc(
+			n_view,
+			perspective
+		);
+		//tri.do_clip();
+		std::vector<VertTextureCoords> visib;
+		rast.calc_visib(
+			tri,
+			visib,
+			near
+		);
+		std::array<
+			std::pair<u8, Vec2<MyCxFixedPt>>,
+			SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x
+		> visib_buf;
+		//visib_buf.fill(false);
+		visib_buf.fill(
+			std::make_pair<u8, Vec2<MyCxFixedPt>>(
+				false,
+				{
+					.x=MyCxFixedPt(0),
+					.y=MyCxFixedPt(0),
+				}
+			)
+		);
+		//int last_y = 0;
+		for (const auto& item: visib) {
+			//printout(item, " ");
+			//if (last_y != item.y) {
+			//	printout("\n");
+			//}
+			//last_y = item.y;
+			const Vec2<int> temp{
+				.x=int(item.v.x),
+				.y=int(item.v.y),
+			};
+			if (
+				temp.x >= /*MyCxFixedPt*/(0)
+				&& temp.x <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.x - 1)
+				&& temp.y >= /*MyCxFixedPt*/(0)
+				&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
+			) {
+				//printout(temp);
+				auto& my_visib = visib_buf.at(
+					int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)
+				);
+				my_visib.first = true;
+				my_visib.second = item.uv;
+				//printout(
+				//	temp, ": ",
+				//	Vec2<double>{
+				//		.x=item.uv.x,
+				//		.y=item.uv.y,
+				//	},
+				//	"\n"
+				//);
+			}
+		}
 		for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
 			for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
 				const auto& my_visib = (

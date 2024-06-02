@@ -139,6 +139,13 @@ void Transform::set_translate(const Vec3<MyCxFixedPt>& translate) {
 	//printout("set_translate():\n");
 	//printout(mat);
 }
+Vec3<MyCxFixedPt> Transform::translate() const {
+	Vec3<MyCxFixedPt> ret;
+	for (size_t j=0; j<ret.SIZE; ++j) {
+		ret.at(j) = mat.m.at(j).at(3);
+	}
+	return ret;
+}
 void Transform::set_perspective(
 	MyCxFixedPt near,
 	MyCxFixedPt far,
@@ -242,13 +249,40 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//	//almost_ret = mat.mult_homogeneous(view_v),
 	//	almost_ret = mat * view_v,
 	//	ret{
-	//		.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
-	//		.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
+	//		//.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
+	//		//.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
+	//		.x=(almost_ret.x /*+ HALF_SCREEN_SIZE_2D.x*/),
+	//		.y=(almost_ret.y /*+ HALF_SCREEN_SIZE_2D.y*/),
 	//		.z=almost_ret.z,
 	//		.w=almost_ret.w,
 	//	};
+	Mat4x4<MyCxFixedPt>
+		temp_model(model.mat),
+		temp_view(view.mat);
+	////temp_model.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
+	////temp_model.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
+	////temp_view.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
+	////temp_view.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
+	////printout(
+	////	"model{",
+	////		double(model.mat.m.at(0).at(3)), " ", 
+	////		double(model.mat.m.at(1).at(3)),
+	////	"}\n",
+	////	"view{",
+	////		double(view.mat.m.at(0).at(3)), " ", 
+	////		double(view.mat.m.at(1).at(3)),
+	////	"}\n"
+	////	"temp_model{",
+	////		double(temp_model.m.at(0).at(3)), " ", 
+	////		double(temp_model.m.at(1).at(3)),
+	////	"}\n",
+	////	"temp_view{",
+	////		double(temp_view.m.at(0).at(3)), " ", 
+	////		double(temp_view.m.at(1).at(3)),
+	////	"}\n"
+	////);
 	const auto
-		model_view = model.mat * view.mat,
+		model_view = temp_model * temp_view,
 		mvp = mat * model_view;
 	const Vec4<MyCxFixedPt>
 		almost_ret = mvp * v,
@@ -355,6 +389,72 @@ Vec4<MyCxFixedPt> Transform::do_project(
     //--------
 	return ret;
 	//--------
+}
+Transform Transform::look_at(
+	const Vec3<MyCxFixedPt>& model_pos,
+	//const Transform& view,
+	const Vec3<MyCxFixedPt>& up
+) const {
+	Transform ret;
+	//const Vec3<MyCxFixedPt>
+	//	n_forward((model_pos - translate()).norm()),
+	//	n_up(translate().cross(up).norm()),
+	//	n_right(n_forward.cross(n_up).norm());
+	//for (size_t j=0; j<3; ++j) {
+	//	for (size_t i=0; i<3; ++i) {
+	//		if (j == 0) {
+	//			ret.mat.m.at(j).at(i) = n_right.at(i);
+	//		} else if (j == 1) {
+	//			ret.mat.m.at(j).at(i) = n_up.at(i);
+	//		} else {
+	//			ret.mat.m.at(j).at(i) = n_forward.at(i);
+	//		}
+	//	}
+	//}
+	const Vec3<MyCxFixedPt>
+		eye(translate()),
+		center(model_pos),
+		n((eye - center).norm()),
+		u(up.cross(n).norm()),
+		v(n.cross(u));
+	const MyCxFixedPt
+		neg_u_dot_eye((-u).dot(eye)),
+		neg_v_dot_eye((-v).dot(eye)),
+		neg_n_dot_eye((-n).dot(eye));
+	
+	ret.mat = Mat4x4<MyCxFixedPt>{{
+		{
+			//{u.at(0), v.at(0), n.at(0), MyCxFixedPt(0.0)},
+			//{u.at(1), v.at(1), n.at(1), MyCxFixedPt(0.0)},
+			//{u.at(2), v.at(2), n.at(2), MyCxFixedPt(0.0)},
+			//{neg_u_dot_eye, neg_v_dot_eye, neg_n_dot_eye, MyCxFixedPt(1.0)},
+			{u.at(0), u.at(1), u.at(2), neg_u_dot_eye},
+			{v.at(0), v.at(1), v.at(2), neg_v_dot_eye},
+			{n.at(0), n.at(1), n.at(2), neg_n_dot_eye},
+			{
+				MyCxFixedPt(0.0),
+				MyCxFixedPt(0.0),
+				MyCxFixedPt(0.0), 
+				MyCxFixedPt(1.0), 
+			},
+		}
+	}};
+	return ret;
+}
+Transform Transform::look_at(
+	const Transform& model,
+	const Vec3<MyCxFixedPt>& up
+) const {
+	return look_at(
+		model.translate(),
+		up
+	);
+}
+void Transform::set_look_at(
+	const Transform& model,
+	const Vec3<MyCxFixedPt>& up
+) {
+	*this = look_at(model, up);
 }
 void Transform::set_to_affine_finish() {
 	for (size_t i=0; i<3u; ++i) {

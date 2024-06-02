@@ -126,6 +126,13 @@ public:		// functions
 	//explicit constexpr inline operator Vec3<T> () const {
 	//	return Vec3
 	//}
+	constexpr inline void set_translate(
+		const Vec3<T>& v
+	) {
+		for (size_t k=0; k<v.SIZE; ++k) {
+			m.at(k).at(3) = v.at(k);
+		}
+	}
 };
 template<typename T>
 static constexpr Mat4x4<T> MAT4X4_IDENTITY{

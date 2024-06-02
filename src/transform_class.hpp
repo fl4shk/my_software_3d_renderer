@@ -66,6 +66,7 @@ public:		// functions
 		const Vec3<MyCxFixedPt>& scale=DEFAULT_SCALE
 	);
 	void set_translate(const Vec3<MyCxFixedPt>& translate);
+	Vec3<MyCxFixedPt> translate() const;
 	void set_perspective(
 		MyCxFixedPt near,
 		MyCxFixedPt far,
@@ -77,7 +78,42 @@ public:		// functions
 		const Vec4<MyCxFixedPt>& v
 	) const;
 
+	// from `view`'s perspective
+	Transform look_at(
+		const Vec3<MyCxFixedPt>& model_pos,
+		//const Transform& view,
+		const Vec3<MyCxFixedPt>& up={
+			.x=MyCxFixedPt(0.0),
+			.y=MyCxFixedPt(1.0),
+			.z=MyCxFixedPt(0.0),
+		}
+	) const;
+	Transform look_at(
+		const Transform& model,
+		const Vec3<MyCxFixedPt>& up={
+			.x=MyCxFixedPt(0.0),
+			.y=MyCxFixedPt(1.0),
+			.z=MyCxFixedPt(0.0),
+		}
+	) const;
+	void set_look_at(
+		const Transform& model,
+		const Vec3<MyCxFixedPt>& up={
+			.x=MyCxFixedPt(0.0),
+			.y=MyCxFixedPt(1.0),
+			.z=MyCxFixedPt(0.0),
+		}
+	);
+
 	void set_to_affine_finish();
+	
+	//inline void set_translate(
+	//	const Vec3<MyCxFixedPt>& v
+	//) {
+	//	for (size_t k=0; k<v.SIZE; ++k) {
+	//		mat.m.at(k).at(3) = v.at(k);
+	//	}
+	//}
 private:		// functions
 	void _set_to_perspective_finish();
 
