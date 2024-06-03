@@ -141,8 +141,8 @@ int main(int argc, char** argv) {
 					.z=MyCxFixedPt(0.0),
 				},
 				.uv={
-					.x=MyCxFixedPt(0.1 / 16.0),
-					.y=MyCxFixedPt(0.1 / 16.0),
+					.x=MyCxFixedPt(0.01),
+					.y=MyCxFixedPt(0.01),
 				},
 			},
 			Vert{
@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
 				},
 				.uv={
 					.x=MyCxFixedPt(15.0 / 16.0),
-					.y=MyCxFixedPt(0.1 / 16.0),
+					.y=MyCxFixedPt(0.01),
 				},
 			},
 			Vert{
