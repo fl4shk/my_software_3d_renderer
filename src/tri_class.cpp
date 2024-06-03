@@ -65,44 +65,44 @@ void Tri::do_project_etc(
 			mult_cx_rw(proj_v.at(i).uv.y, rw_arr.at(i))
 		);
 	}
-	//printout("Tri::do_project():\n");
-	//printout("v:\n");
-	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-	//	Vec3<double> temp_v;
-	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
-	//		temp_v.at(j) = double(v.at(i).v.at(j));
-	//	}
-	//	printout(
-	//		//project_v.at(i).v, "\n"
-	//		"{", temp_v, " ", double(v.at(i).v.w), "}",
-	//		"\n"
-	//	);
-	//}
-	//printout("proj_v:\n");
-	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-	//	Vec3<double> temp_v;
-	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
-	//		temp_v.at(j) = double(proj_v.at(i).v.at(j));
-	//	}
-	//	printout(
-	//		//project_v.at(i).v, "\n"
-	//		"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
-	//		"\n"
-	//	);
-	//}
-	//printout("screen_v:\n");
-	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-	//	Vec3<double> temp_v;
-	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
-	//		temp_v.at(j) = double(screen_v.at(i).v.at(j));
-	//	}
-	//	printout(
-	//		//project_v.at(i).v, "\n"
-	//		"{", temp_v, " ", double(screen_v.at(i).v.w), "}",
-	//		"\n"
-	//	);
-	//}
-	//printout("\n");
+	printout("Tri::do_project():\n");
+	printout("v:\n");
+	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
+		Vec3<double> temp_v;
+		for (size_t j=0; j<temp_v.SIZE; ++j) {
+			temp_v.at(j) = double(v.at(i).v.at(j));
+		}
+		printout(
+			//project_v.at(i).v, "\n"
+			"{", temp_v, " ", double(v.at(i).v.w), "}",
+			"\n"
+		);
+	}
+	printout("proj_v:\n");
+	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
+		Vec3<double> temp_v;
+		for (size_t j=0; j<temp_v.SIZE; ++j) {
+			temp_v.at(j) = double(proj_v.at(i).v.at(j));
+		}
+		printout(
+			//project_v.at(i).v, "\n"
+			"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
+			"\n"
+		);
+	}
+	printout("screen_v:\n");
+	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
+		Vec3<double> temp_v;
+		for (size_t j=0; j<temp_v.SIZE; ++j) {
+			temp_v.at(j) = double(screen_v.at(i).v.at(j));
+		}
+		printout(
+			//project_v.at(i).v, "\n"
+			"{", temp_v, " ", double(screen_v.at(i).v.w), "}",
+			"\n"
+		);
+	}
+	printout("\n");
 }
 //void Tri::do_clip() {
 //	Clip::clip(*this);

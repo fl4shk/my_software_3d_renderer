@@ -40,23 +40,33 @@ int main(int argc, char** argv) {
 			.x=tri_base_height.x / MyCxFixedPt(2),
 			.y=tri_base_height.y / MyCxFixedPt(2),
 		};
-	Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	view_mat.m.at(0).at(3) = MyCxFixedPt(
+	//Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
+	Vec3<MyCxFixedPt> view_pos;
+	view_pos.x = MyCxFixedPt(
 		//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
-		0.0
+		//2.0
+		0.1
 	);
-	view_mat.m.at(1).at(3) = MyCxFixedPt(
+	view_pos.y = MyCxFixedPt(
 		//HALF_SCREEN_SIZE_2D.y - tri_half_base_height.x
-		0.0
+		//2.0
+		0.1
 	);
-	view_mat.m.at(2).at(3) = MyCxFixedPt(
+	view_pos.z = MyCxFixedPt(
 		//MyCxFixedPt(near) + MyCxFixedPt(0.1)
 		//MyCxFixedPt(1.00)
 		0.100
 	);
+	//view_pos = view_pos.norm();
 	Transform view(
-		view_mat
+		MAT4X4_IDENTITY<MyCxFixedPt>
 	);
+		//view_mat
+		//view_pos
+	//view.mat = MAT4X4_IDENTITY<MyCxFixedPt>;
+	//view.set_translate(view_pos);
+	//view.set_to_affine_finish();
+	
 	//Transform perspective(
 	//	MAT4X4_IDENTITY<MyCxFixedPt>
 	//);
@@ -69,24 +79,24 @@ int main(int argc, char** argv) {
 	Vec3<MyCxFixedPt> tri_pos{
 		//.x=HALF_SCREEN_SIZE_2D.x,
 		//.y=HALF_SCREEN_SIZE_2D.y,
-		.x=MyCxFixedPt(0),
-		.y=MyCxFixedPt(0),
-		.z=MyCxFixedPt(-0.50),
+		.x=MyCxFixedPt(10.1),
+		.y=MyCxFixedPt(10.1),
+		.z=MyCxFixedPt(-0.510),
 	};
 	Transform my_tri_model;
 	my_tri_model.mat.set_translate(tri_pos);
 	my_tri_model.set_rot_scale(
-		//Vec3<MyCxFixedPt>{ // rotate
-		//	.x=MyCxFixedPt(MATH_PI * 0.5/*0*//*MATH_PI * 1.3*/),
-		//	.y=MyCxFixedPt(0/*MATH_PI * 1.3*/),
-		//	.z=MyCxFixedPt(0),
-		//}
+		Vec3<MyCxFixedPt>{ // rotate
+			.x=MyCxFixedPt(0.01/*MATH_PI * 1.3*/),
+			.y=MyCxFixedPt(0/*MATH_PI * 1.3*/),
+			.z=MyCxFixedPt(0),
+		}
 		//Vec3<MyCxFixedPt>{ // scale
-		//	.x=MyCxFixedPt(4.00),
-		//	.y=MyCxFixedPt(4.00),
+		//	.x=MyCxFixedPt(1.00),
+		//	.y=MyCxFixedPt(1.00),
 		//	.z=MyCxFixedPt(1.0),
 		//}
-		MAT3X3_IDENTITY<MyCxFixedPt>
+		//MAT3X3_IDENTITY<MyCxFixedPt>
 		//* MyCxFixedPt(0.10)
 		//* MyCxFixedPt(1 / 3.0)
 	);
@@ -96,7 +106,10 @@ int main(int argc, char** argv) {
 	my_tri_model.set_to_affine_finish();
 	const MyCxFixedPt
 		my_z = MyCxFixedPt(0.0);
-	Texture texture("gfx/obj/wood_block.bmp");
+	Texture texture(
+		//"gfx/obj/wood_block.bmp"
+		"gfx/obj/foreground_common_gfx.bmp"
+	);
 	Tri tri{
 		.img=&texture,
 		.model=Transform(
@@ -185,9 +198,10 @@ int main(int argc, char** argv) {
 		}
 		disp.handle_sdl_events();
 		my_tri_model.set_translate(tri_pos);
-		const auto n_view = view.look_at(
-			my_tri_model
-		);
+		//const auto n_view = view.look_at(
+		//	my_tri_model
+		//);
+		const auto n_view = view;
 		tri.do_project_etc(
 			n_view,
 			perspective
@@ -236,14 +250,14 @@ int main(int argc, char** argv) {
 				);
 				my_visib.first = true;
 				my_visib.second = item.uv;
-				//printout(
-				//	temp, ": ",
-				//	Vec2<double>{
-				//		.x=item.uv.x,
-				//		.y=item.uv.y,
-				//	},
-				//	"\n"
-				//);
+				printout(
+					temp, ": ",
+					Vec2<double>{
+						.x=double(item.uv.x),
+						.y=double(item.uv.y),
+					},
+					"\n"
+				);
 			}
 		}
 		for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
@@ -252,31 +266,40 @@ int main(int argc, char** argv) {
 					visib_buf.at(j * SCREEN_SIZE_2D.x + i)
 				);
 				if (my_visib.first) {
+					const Vec2<size_t>
+						pos{
+							.x=size_t(
+								my_visib.second.x * MyCxFixedPt(16)
+								+ MyCxFixedPt(48)
+							),
+							.y=size_t(
+								my_visib.second.y * MyCxFixedPt(16)
+							),
+						};
 					//printout(
 					//	"my_visib.first: ",
 					//	Vec2<size_t>(i, j), " ",
 					//	double(my_visib.second.x), " ",
-					//	double(my_visib.second.y),
+					//	double(my_visib.second.y), " ",
+					//	pos,
 					//	"\n"
 					//);
-					disp.set(
-						Vec2<size_t>{
-							.x=i,
-							.y=j,
-						},
-						//0xfffffff
-						//my_visib.second,
-						tri.img->at_u32(
+					if (
+						pos.x >= 0 + 48 && pos.x < 16 + 48
+						&& pos.y >=0 && pos.y < 16
+					) {
+						disp.set(
 							Vec2<size_t>{
-								.x=size_t(
-									my_visib.second.x * MyCxFixedPt(16)
-								),
-								.y=size_t(
-									my_visib.second.y * MyCxFixedPt(16)
-								),
-							}
-						)
-					);
+								.x=i,
+								.y=j,
+							},
+							//0xfffffff
+							//my_visib.second,
+							tri.img->at_u32(
+								pos
+							)
+						);
+					}
 					//printout(
 					//	//uint32_t(visib.at(j * SIZE_2D.x + i)),
 					//	//"visib: ",
