@@ -117,16 +117,16 @@ BaryLerp::BaryLerp(
 			_one_over_interp_rw
 		),
 	};
-	if (
-		double(uv().x) != 0.0
-		&& double(uv().y) != 0.0
-	) {
-		//printout(
-		//	"ABC", Vec3<double>{double(A), double(B), double(C)}, "\n",
-		//	"xy", Vec2<double>{double(x), double(y)}, "\n",
-		//	"uv", Vec2<double>{double(_uv.x), double(_uv.y)}, "\n"
-		//);
-	}
+	//if (
+	//	double(uv().x) != 0.0
+	//	&& double(uv().y) != 0.0
+	//) {
+	//	//printout(
+	//	//	"ABC", Vec3<double>{double(A), double(B), double(C)}, "\n",
+	//	//	"xy", Vec2<double>{double(x), double(y)}, "\n",
+	//	//	"uv", Vec2<double>{double(_uv.x), double(_uv.y)}, "\n"
+	//	//);
+	//}
 }
 //std::optional<MyCxFixedPt> BaryLerp::lerp(
 //	MyCxFixedPt v

@@ -14,6 +14,8 @@ private:		// variables
 	MyRwCxFixedPt
 		//_interp_rw,
 		_one_over_interp_rw;
+	Vec3<MyCxFixedPt>
+		_v;
 	Vec2<MyCxFixedPt>
 		_uv;
 public:		// functions

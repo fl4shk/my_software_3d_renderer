@@ -189,8 +189,8 @@ void Transform::set_perspective(
 	//	std::dec
 	//);
 	const MyCxFixedPt s(MyCxFixedPt(1) / temp);
-	mat.m.at(0).at(0) = 1.0; //s;
-	mat.m.at(1).at(1) = 1.0; //s;
+	mat.m.at(0).at(0) = s;
+	mat.m.at(1).at(1) = s;
 	const double near_dbl = double(near);
 	const double far_dbl = double(far);
 	const MyCxFixedPt temp_0 = MyCxFixedPt(

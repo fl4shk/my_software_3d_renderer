@@ -22,7 +22,8 @@ public:		// constants
 		.z=MyCxFixedPt(1),
 	};
 	static constexpr MyCxFixedPt DEFAULT_FOV{
-		0.25 * 360
+		//0.25 * 360
+		0.125 * 360
 		//1
 	};
 public:		// variables
