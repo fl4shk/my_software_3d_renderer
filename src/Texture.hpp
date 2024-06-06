@@ -1,7 +1,7 @@
 #ifndef src_texture_class_hpp
 #define src_texture_class_hpp
 
-#include "misc_includes.hpp"
+#include "MiscIncludes.hpp"
 
 class Texture final {
 private:		// variables

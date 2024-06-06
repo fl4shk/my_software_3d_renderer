@@ -1,4 +1,4 @@
-#include "texture_class.hpp"
+#include "Texture.hpp"
 
 Texture::Texture(const std::string& fname) {
 	load(fname);

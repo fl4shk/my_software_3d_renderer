@@ -1,5 +1,5 @@
-#include "tri_class.hpp"
-#include "clip_class.hpp"
+#include "Tri.hpp"
+#include "Clip.hpp"
 
 void Tri::do_project_etc(
 	const Transform& view,
@@ -7,25 +7,26 @@ void Tri::do_project_etc(
 ) {
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		proj_v.at(i).v = perspective.do_project(
-			model,
+			*model,
 			view,
 			v.at(i).v
 		);
 		proj_v.at(i).uv = v.at(i).uv;
-		rw_arr.at(i).data = (
-			i64(
-				proj_v.at(i).v.w.recip_ldbl()
-				* (1 << MyRwCxFixedPt::FRAC_WIDTH)
-				//i64(MyRwCxFixedPt(1).data)
-				/// (
-				//	i64(proj_v.at(i).v.w.data)
-				//	<< i64(abs(
-				//		i64(MyRwCxFixedPt::FRAC_WIDTH)
-				//		- i64(MyCxFixedPt::FRAC_WIDTH)
-				//	))
-				//)
-			)
-		);
+		//rw_arr.at(i).data = (
+		//	i64(
+		//		proj_v.at(i).v.w.recip_ldbl()
+		//		* (1 << MyRwCxFixedPt::FRAC_WIDTH)
+		//		//i64(MyRwCxFixedPt(1).data)
+		//		/// (
+		//		//	i64(proj_v.at(i).v.w.data)
+		//		//	<< i64(abs(
+		//		//		i64(MyRwCxFixedPt::FRAC_WIDTH)
+		//		//		- i64(MyCxFixedPt::FRAC_WIDTH)
+		//		//	))
+		//		//)
+		//	)
+		//);
+		rw_arr.at(i) = my_recip(proj_v.at(i).v.w);
 		screen_v.at(i).v.x = (
 			(
 				//(
@@ -72,33 +73,56 @@ void Tri::do_project_etc(
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
 			temp_v.at(j) = double(v.at(i).v.at(j));
 		}
+		//printout(
+		//	//project_v.at(i).v, "\n"
+		//	"{", temp_v, " ", double(v.at(i).v.w), "}",
+		//	"\n"
+		//);
+		const Vec2<double>
+			my_uv{
+				.x=double(v.at(i).uv.x),
+				.y=double(v.at(i).uv.y),
+			};
 		printout(
 			//project_v.at(i).v, "\n"
-			"{", temp_v, " ", double(v.at(i).v.w), "}",
+			"{",
+				temp_v, " ",
+				double(v.at(i).v.w), " ",
+				my_uv,
+			"}",
 			"\n"
 		);
 	}
-	printout("proj_v:\n");
-	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-		Vec3<double> temp_v;
-		for (size_t j=0; j<temp_v.SIZE; ++j) {
-			temp_v.at(j) = double(proj_v.at(i).v.at(j));
-		}
-		printout(
-			//project_v.at(i).v, "\n"
-			"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
-			"\n"
-		);
-	}
+	//printout("proj_v:\n");
+	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
+	//	Vec3<double> temp_v;
+	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
+	//		temp_v.at(j) = double(proj_v.at(i).v.at(j));
+	//	}
+	//	printout(
+	//		//project_v.at(i).v, "\n"
+	//		"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
+	//		"\n"
+	//	);
+	//}
 	printout("screen_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
 			temp_v.at(j) = double(screen_v.at(i).v.at(j));
 		}
+		const Vec2<double>
+			my_screen_uv{
+				.x=double(screen_v.at(i).uv.x),
+				.y=double(screen_v.at(i).uv.y),
+			};
 		printout(
 			//project_v.at(i).v, "\n"
-			"{", temp_v, " ", double(screen_v.at(i).v.w), "}",
+			"{",
+				temp_v, " ",
+				double(screen_v.at(i).v.w), " ",
+				my_screen_uv,
+			"}",
 			"\n"
 		);
 	}

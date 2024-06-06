@@ -2,8 +2,9 @@
 #define src_mat4x4_class_hpp
 
 #include <cmath>
-#include "vec4_class.hpp"
-#include "misc_includes.hpp"
+#include "Mat3x3.hpp"
+#include "Vec4.hpp"
+#include "MiscIncludes.hpp"
 
 template<typename T>
 class Mat4x4 final {
@@ -19,7 +20,17 @@ public:		// variables
 		SIZE_2D.y
 	> m;
 public:		// functions
-	constexpr inline Mat4x4 operator + (
+	template<typename OtherT>
+	static Mat4x4 cast_from(const Mat4x4<OtherT>& other) {
+		Mat4x4 ret;
+		for (size_t j=0; j<SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SIZE_2D.x; ++i) {
+				ret.m.at(j).at(i) = T(other.m.at(j).at(i));
+			}
+		}
+		return ret;
+	}
+	Mat4x4 operator + (
 		const Mat4x4& other
 	) const {
 		Mat4x4 ret;
@@ -32,7 +43,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat4x4 operator - (
+	Mat4x4 operator - (
 		const Mat4x4& other
 	) const {
 		Mat4x4 ret;
@@ -45,7 +56,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat4x4 operator * (
+	Mat4x4 operator * (
 		const T& scale
 	) const {
 		Mat4x4 ret;
@@ -56,7 +67,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat4x4 operator * (
+	Mat4x4 operator * (
 		const Mat4x4& other
 	) const {
 		Mat4x4 ret;
@@ -71,7 +82,16 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Vec4<T> mult_homogeneous(
+	Mat4x4 transpose() const {
+		Mat4x4 ret;
+		for (size_t j=0; j<SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SIZE_2D.x; ++i) {
+				ret.m.at(j).at(i) = m.at(i).at(j);
+			}
+		}
+		return ret;
+	}
+	Vec4<T> mult_homogeneous(
 		const Vec4<T>& v
 	) const {
 		//const Vec4<T> temp = *this * Vec4<T>::build_homogeneous(other);
@@ -97,7 +117,7 @@ public:		// functions
 
 		return ret;
 	}
-	constexpr inline Vec4<T> operator * (
+	Vec4<T> operator * (
 		const Vec4<T>& v
 	) const {
 		Vec4<T> ret{
@@ -126,11 +146,31 @@ public:		// functions
 	//explicit constexpr inline operator Vec3<T> () const {
 	//	return Vec3
 	//}
-	constexpr inline void set_translate(
-		const Vec3<T>& v
+	void set_translate(
+		const Vec3<T>& v,
+		bool right_vec_mult=true
 	) {
 		for (size_t k=0; k<v.SIZE; ++k) {
-			m.at(k).at(3) = v.at(k);
+			if (right_vec_mult) {
+				m.at(k).at(3) = v.at(k);
+			} else {
+				m.at(3).at(k) = v.at(k);
+			}
+		}
+	}
+	void set_rot_scale(
+		const Mat3x3<T>& m3x3,
+		bool right_vec_mult=true
+	) {
+		for (size_t j=0; j<m3x3.SIZE_2D.y; ++j) {
+			for (size_t i=0; i<m3x3.SIZE_2D.x; ++i) {
+				if (right_vec_mult) {
+					m.at(j).at(i) = m3x3.m.at(j).at(i);
+				} else {
+					// use the transpose
+					m.at(j).at(i) = m3x3.m.at(i).at(j);
+				}
+			}
 		}
 	}
 };

@@ -3,19 +3,21 @@
 
 // src/my_display_class.hpp
 
-#include "misc_includes.hpp"
-//#include "rgb444_class.hpp"
-#include "texture_class.hpp"
-#include "transform_class.hpp"
-#include "tri_class.hpp"
-#include "rast_class.hpp"
+#include "MiscIncludes.hpp"
+//#include "Rgb444.hpp"
+#include "Texture.hpp"
+#include "Transform.hpp"
+#include "Tri.hpp"
+#include "Rast.hpp"
 
 class Display {
 public:		// variables
 	sdl::Window window;
 	sdl::Renderer renderer;
 	sdl::Texture texture;
-	std::unique_ptr<Uint32[]> pixels;
+	std::array<std::unique_ptr<Uint32[]>, 2> pixels;
+	// `active_pixels` is used for double buffering
+	size_t active_pixels = 0;
 public:		// functions
 	Display();
 	virtual ~Display();
@@ -23,13 +25,13 @@ public:		// functions
 		const Vec2<size_t>& pos,
 		Uint32 col
 	) {
-		pixels[pos.y * SCREEN_SIZE_2D.x + pos.x] = col;
+		pixels.at(active_pixels)[pos.y * SCREEN_SIZE_2D.x + pos.x] = col;
 	}
 	inline void set(
 		size_t idx,
 		Uint32 col
 	) {
-		pixels[idx] = col; 
+		pixels.at(active_pixels)[idx] = col; 
 	}
 	//inline void set(
 	//	const Vec2<size_t>& pos,
@@ -57,6 +59,7 @@ enum class SnesKeyKind: uint32_t {
 };
 
 class MyDisplay: public Display {
+public:		// variables
 protected:	// variables
 	sdl::KeyStatusUmap _key_status_umap;
 	liborangepower::game::EngineKeyStatus _engine_key_status;
@@ -71,8 +74,15 @@ public:		// functions
 	void refresh();
 	void handle_sdl_events();
 	//void push_tri(const Tri& to_push);
+	inline bool key_up_now(const SnesKeyKind& key_kind) const {
+		return engine_key_status().key_up_now(key_kind);
+	}
+	inline bool key_down_now(const SnesKeyKind& key_kind) const {
+		return engine_key_status().key_down_now(key_kind);
+	}
 
 	GEN_GETTER_BY_CON_REF(do_exit);
+	GEN_GETTER_BY_CON_REF(engine_key_status);
 protected:		// variables and helper functions
 	//uint32_t _misc_visib_timer = 0;
 	//bool _visib_enable = false;

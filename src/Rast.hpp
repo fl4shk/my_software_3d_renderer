@@ -1,11 +1,11 @@
 #ifndef src_rast_class_hpp
 #define src_rast_class_hpp
 
-#include "texture_class.hpp"
-#include "tri_class.hpp"
-#include "transform_class.hpp"
-#include "line_drawing_funcs.hpp"
-#include "vert_class.hpp"
+#include "Texture.hpp"
+#include "Tri.hpp"
+#include "Transform.hpp"
+#include "LineDrawingFuncs.hpp"
+#include "Vert.hpp"
 
 class MyDisplay;
 
@@ -35,20 +35,30 @@ public:		// functions
 		MyCxFixedPt near
 	) const;
 private:		// functions
-	//void _calc_flat_top_visib(
-	//	//const Tri& tri,
-	//	const Vec2<DrawT>& v1,
-	//	const Vec2<DrawT>& v2,
-	//	const Vec2<DrawT>& v3,
-	//	std::vector<Vec2<DrawT>>& ret
-	//) const;
-	//void _calc_flat_bot_visib(
-	//	//const Tri& tri,
-	//	const Vec2<DrawT>& v1,
-	//	const Vec2<DrawT>& v2,
-	//	const Vec2<DrawT>& v3,
-	//	std::vector<Vec2<DrawT>>& ret
-	//) const;
+	void _calc_flat_top_visib(
+		const Tri& tri,
+		//const Vert& v1,
+		//const Vert& v2,
+		//const Vert& v3,
+		//std::vector<Vec2<DrawT>>& ret
+		std::vector<VertTextureCoords>& ret
+	) const;
+	void _calc_flat_bot_visib(
+		const Tri& tri,
+		//const Vert& v1,
+		//const Vert& v2,
+		//const Vert& v3,
+		//std::vector<Vec2<DrawT>>& ret
+		std::vector<VertTextureCoords>& ret
+	) const;
+	void _do_push_back(
+		//const Vert& v1,
+		//const Vert& v2,
+		//const Vert& v3,
+		const Tri& tri,
+		const Vec2<DrawT>& v,
+		std::vector<VertTextureCoords>& ret
+	) const;
 };
 
 

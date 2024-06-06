@@ -1,7 +1,7 @@
 #ifndef src_line_drawing_funcs_hpp
 #define src_line_drawing_funcs_hpp
 //--------
-#include "misc_includes.hpp"
+#include "MiscIncludes.hpp"
 #include <cmath>
 
 template<typename T>
@@ -27,21 +27,21 @@ void calc_line_coords(
 
 	dx = (x2 - x1);
 	dy = (y2 - y1);
-	T dx_abs;
-	dx_abs = std::abs(dx);
-	T dy_abs;
-	dy_abs = std::abs(dy);
+	//T dx_abs;
+	//dx_abs = std::abs(dx);
+	//T dy_abs;
+	//dy_abs = std::abs(dy);
 
-	//T dx_abs = (
-	//	dx < T(0)
-	//	? -dx
-	//	: dx
-	//);
-	//T dy_abs = (
-	//	dx < T(0)
-	//	? -dx
-	//	: dx
-	//);
+	T dx_abs = (
+		dx < T(0)
+		? -dx
+		: dx
+	);
+	T dy_abs = (
+		dx < T(0)
+		? -dx
+		: dx
+	);
 
 	if (dx_abs >= dy_abs) {
 		step = dx_abs;
@@ -56,13 +56,13 @@ void calc_line_coords(
 		y = y1;
 		i = T(0);
 
-		double last_y = double(y);
+		MyCxFixedPt last_y = MyCxFixedPt(y);
 
 		while (i <= step) {
 			//putpixel(x, y, 5);
 			//printout(Vec2<double>{.x=double(x), .y=double(y)}, " ");
-			if (last_y != double(y)) {
-				last_y = double(y);
+			if (last_y != MyCxFixedPt(y)) {
+				last_y = MyCxFixedPt(y);
 				printout("\n");
 			}
 			ret.push_back(Vec2<T>{.x=x, .y=y});

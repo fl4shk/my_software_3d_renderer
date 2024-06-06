@@ -15,7 +15,7 @@
 //#define src_clip_class_hpp
 //
 //#include "misc_includes.hpp"
-//#include "tri_class.hpp"
+//#include "tri.hpp"
 //
 //class Clip final {
 //private:		// functions

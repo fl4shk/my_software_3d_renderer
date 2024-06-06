@@ -52,9 +52,10 @@ using liborangepower::math::CxFixedPt;
 //using MyCxFixedPt = CxFixedI16p16;
 //using MyCxFixedPt = CxFixedPt<i32, 14>;
 //using MyCxFixedPt = CxFixedI20p12;
-//using MyCxFixedPt = double;
-using MyCxFixedPt = CxFixedPt<i32, 10>;
-using MyRwCxFixedPt = CxFixedPt<i32, 28>;
+using MyCxFixedPt = double;
+using MyRwCxFixedPt = double;
+//using MyCxFixedPt = CxFixedPt<i32, 16>;
+//using MyRwCxFixedPt = CxFixedPt<i32, 28>;
 //static constexpr size_t MY_RW_FRAC_SHIFT = (
 //	i64(MyRwCxFixedPt::FRAC_WIDTH) - i64(MyCxFixedPt::FRAC_WIDTH)
 //);
@@ -62,11 +63,25 @@ constexpr inline MyCxFixedPt mult_cx_rw(
 	MyCxFixedPt a, MyRwCxFixedPt rw
 ) {
 	MyCxFixedPt ret;
-	ret.data = (
-		(i64(a.data) * i64(rw.data))
-		>> MyRwCxFixedPt::FRAC_WIDTH
-		// the two fractional widths are added to one another
-	);
+	//ret.data = (
+	//	(i64(a.data) * i64(rw.data))
+	//	>> MyRwCxFixedPt::FRAC_WIDTH
+	//	// the two fractional widths are added to one another
+	//);
+	ret = a * rw;
+	return ret;
+}
+constexpr inline MyRwCxFixedPt my_recip(
+	MyCxFixedPt a
+) {
+	MyRwCxFixedPt ret;
+	//ret.data = (
+	//	i64(
+	//		a.recip_ldbl()
+	//		* (1 << MyRwCxFixedPt::FRAC_WIDTH)
+	//	)
+	//);
+	ret = MyRwCxFixedPt(1.0 / double(a));
 	return ret;
 }
 //using liborangepower::math::MyCxFixedPt;
@@ -76,11 +91,13 @@ namespace sdl = liborangepower::sdl;
 #include <SDL_events.h>
 #include <SDL_image.h>
 
-static constexpr double MATH_PI = double(3.141592653589793);
+static constexpr double MATH_PI = double(M_PI); //double(3.141592653589793);
 static constexpr Vec2<size_t>
 	SCREEN_SIZE_2D{
 		.x=640,
 		.y=480,
+		//.x=800,
+		//.y=600,
 		//.x=32,
 		//.y=20,
 	};

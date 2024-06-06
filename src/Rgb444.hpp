@@ -3,7 +3,7 @@
 //
 //// src/rgb444_class.hpp
 //
-//#include "misc_includes.hpp"
+//#include "MiscIncludes.hpp"
 //
 //class Rgb444 final {
 //public:		// variables

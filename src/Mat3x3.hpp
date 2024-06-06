@@ -2,7 +2,7 @@
 #define src_mat3x3_class_hpp
 
 #include <cmath>
-#include "misc_includes.hpp"
+#include "MiscIncludes.hpp"
 
 template<typename T>
 class Mat3x3 final {
@@ -18,7 +18,17 @@ public:		// variables
 		SIZE_2D.y
 	> m;
 public:		// functions
-	constexpr inline Mat3x3 operator + (
+	template<typename OtherT>
+	static Mat3x3 cast_from(const Mat3x3<OtherT>& other) {
+		Mat3x3 ret;
+		for (size_t j=0; j<SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SIZE_2D.x; ++i) {
+				ret.m.at(j).at(i) = T(other.m.at(j).at(i));
+			}
+		}
+		return ret;
+	}
+	Mat3x3 operator + (
 		const Mat3x3& other
 	) const {
 		Mat3x3 ret;
@@ -31,7 +41,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat3x3 operator - (
+	Mat3x3 operator - (
 		const Mat3x3& other
 	) const {
 		Mat3x3 ret;
@@ -44,7 +54,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat3x3 operator * (
+	Mat3x3 operator * (
 		const T& scale
 	) const {
 		Mat3x3 ret;
@@ -55,7 +65,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline Mat3x3 operator * (
+	Mat3x3 operator * (
 		const Mat3x3& other
 	) const {
 		Mat3x3 ret;
@@ -76,7 +86,16 @@ public:		// functions
 		//printout("\n");
 		return ret;
 	}
-	constexpr inline Vec3<T> operator * (
+	Mat3x3 transpose() const {
+		Mat3x3 ret;
+		for (size_t j=0; j<SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SIZE_2D.x; ++i) {
+				ret.m.at(j).at(i) = m.at(i).at(j);
+			}
+		}
+		return ret;
+	}
+	Vec3<T> operator * (
 		const Vec3<T>& other
 	) const {
 		Vec3<T> ret{

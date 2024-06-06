@@ -1,7 +1,7 @@
 #ifndef src_cube_class_hpp
 #define src_cube_class_hpp
 
-#include "tri_class.hpp"
+#include "Tri.hpp"
 
 class Cube final {
 public:		// types
@@ -31,7 +31,7 @@ public:		// variables
 		//pos,
 		size_3d;
 public:		// functions
-	std::array<std::array<Tri, 2>, size_t(TriIdx::LIM)> to_tri_arr() const;
+	//std::array<std::array<Tri, 2>, size_t(TriIdx::LIM)> to_tri_arr() const;
 };
 
 #endif		// src_cube_class_hpp

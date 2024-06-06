@@ -1,8 +1,9 @@
 #ifndef src_transform_class_hpp
 #define src_transform_class_hpp
 
-#include "mat4x4_class.hpp"
-#include "mat3x3_class.hpp"
+#include "Mat4x4.hpp"
+#include "Mat3x3.hpp"
+#include "Versor.hpp"
 
 //class TransformRet final {
 //public:		// variables
@@ -22,6 +23,7 @@ public:		// constants
 	};
 	static constexpr MyCxFixedPt DEFAULT_FOV{
 		0.25 * 360
+		//1
 	};
 public:		// variables
 	Mat4x4<MyCxFixedPt>
@@ -51,6 +53,12 @@ public:		// functions
 		const Vec3<MyCxFixedPt>& scale=DEFAULT_SCALE
 	);
 	Transform(
+		// affine
+		const Versor<MyCxFixedPt>& rotate,
+		const Vec3<MyCxFixedPt>& translate,
+		const Vec3<MyCxFixedPt>& scale=DEFAULT_SCALE
+	);
+	Transform(
 		// perspective projection
 		MyCxFixedPt near,
 		MyCxFixedPt far,
@@ -63,6 +71,10 @@ public:		// functions
 	void set_rot_scale(const Mat3x3<MyCxFixedPt>& rot_scale);
 	void set_rot_scale(
 		const Vec3<MyCxFixedPt>& rotate,
+		const Vec3<MyCxFixedPt>& scale=DEFAULT_SCALE
+	);
+	void set_rot_scale(
+		const Versor<MyCxFixedPt>& rotate,
 		const Vec3<MyCxFixedPt>& scale=DEFAULT_SCALE
 	);
 	void set_translate(const Vec3<MyCxFixedPt>& translate);
@@ -115,6 +127,17 @@ public:		// functions
 	//	}
 	//}
 private:		// functions
+	static constexpr inline Mat3x3<MyCxFixedPt> _calc_scale_mat(
+		const Vec3<MyCxFixedPt>& scale
+	) {
+		return Mat3x3<MyCxFixedPt>{.m{
+			{
+				{scale.x, 0.0, 0.0},
+				{0.0, scale.y, 0.0},
+				{0.0, 0.0, scale.z},
+			}
+		}};
+	}
 	void _set_to_perspective_finish();
 
 	//TransformRet affine(const Vec3<MyCxFixedPt>& v) const;

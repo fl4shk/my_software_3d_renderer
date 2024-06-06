@@ -1,8 +1,8 @@
 #ifndef src_texture_loader_class_hpp
 #define src_texture_loader_class_hpp
 
-#include "texture_class.hpp"
-#include "misc_includes.hpp"
+#include "Texture.hpp"
+#include "MiscIncludes.hpp"
 
 class TextureLoader final {
 private:	// variables

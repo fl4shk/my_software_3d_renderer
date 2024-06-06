@@ -1,8 +1,9 @@
 #ifndef src_vert_class_hpp
 #define src_vert_class_hpp
 
-#include "misc_includes.hpp"
-#include "vec4_class.hpp"
+#include "MiscIncludes.hpp"
+#include "Vec4.hpp"
+#include "Texture.hpp"
 
 class Vert final {
 public:		// variables
@@ -18,6 +19,7 @@ public:		// functions
 };
 class VertTextureCoords final {
 public:		// variables
+	Texture* img=nullptr;
 	Vec2<MyCxFixedPt> v;
 	Vec2<MyCxFixedPt> uv;
 };

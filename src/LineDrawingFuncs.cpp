@@ -1,4 +1,4 @@
-#include "line_drawing_funcs.hpp"
+#include "LineDrawingFuncs.hpp"
 
 //void calc_line_coords(
 //	const Vec2<MyCxFixedPt>& v0, const Vec2<MyCxFixedPt>& v1,

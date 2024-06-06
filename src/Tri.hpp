@@ -1,11 +1,11 @@
 #ifndef src_tri_class_hpp
 #define src_tri_class_hpp
 
-#include "misc_includes.hpp"
-//#include "rgb444_class.hpp"
-#include "texture_class.hpp"
-#include "transform_class.hpp"
-#include "vert_class.hpp"
+#include "MiscIncludes.hpp"
+//#include "Rgb444.hpp"
+#include "Texture.hpp"
+#include "Transform.hpp"
+#include "Vert.hpp"
 
 static constexpr size_t TRI_VERT_SIZE = 3;
 using TriVert = std::array<Vert, TRI_VERT_SIZE>;
@@ -30,7 +30,7 @@ class Tri final {
 public:		// variables
 	Texture* img=nullptr;
 	//TransformMvp* mvp=nullptr;
-	Transform model;
+	Transform* model=nullptr;
 	TriVert
 		v,
 		proj_v,

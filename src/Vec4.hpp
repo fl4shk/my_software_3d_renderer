@@ -1,7 +1,7 @@
 #ifndef src_vec4_class_hpp
 #define src_vec4_class_hpp
 
-#include "misc_includes.hpp"
+#include "MiscIncludes.hpp"
 
 template<typename T>
 class Vec4 {
@@ -36,6 +36,13 @@ public:		// functions
 		}
 		return ret;
 	}
+	constexpr inline Vec4 operator - () const {
+		Vec4 ret;
+		for (size_t i=0; i<SIZE; ++i) {
+			ret.at(i) = -at(i);
+		}
+		return ret;
+	}
 	constexpr inline Vec4 operator * (const T& scale) const {
 		Vec4 ret;
 		for (size_t i=0; i<SIZE; ++i) {
@@ -43,13 +50,28 @@ public:		// functions
 		}
 		return ret;
 	}
-	constexpr inline T& at(size_t pos) {
-		std::array<T*, SIZE> arr{&x, &y, &z, &w};
-		return *arr.at(pos);
+	constexpr inline Vec4 operator / (const T& scale) const {
+		Vec4 ret;
+		for (size_t i=0; i<SIZE; ++i) {
+			ret.at(i) = at(i) / scale;
+		}
+		return ret;
 	}
-	constexpr inline const T& at(size_t pos) const {
+	constexpr inline Vec4 norm() const {
+		return *this / mag();
+	}
+	constexpr inline T mag() const {
+		return liborangepower::math::cstm_sqrt(
+			(x * x) + (y * y) + (z * z) + (w * w)
+		);
+	}
+	constexpr inline T& at(size_t idx) {
+		std::array<T*, SIZE> arr{&x, &y, &z, &w};
+		return *arr.at(idx);
+	}
+	constexpr inline const T& at(size_t idx) const {
 		std::array<const T*, SIZE> arr{&x, &y, &z, &w};
-		return *arr.at(pos);
+		return *arr.at(idx);
 	}
 };
 

@@ -1,8 +1,8 @@
 #ifndef src_vertex_class_hpp
 #define src_vertex_class_hpp
 
-#include "misc_includes.hpp"
-#include "rgb444_class.hpp"
+#include "MiscIncludes.hpp"
+#include "Rgb444.hpp"
 
 constexpr inline MyCxFixedPt bary_lerp(
 	const Vec2<MyCxFixedPt>& a,

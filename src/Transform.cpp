@@ -1,4 +1,4 @@
-#include "transform_class.hpp"
+#include "Transform.hpp"
 #include <cmath>
 
 Transform::Transform() {
@@ -71,66 +71,82 @@ void Transform::set_rot_scale(
 		.z=double(rotate.z),
 	};
 	//--------
-	rot_m_v.x.m.at(0).at(0) = MyCxFixedPt(1);
-	rot_m_v.x.m.at(0).at(1) = MyCxFixedPt(0);
-	rot_m_v.x.m.at(0).at(2) = MyCxFixedPt(0);
+	rot_m_v.x.m.at(0).at(0) = 1.0;
+	rot_m_v.x.m.at(0).at(1) = 0.0;
+	rot_m_v.x.m.at(0).at(2) = 0.0;
 
-	rot_m_v.x.m.at(1).at(0) = MyCxFixedPt(0);
-	rot_m_v.x.m.at(1).at(1) = MyCxFixedPt(std::cos(rotate_dbl.x));
-	rot_m_v.x.m.at(1).at(2) = MyCxFixedPt(-std::sin(rotate_dbl.x));
+	rot_m_v.x.m.at(1).at(0) = 0.0;
+	rot_m_v.x.m.at(1).at(1) = std::cos(rotate_dbl.x);
+	rot_m_v.x.m.at(1).at(2) = -std::sin(rotate_dbl.x);
 
-	rot_m_v.x.m.at(2).at(0) = MyCxFixedPt(0);
-	rot_m_v.x.m.at(2).at(1) = MyCxFixedPt(std::sin(rotate_dbl.x));
-	rot_m_v.x.m.at(2).at(2) = MyCxFixedPt(std::cos(rotate_dbl.x));
+	rot_m_v.x.m.at(2).at(0) = 0.0;
+	rot_m_v.x.m.at(2).at(1) = std::sin(rotate_dbl.x);
+	rot_m_v.x.m.at(2).at(2) = std::cos(rotate_dbl.x);
+	//rot_m_v.x = MAT3X3_IDENTITY<MyCxFixedPt>;
 	//--------
-	rot_m_v.y.m.at(0).at(0) = MyCxFixedPt(std::cos(rotate_dbl.y));
-	rot_m_v.y.m.at(0).at(1) = MyCxFixedPt(0);
-	rot_m_v.y.m.at(0).at(2) = MyCxFixedPt(std::sin(rotate_dbl.y));
+	rot_m_v.y.m.at(0).at(0) = std::cos(rotate_dbl.y);
+	rot_m_v.y.m.at(0).at(1) = 0.0;
+	rot_m_v.y.m.at(0).at(2) = std::sin(rotate_dbl.y);
 
-	rot_m_v.y.m.at(1).at(0) = MyCxFixedPt(0);
-	rot_m_v.y.m.at(1).at(1) = MyCxFixedPt(1);
-	rot_m_v.y.m.at(1).at(2) = MyCxFixedPt(0);
+	rot_m_v.y.m.at(1).at(0) = 0.0;
+	rot_m_v.y.m.at(1).at(1) = 1.0;
+	rot_m_v.y.m.at(1).at(2) = 0.0;
 
-	rot_m_v.y.m.at(2).at(0) = MyCxFixedPt(-std::sin(rotate_dbl.y));
-	rot_m_v.y.m.at(2).at(1) = MyCxFixedPt(0);
-	rot_m_v.y.m.at(2).at(2) = MyCxFixedPt(std::cos(rotate_dbl.y));
+	rot_m_v.y.m.at(2).at(0) = -std::sin(rotate_dbl.y);
+	rot_m_v.y.m.at(2).at(1) = 0.0;
+	rot_m_v.y.m.at(2).at(2) = std::cos(rotate_dbl.y);
 	//--------
-	rot_m_v.z.m.at(0).at(0) = MyCxFixedPt(std::cos(rotate_dbl.z));
-	rot_m_v.z.m.at(0).at(1) = MyCxFixedPt(-std::sin(rotate_dbl.z));
-	rot_m_v.z.m.at(0).at(2) = MyCxFixedPt(0);
+	rot_m_v.z.m.at(0).at(0) = std::cos(rotate_dbl.z);
+	rot_m_v.z.m.at(0).at(1) = -std::sin(rotate_dbl.z);
+	rot_m_v.z.m.at(0).at(2) = 0.0;
 
-	rot_m_v.z.m.at(1).at(0) = MyCxFixedPt(std::sin(rotate_dbl.z));
-	rot_m_v.z.m.at(1).at(1) = MyCxFixedPt(std::cos(rotate_dbl.z));
-	rot_m_v.z.m.at(1).at(2) = MyCxFixedPt(0);
+	rot_m_v.z.m.at(1).at(0) = std::sin(rotate_dbl.z);
+	rot_m_v.z.m.at(1).at(1) = std::cos(rotate_dbl.z);
+	rot_m_v.z.m.at(1).at(2) = 0.0;
 
-	rot_m_v.z.m.at(2).at(0) = MyCxFixedPt(0);
-	rot_m_v.z.m.at(2).at(1) = MyCxFixedPt(0);
-	rot_m_v.z.m.at(2).at(2) = MyCxFixedPt(1);
-	//printout("set_rot_scale() 2-args:\n");
-	//printout("3x3 rotation matrices:\n");
-	//printout("x:\n", rot_m_v.x, "\n");
-	//printout("y:\n", rot_m_v.y, "\n");
-	//printout("z:\n", rot_m_v.z, "\n");
+	rot_m_v.z.m.at(2).at(0) = 0.0;
+	rot_m_v.z.m.at(2).at(1) = 0.0;
+	rot_m_v.z.m.at(2).at(2) = 1.0;
+	//rot_m_v.z = MAT3X3_IDENTITY<MyCxFixedPt>;
+	printout("set_rot_scale() 2-args:\n");
+	printout("3x3 rotation matrices:\n");
+	printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
+	printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
+	printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
 	//--------
-	Vec3<Mat3x3<MyCxFixedPt>> rot_scale_m_v;
-	for (size_t k=0; k<rot_scale_m_v.SIZE; ++k) {
-		rot_scale_m_v.at(k) = rot_m_v.at(k) * scale.at(k);
-	}
-	//printout("scaled 3x3 rotation matrices:\n");
-	//printout("x:\n", rot_m_v.x, "\n");
-	//printout("y:\n", rot_m_v.y, "\n");
-	//printout("z:\n", rot_m_v.z, "\n");
+	//Vec3<Mat3x3<MyCxFixedPt>> rot_scale_m_v;
+	//for (size_t k=0; k<rot_scale_m_v.SIZE; ++k) {
+	//	rot_scale_m_v.at(k) = rot_m_v.at(k) * scale.at(k);
+	//	rot_scale_m_v.at(k) = rot_m_v.at(k);
+	//}
+	const auto scale_m = _calc_scale_mat(scale);
+
+	printout("scale 3x3 matrix:\n");
+	printout(Mat3x3<double>::cast_from(scale_m), "\n");
+	//printout("x:\n", Mat3x3<double>::cast_from(rot_scale_m_v.x), "\n");
+	//printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
+	//printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
 	//--------
-	const Mat3x3<MyCxFixedPt> rot_scale_m_xy = (
-		(rot_scale_m_v.x * rot_scale_m_v.y) //* rot_scale_m_v.z
-	);
 	const Mat3x3<MyCxFixedPt> rot_scale_m = (
-		rot_scale_m_xy * rot_scale_m_v.z
+		// scale should be applied first, otherwise you're scaling your
+		// rotation
+		((scale_m * rot_m_v.z) * rot_m_v.y) * rot_m_v.x
 	);
-	//printout("multiplied rotation/scaling matrices:\n");
-	//printout(rot_scale_m_xy);
-	//printout(rot_scale_m);
+	//const Mat3x3<MyCxFixedPt> rot_scale_m = (
+	//	rot_scale_m_zy * rot_scale_m_v.x
+	//);
+	printout("multiplied rotation/scaling matrices:\n");
+	//printout(Mat3x3<double>::cast_from(rot_scale_m_zy), "\n");
+	printout(Mat3x3<double>::cast_from(rot_scale_m), "\n");
 	set_rot_scale(rot_scale_m);
+}
+void Transform::set_rot_scale(
+	const Versor<MyCxFixedPt>& rotate,
+	const Vec3<MyCxFixedPt>& scale
+) {
+	set_rot_scale(
+		_calc_scale_mat(scale) * rotate.to_rot_mat()
+	);
 }
 void Transform::set_translate(const Vec3<MyCxFixedPt>& translate) {
 	for (size_t j=0; j<3u; ++j) {
@@ -173,8 +189,8 @@ void Transform::set_perspective(
 	//	std::dec
 	//);
 	const MyCxFixedPt s(MyCxFixedPt(1) / temp);
-	mat.m.at(0).at(0) = s;
-	mat.m.at(1).at(1) = s;
+	mat.m.at(0).at(0) = 1.0; //s;
+	mat.m.at(1).at(1) = 1.0; //s;
 	const double near_dbl = double(near);
 	const double far_dbl = double(far);
 	const MyCxFixedPt temp_0 = MyCxFixedPt(
@@ -263,24 +279,24 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	////temp_model.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
 	////temp_view.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
 	////temp_view.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
-	////printout(
-	////	"model{",
-	////		double(model.mat.m.at(0).at(3)), " ", 
-	////		double(model.mat.m.at(1).at(3)),
-	////	"}\n",
-	////	"view{",
-	////		double(view.mat.m.at(0).at(3)), " ", 
-	////		double(view.mat.m.at(1).at(3)),
-	////	"}\n"
-	////	"temp_model{",
-	////		double(temp_model.m.at(0).at(3)), " ", 
-	////		double(temp_model.m.at(1).at(3)),
-	////	"}\n",
-	////	"temp_view{",
-	////		double(temp_view.m.at(0).at(3)), " ", 
-	////		double(temp_view.m.at(1).at(3)),
-	////	"}\n"
-	////);
+	//printout(
+	//	"model{",
+	//		double(model.mat.m.at(0).at(3)), " ", 
+	//		double(model.mat.m.at(1).at(3)),
+	//	"}\n",
+	//	"view{",
+	//		double(view.mat.m.at(0).at(3)), " ", 
+	//		double(view.mat.m.at(1).at(3)),
+	//	"}\n"
+	//	"temp_model{",
+	//		double(temp_model.m.at(0).at(3)), " ", 
+	//		double(temp_model.m.at(1).at(3)),
+	//	"}\n",
+	//	"temp_view{",
+	//		double(temp_view.m.at(0).at(3)), " ", 
+	//		double(temp_view.m.at(1).at(3)),
+	//	"}\n"
+	//);
 	const auto
 		model_view = temp_model * temp_view,
 		mvp = mat * model_view;
@@ -411,6 +427,7 @@ Transform Transform::look_at(
 	//		}
 	//	}
 	//}
+	//--------
 	const Vec3<MyCxFixedPt>
 		eye(translate()),
 		center(model_pos),
@@ -421,7 +438,7 @@ Transform Transform::look_at(
 		neg_u_dot_eye((-u).dot(eye)),
 		neg_v_dot_eye((-v).dot(eye)),
 		neg_n_dot_eye((-n).dot(eye));
-	
+
 	ret.mat = Mat4x4<MyCxFixedPt>{{
 		{
 			//{u.at(0), v.at(0), n.at(0), MyCxFixedPt(0.0)},
@@ -439,6 +456,23 @@ Transform Transform::look_at(
 			},
 		}
 	}};
+	//const Vec3<MyCxFixedPt>
+	//	my_translate(translate()),
+	//	f((model_pos - my_translate).norm()),
+	//	up_prime(up.norm()),
+	//	s(f.cross(up_prime)),
+	//	u(s.norm().cross(f));
+	//ret.mat.m = {
+	//	{
+	//		{s.x, s.y, s.z, -my_translate.x},
+	//		{u.x, u.y, u.z, -my_translate.y},
+	//		{-f.x, -f.y, -f.z, -my_translate.z},
+	//		{
+	//			MyCxFixedPt(0), MyCxFixedPt(0), MyCxFixedPt(0),
+	//			MyCxFixedPt(1),
+	//		},
+	//	},
+	//};
 	return ret;
 }
 Transform Transform::look_at(

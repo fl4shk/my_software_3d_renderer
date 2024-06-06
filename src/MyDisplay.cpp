@@ -1,4 +1,4 @@
-#include "my_display_class.hpp"
+#include "MyDisplay.hpp"
 //--------
 Display::Display()
 	: window(
@@ -30,13 +30,22 @@ Display::Display()
 			SCREEN_SIZE_2D.y
 		)
 	),
-	pixels(new Uint32[SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y])
+	pixels({
+		std::unique_ptr<Uint32[]>(
+			new Uint32[SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y]
+		),
+		std::unique_ptr<Uint32[]>(
+			new Uint32[SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y]
+		),
+	})
 {
-	std::memset(
-		pixels.get(),
-		0,
-		SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y * sizeof(Uint32)
-	);
+	for (auto& item: pixels) {
+		std::memset(
+			item.get(),
+			0,
+			SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y * sizeof(Uint32)
+		);
+	}
 }
 Display::~Display() {
 }
@@ -74,17 +83,23 @@ void MyDisplay::refresh() {
 	SDL_UpdateTexture(
 		texture,
 		NULL,
-		pixels.get(),
+		pixels.at(active_pixels).get(),
 		sizeof(Uint32) * SCREEN_SIZE_2D.x // pitch
 		//sizeof(Uint32) * HALF_SIZE_2D.x // pitch
 		//sizeof(Uint32) * SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y
 	);
+	//for (size_t j=0; j<SCREEN_SIZE_2D.y; ++j) {
+	//	for (size_t i=0; i<SCREEN_SIZE_2D.x; ++i) {
+	//		
+	//	}
+	//}
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 	//std::memset(pixels.get(), 0, HALF_SIZE_2D.x * sizeof(Uint32));
+	active_pixels = (active_pixels + 1) % pixels.size();
 	std::memset(
-		pixels.get(),
+		pixels.at(active_pixels).get(),
 		0,
 		SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y * sizeof(Uint32)
 		//HALF_SIZE_2D.x * HALF_SIZE_2D.y * sizeof(Uint32)
