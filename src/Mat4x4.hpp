@@ -82,15 +82,7 @@ public:		// functions
 		}
 		return ret;
 	}
-	Mat4x4 transpose() const {
-		Mat4x4 ret;
-		for (size_t j=0; j<SIZE_2D.y; ++j) {
-			for (size_t i=0; i<SIZE_2D.x; ++i) {
-				ret.m.at(j).at(i) = m.at(i).at(j);
-			}
-		}
-		return ret;
-	}
+	
 	Vec4<T> mult_homogeneous(
 		const Vec4<T>& v
 	) const {
@@ -141,6 +133,159 @@ public:		// functions
 		ret.y = b;
 		ret.z = c;
 		ret.w = w;
+		return ret;
+	}
+	Mat4x4 transpose() const {
+		Mat4x4 ret;
+		for (size_t j=0; j<SIZE_2D.y; ++j) {
+			for (size_t i=0; i<SIZE_2D.x; ++i) {
+				ret.m.at(j).at(i) = m.at(i).at(j);
+			}
+		}
+		return ret;
+	}
+	Mat4x4 inverse() const {
+		const T A2323 = m[2][2] * m[3][3] - m[2][3] * m[3][2];
+		const T A1323 = m[2][1] * m[3][3] - m[2][3] * m[3][1];
+		const T A1223 = m[2][1] * m[3][2] - m[2][2] * m[3][1];
+		const T A0323 = m[2][0] * m[3][3] - m[2][3] * m[3][0];
+		const T A0223 = m[2][0] * m[3][2] - m[2][2] * m[3][0];
+		const T A0123 = m[2][0] * m[3][1] - m[2][1] * m[3][0];
+		const T A2313 = m[1][2] * m[3][3] - m[1][3] * m[3][2];
+		const T A1313 = m[1][1] * m[3][3] - m[1][3] * m[3][1];
+		const T A1213 = m[1][1] * m[3][2] - m[1][2] * m[3][1];
+		const T A2312 = m[1][2] * m[2][3] - m[1][3] * m[2][2];
+		const T A1312 = m[1][1] * m[2][3] - m[1][3] * m[2][1];
+		const T A1212 = m[1][1] * m[2][2] - m[1][2] * m[2][1];
+		const T A0313 = m[1][0] * m[3][3] - m[1][3] * m[3][0];
+		const T A0213 = m[1][0] * m[3][2] - m[1][2] * m[3][0];
+		const T A0312 = m[1][0] * m[2][3] - m[1][3] * m[2][0];
+		const T A0212 = m[1][0] * m[2][2] - m[1][2] * m[2][0];
+		const T A0113 = m[1][0] * m[3][1] - m[1][1] * m[3][0];
+		const T A0112 = m[1][0] * m[2][1] - m[1][1] * m[2][0];
+
+		const auto inv_det = my_recip(
+			(
+				m[0][0]
+				* (
+					m[1][1] * A2323 - m[1][2] * A1323 + m[1][3] * A1223 
+				)
+			) - (
+				m[0][1]
+				* (
+					m[1][0] * A2323 - m[1][2] * A0323 + m[1][3] * A0223 
+				) 
+			) + (
+				m[0][2]
+				* (
+					m[1][0] * A1323 - m[1][1] * A0323 + m[1][3] * A0123
+				) 
+			) - (
+				m[0][3]
+				* (
+					m[1][0] * A1223 - m[1][1] * A0223 + m[1][2] * A0123 
+				)
+			)
+		);
+		//det = my_recip(det);
+
+		Mat4x4 ret;
+		ret.m[0][0] = (
+			inv_det
+			* (
+				m[1][1] * A2323 - m[1][2] * A1323 + m[1][3] * A1223
+			)
+		);
+		ret.m[0][1] = (
+			inv_det
+			* (
+				-(m[0][1] * A2323 - m[0][2] * A1323 + m[0][3] * A1223)
+			)
+		);
+		ret.m[0][2] = (
+			inv_det
+			* (
+				(m[0][1] * A2313 - m[0][2] * A1313 + m[0][3] * A1213)
+			)
+		);
+		ret.m[0][3] = (
+			inv_det
+			* (
+				(m[0][1] * A2312 - m[0][2] * A1312 + m[0][3] * A1212)
+			)
+		);
+		ret.m[1][0] = (
+			inv_det
+			* (
+				(m[1][0] * A2323 - m[1][2] * A0323 + m[1][3] * A0223)
+			)
+		);
+		ret.m[1][1] = (
+			inv_det
+			* (
+				(m[0][0] * A2323 - m[0][2] * A0323 + m[0][3] * A0223)
+			)
+		);
+		ret.m[1][2] = (
+			inv_det
+			* (
+				(m[0][0] * A2313 - m[0][2] * A0313 + m[0][3] * A0213)
+			)
+		);
+		ret.m[1][3] = (
+			inv_det
+			* (
+				(m[0][0] * A2312 - m[0][2] * A0312 + m[0][3] * A0212)
+			)
+		);
+		ret.m[2][0] = (
+			inv_det
+			* (
+				(m[1][0] * A1323 - m[1][1] * A0323 + m[1][3] * A0123)
+			)
+		);
+		ret.m[2][1] = (
+			inv_det
+			* (
+				(m[0][0] * A1323 - m[0][1] * A0323 + m[0][3] * A0123)
+			)
+		);
+		ret.m[2][2] = (
+			inv_det
+			* (
+				(m[0][0] * A1313 - m[0][1] * A0313 + m[0][3] * A0113)
+			)
+		);
+		ret.m[2][3] = (
+			inv_det
+			* (
+				(m[0][0] * A1312 - m[0][1] * A0312 + m[0][3] * A0112)
+			)
+		);
+		ret.m[3][0] = (
+			inv_det
+			* (
+				(m[1][0] * A1223 - m[1][1] * A0223 + m[1][2] * A0123)
+			)
+		);
+		ret.m[3][1] = (
+			inv_det
+			* (
+				(m[0][0] * A1223 - m[0][1] * A0223 + m[0][2] * A0123)
+			)
+		);
+		ret.m[3][2] = (
+			inv_det
+			* (
+				(m[0][0] * A1213 - m[0][1] * A0213 + m[0][2] * A0113)
+			)
+		);
+		ret.m[3][3] = (
+			inv_det
+			* (
+				(m[0][0] * A1212 - m[0][1] * A0212 + m[0][2] * A0112)
+			)
+		);
 		return ret;
 	}
 	//explicit constexpr inline operator Vec3<T> () const {

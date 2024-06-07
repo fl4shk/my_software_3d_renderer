@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 	);
 	Square sq{
 		.size_2d{1.0, 1.0},
-		.pos{0.0, 0.0, -5.0},
+		.pos{0.0, 0.0, 0.0},
 		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
 		.img=&texture,
 	};
@@ -65,31 +65,31 @@ int main(int argc, char** argv) {
 	//	.y=0.0,
 	//	.z=0.0,
 	//};
-	//Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	Vec3<MyCxFixedPt> view_pos{0.00, 0.00, 0.000};
-	//view_pos.x = /*MyCxFixedPt*/(
+	//Mat4x4<MyCxFixedPt> camera_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
+	Vec3<MyCxFixedPt> camera_pos{0.00, 0.00, -5.000};
+	//camera_pos.x = /*MyCxFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 	//	//2.0
 	//	0.1
 	//	//-HALF_SCREEN_SIZE_2D.x
 	//);
-	//view_pos.y = /*MyCxFixedPt*/(
+	//camera_pos.y = /*MyCxFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.y - tri_half_base_height.x
 	//	//2.0
 	//	0.1
 	//	//-HALF_SCREEN_SIZE_2D.y
 	//);
-	//view_pos.z = /*MyCxFixedPt*/(
+	//camera_pos.z = /*MyCxFixedPt*/(
 	//	//MyCxFixedPt(near) + MyCxFixedPt(0.1)
 	//	//MyCxFixedPt(1.00)
 	//	0.100
 	//);
-	//view_pos = view_pos.norm();
+	//camera_pos = camera_pos.norm();
 	Versor<MyCxFixedPt>
-		view_rot;
+		camera_rot;
 	//Mat4x4<MyCxFixedPt>
-	//	view_mat;
-	Transform view(
+	//	camera_mat;
+	Transform camera(
 		MAT4X4_IDENTITY<MyCxFixedPt>
 		//Mat4x4<MyCxFixedPt>{.m{{
 		//	{},
@@ -98,13 +98,13 @@ int main(int argc, char** argv) {
 		//	{},
 		//}}}
 	);
-		//view_mat
-		//view_pos
+		//camera_mat
+		//camera_pos
 	//view.mat = MAT4X4_IDENTITY<MyCxFixedPt>;
 
-	//view.set_translate(view_pos);
+	//view.set_translate(camera_pos);
 	//view.set_rot_scale(
-	//	//view_rot
+	//	//camera_rot
 	//	MAT3X3_IDENTITY<MyCxFixedPt>
 	//);
 	//view.set_to_affine_finish();
@@ -246,27 +246,27 @@ int main(int argc, char** argv) {
 		{
 			printout("checking keys\n");
 			const MyCxFixedPt
-				amount_xy(0.10),
+				amount_xy(0.010),
 				amount_z(0.001),
 				amount_angle(0.010005);
 			if (
 				disp.key_down_now(SnesKeyKind::DpadLeft)
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
 			) {
-				sq.pos.x += amount_xy;
+				camera_pos.x += amount_xy;
 				printout(
 					"moving left: ",
-					double(sq.pos.x),
+					double(camera_pos.x),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadRight)
 				&& disp.key_up_now(SnesKeyKind::DpadLeft)
 			) {
-				sq.pos.x -= amount_xy;
+				camera_pos.x -= amount_xy;
 				printout(
 					"moving right: ",
-					double(sq.pos.x),
+					double(camera_pos.x),
 					"\n"
 				);
 			}
@@ -275,20 +275,20 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::DpadUp)
 				&& disp.key_up_now(SnesKeyKind::DpadDown)
 			) {
-				sq.pos.y += amount_xy;
+				camera_pos.y += amount_xy;
 				printout(
 					"moving up: ",
-					double(sq.pos.y),
+					double(camera_pos.y),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadDown)
 				&& disp.key_up_now(SnesKeyKind::DpadUp)
 			) {
-				sq.pos.y -= amount_xy;
+				camera_pos.y -= amount_xy;
 				printout(
 					"moving down: ",
-					double(sq.pos.y),
+					double(camera_pos.y),
 					"\n"
 				);
 			}
@@ -297,20 +297,20 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::Y)
 				&& disp.key_up_now(SnesKeyKind::A)
 			) {
-				sq.pos.z -= amount_z;
+				camera_pos.z -= amount_z;
 				printout(
 					"moving backward: ",
-					double(sq.pos.z),
+					double(camera_pos.z),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::A)
 				&& disp.key_up_now(SnesKeyKind::Y)
 			) {
-				sq.pos.z += amount_z;
+				camera_pos.z += amount_z;
 				printout(
 					"moving forward: ",
-					double(sq.pos.z),
+					double(camera_pos.z),
 					"\n"
 				);
 			}
@@ -412,12 +412,12 @@ int main(int argc, char** argv) {
 		//my_sq_model.set_translate(sq.pos);
 		auto& tri_arr = sq.update_tri_arr();
 
-		//view.set_translate(view_pos);
+		camera.set_translate(camera_pos);
 		//tri.model = &my_sq_model;
-		const auto n_view = (
+		const Transform n_view(
 			//view.look_at(my_sq_model)
 			//view.look_at(sq.model)
-			view
+			camera.mat.inverse()
 		);
 		std::vector<VertTextureCoords> visib;
 		for (size_t i=0; i<tri_arr.size(); ++i)
