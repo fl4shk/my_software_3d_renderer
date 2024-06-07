@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 	//		{0.0, 0.0, 0.0001}
 	//	);
 	const Vec3<MyCxFixedPt>
-		sq_rotate_angles{0.0001, 0.0001, 0.0001};
+		sq_rotate_angles{0.0101, 0.0101, 0.0101};
 		
 	//my_sq_model.set_rot_scale(
 	//	sq_rotate
@@ -363,44 +363,44 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::L)
 				&& disp.key_up_now(SnesKeyKind::R)
 			) {
-				sq.rot.y = (
-					/*std::fabs*/(std::fmod(
-						double(sq.rot.y - amount_angle),
-						(2.0 * double(MATH_PI))
-					))
-				);
-				//sq.rot.y -= amount_angle;
-				//sq.rot = (
-				//	sq.rot
-				//	* Versor<MyCxFixedPt>::from_y_angle(-sq_rotate_angles.y)
+				//sq.rot.y = (
+				//	/*std::fabs*/(std::fmod(
+				//		double(sq.rot.y - amount_angle),
+				//		(2.0 * double(MATH_PI))
+				//	))
 				//);
+				//sq.rot.y -= amount_angle;
+				sq.rot = (
+					sq.rot
+					* Versor<MyCxFixedPt>::from_y_angle(-sq_rotate_angles.y)
+				);
 				//sq.rot = sq.rot.norm();
 				printout(
 					"rotating y minus: ",
-					//double(sq.rot.v.y),
-					double(sq.rot.y),
+					double(sq.rot.v.y),
+					//double(sq.rot.y),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::R)
 				&& disp.key_up_now(SnesKeyKind::L)
 			) {
-				sq.rot.y = (
-					/*std::fabs*/(std::fmod(
-						double(sq.rot.y + amount_angle),
-						(2.0 * double(MATH_PI))
-					))
-				);
-				//sq.rot.y += amount_angle;
-				//sq.rot = (
-				//	sq.rot
-				//	* Versor<MyCxFixedPt>::from_y_angle(sq_rotate_angles.y)
+				//sq.rot.y = (
+				//	/*std::fabs*/(std::fmod(
+				//		double(sq.rot.y + amount_angle),
+				//		(2.0 * double(MATH_PI))
+				//	))
 				//);
+				//sq.rot.y += amount_angle;
+				sq.rot = (
+					sq.rot
+					* Versor<MyCxFixedPt>::from_y_angle(sq_rotate_angles.y)
+				);
 				//sq.rot = sq.rot.norm();
 				printout(
 					"rotating y plus: ",
-					//double(sq.rot.v.y),
-					double(sq.rot.y),
+					double(sq.rot.v.y),
+					//double(sq.rot.y),
 					"\n"
 				);
 			}

@@ -9,10 +9,10 @@ public:		// variables
 		size_2d={10.0, 10.0};
 	Vec3<MyCxFixedPt>
 		pos{0.0, 0.0, 0.0 };
-	//Versor<MyCxFixedPt>
-	//	rot=Versor<MyCxFixedPt>::identity();
-	Vec3<MyCxFixedPt>
-		rot{0.0, 0.0, 0.0};
+	Versor<MyCxFixedPt>
+		rot=Versor<MyCxFixedPt>::identity();
+	//Vec3<MyCxFixedPt>
+	//	rot{0.0, 0.0, 0.0};
 
 	//Transform model;
 	Texture* img=nullptr;
