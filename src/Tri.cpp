@@ -37,7 +37,8 @@ void Tri::do_project_etc(
 				//)
 				///// (proj_v.at(i).v.w)
 				//	//+ (HALF_SCREEN_SIZE_2D.x)
-				mult_cx_rw(proj_v.at(i).v.x, rw_arr.at(i))
+				//mult_cx_rw(proj_v.at(i).v.x, rw_arr.at(i))
+				proj_v.at(i).v.x
 				+ HALF_SCREEN_SIZE_2D.x
 			)
 		);
@@ -48,8 +49,9 @@ void Tri::do_project_etc(
 			//	//+ HALF_SCREEN_SIZE_2D.y
 			//)
 			/// (proj_v.at(i).v.w)
-			mult_cx_rw(proj_v.at(i).v.y, rw_arr.at(i))
-				//* rw_arr.at(i)
+			//mult_cx_rw(proj_v.at(i).v.y, rw_arr.at(i))
+			//	//* rw_arr.at(i)
+			proj_v.at(i).v.y
 			+ HALF_SCREEN_SIZE_2D.y
 				////* MyCxFixedPt(SCREEN_SIZE_2D.y)
 		);
@@ -93,18 +95,18 @@ void Tri::do_project_etc(
 			"\n"
 		);
 	}
-	//printout("proj_v:\n");
-	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-	//	Vec3<double> temp_v;
-	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
-	//		temp_v.at(j) = double(proj_v.at(i).v.at(j));
-	//	}
-	//	printout(
-	//		//project_v.at(i).v, "\n"
-	//		"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
-	//		"\n"
-	//	);
-	//}
+	printout("proj_v:\n");
+	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
+		Vec3<double> temp_v;
+		for (size_t j=0; j<temp_v.SIZE; ++j) {
+			temp_v.at(j) = double(proj_v.at(i).v.at(j));
+		}
+		printout(
+			//project_v.at(i).v, "\n"
+			"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
+			"\n"
+		);
+	}
 	printout("screen_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;

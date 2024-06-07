@@ -28,32 +28,35 @@ int main(int argc, char** argv) {
 	//);
 	const MyCxFixedPt
 		near(0.1),
-		far(100.0);
+		far(10.0);
 	Transform perspective(
 		near, // near
 		far // far
 	);
-	const Vec2<MyCxFixedPt>
-		tri_base_height(
-			50.0,
-			50.0
-		),
-		tbh(
-			tri_base_height.x / 2.0,
-			tri_base_height.y / 2.0
-		);
+	//const Vec2<MyCxFixedPt>
+	//	tri_base_height(
+	//		50.0,
+	//		50.0
+	//	),
+	//	tbh(
+	//		tri_base_height.x / 2.0,
+	//		tri_base_height.y / 2.0
+	//	);
 	Vec3<MyCxFixedPt> sq_pos{
 		//.x=HALF_SCREEN_SIZE_2D.x ,
 		//.y=HALF_SCREEN_SIZE_2D.y,
 		////.x=MyCxFixedPt(60.1),
 		////.y=MyCxFixedPt(60.1),
 		//.z=0.510,
-		.x=1.0,
-		.y=1.0,
-		.z=0.510,
+		//.x=1.0,
+		//.y=1.0,
+		//.z=0.510,
+		.x=0.0,
+		.y=0.0,
+		.z=0.0,
 	};
 	//Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	Vec3<MyCxFixedPt> view_pos{0.01, 0.01, 0.002};
+	Vec3<MyCxFixedPt> view_pos{0.00, 0.00, -5.000};
 	//view_pos.x = /*MyCxFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 	//	//2.0
@@ -146,9 +149,9 @@ int main(int argc, char** argv) {
 		//"gfx/obj/foreground_common_gfx.bmp"
 	);
 	Square sq{
-		.size_2d{50.0, 50.0},
+		.size_2d{1.0, 1.0},
 		.pos{sq_pos},
-		.rot{VERSOR_IDENTITY<MyCxFixedPt>},
+		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
 		.img=&texture,
 	};
 	//Tri tri{
@@ -374,6 +377,7 @@ int main(int argc, char** argv) {
 				printout(
 					"rotating y minus: ",
 					double(sq_rotate.v.y),
+					//double(sq_rotate.y),
 					"\n"
 				);
 			} else if (
@@ -395,6 +399,7 @@ int main(int argc, char** argv) {
 				printout(
 					"rotating y plus: ",
 					double(sq_rotate.v.y),
+					//double(sq_rotate.y),
 					"\n"
 				);
 			}

@@ -11,6 +11,8 @@ public:		// variables
 		pos{0.0, 0.0, 0.0 };
 	Versor<MyCxFixedPt>
 		rot=Versor<MyCxFixedPt>::identity();
+	//Vec3<MyCxFixedPt>
+	//	rot{0.0, 0.0, 0.0};
 
 	//Transform model;
 	Texture* img=nullptr;
