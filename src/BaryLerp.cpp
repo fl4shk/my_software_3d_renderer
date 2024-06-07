@@ -91,6 +91,8 @@ BaryLerp::BaryLerp(
 		|| C < MyCxFixedPt(0) || C > MyCxFixedPt(1)
 	)) {
 		_inside_tri = true;
+	} else {
+		return;
 	}
 	const MyCxFixedPt
 		interp_rw = (

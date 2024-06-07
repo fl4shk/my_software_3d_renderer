@@ -415,13 +415,13 @@ int main(int argc, char** argv) {
 		camera.set_translate(camera_pos);
 		//tri.model = &my_sq_model;
 		const Transform n_view(
-			Transform(
-				//view.look_at(my_sq_model)
-				//view.look_at(sq.model)
-				//camera.mat.inverse()
-				camera.mat
-			).look_at(sq.model).mat.inverse()
-			//camera.mat.inverse()
+			//Transform(
+			//	//view.look_at(my_sq_model)
+			//	//view.look_at(sq.model)
+			//	//camera.mat.inverse()
+			//	camera.mat
+			//).look_at(sq.model).mat.inverse()
+			camera.mat.inverse()
 			//camera.look_at(sq.model).mat.inverse()
 		);
 		std::vector<VertTextureCoords> visib;
