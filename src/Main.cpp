@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 	//);
 	const MyCxFixedPt
 		near(0.1),
-		far(100.0);
+		far(10.0);
 	Transform perspective(
 		near, // near
 		far // far
@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 		//"gfx/obj/foreground_common_gfx.bmp"
 	);
 	Square sq{
-		.size_2d{1.0, 1.0},
+		.size_2d{10.0, 10.0},
 		.pos{0.0, 0.0, 0.0},
 		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
 		.img=&texture,
@@ -246,9 +246,9 @@ int main(int argc, char** argv) {
 		{
 			printout("checking keys\n");
 			const MyCxFixedPt
-				amount_xy(1.010),
-				amount_z(0.001),
-				amount_angle(0.010005);
+				amount_xy(0.100),
+				amount_z(0.100),
+				amount_angle(0.010000);
 			if (
 				disp.key_down_now(SnesKeyKind::DpadLeft)
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
