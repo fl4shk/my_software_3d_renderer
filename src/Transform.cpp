@@ -257,20 +257,26 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//const auto& m = mvp.m;
 
 	const Vec4<MyCxFixedPt>
+		//model_v = model.mat.mult_homogeneous(
+		//	//Vec4<MyCxFixedPt>::build_homogeneous(v)
+		//	v
+		//),
+		//view_v = view.mat.mult_homogeneous(model_v),
+		//almost_ret = mat.mult_homogeneous(view_v),
+		persp_v = mat.mult_homogeneous(v),
+		view_v = view.mat.mult_homogeneous(persp_v),
 		model_v = model.mat.mult_homogeneous(
 			//Vec4<MyCxFixedPt>::build_homogeneous(v)
-			v
+			view_v
 		),
-		view_v = view.mat.mult_homogeneous(model_v),
-		almost_ret = mat.mult_homogeneous(view_v),
 		//almost_ret = mat * view_v,
 		ret{
 			//.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
 			//.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
-			.x=(almost_ret.x /*+ HALF_SCREEN_SIZE_2D.x*/),
-			.y=(almost_ret.y /*+ HALF_SCREEN_SIZE_2D.y*/),
-			.z=almost_ret.z,
-			.w=almost_ret.w,
+			.x=(model_v.x /*+ HALF_SCREEN_SIZE_2D.x*/),
+			.y=(model_v.y /*+ HALF_SCREEN_SIZE_2D.y*/),
+			.z=model_v.z,
+			.w=model_v.w,
 		};
 	Mat4x4<MyCxFixedPt>
 		temp_model(model.mat),

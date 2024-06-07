@@ -565,7 +565,21 @@ void Rast::_do_push_back(
 				.y=MyCxFixedPt(v.y),
 			}
 		);
-	if (lerp.inside_tri()) {
+	if (
+		lerp.inside_tri()
+		//&& (
+		//	lerp.v().x >= MyCxFixedPt(-1.0)
+		//	&& lerp.v().x <= MyCxFixedPt(1.0)
+		//) && (
+		//	lerp.v().y >= MyCxFixedPt(-1.0)
+		//	&& lerp.v().y <= MyCxFixedPt(1.0)
+		//) 
+		&& (
+			//lerp.v().z >= MyCxFixedPt(0.0)
+			lerp.v().z >= MyCxFixedPt(-1.0)
+			&& lerp.v().z <= MyCxFixedPt(1.0)
+		)
+	) {
 		ret.push_back(
 			//to_push
 			VertTextureCoords{

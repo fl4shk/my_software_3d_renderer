@@ -21,7 +21,7 @@ private:		// variables
 public:		// functions
 	BaryLerp(
 		const Tri& tri,
-		const Vec2<MyCxFixedPt>& v//,
+		const Vec2<MyCxFixedPt>& v1//,
 		//bool just_coords=false
 	);
 	BaryLerp(const BaryLerp&) = default;
@@ -37,6 +37,9 @@ public:		// functions
 
 	constexpr inline bool inside_tri() const {
 		return _inside_tri;
+	}
+	constexpr inline const Vec3<MyCxFixedPt>& v() const {
+		return _v;
 	}
 };
 

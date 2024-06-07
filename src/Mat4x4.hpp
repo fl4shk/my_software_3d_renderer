@@ -91,6 +91,25 @@ public:		// functions
 		}
 		return ret;
 	}
+	Vec4<T> mult_homogeneous_transpose(
+		const Vec4<T>& v
+	) const {
+		Vec4<T> ret;
+
+		//T a = v.x * m[0][0]
+		ret.x = v.x * m[0][0] + v.y * m[1][0] + v.z * m[2][0] + m[3][0]; 
+		ret.y = v.x * m[0][1] + v.y * m[1][1] + v.z * m[2][1] + m[3][1]; 
+		ret.z = v.x * m[0][2] + v.y * m[1][2] + v.z * m[2][2] + m[3][2]; 
+		T w = v.x * m[0][3] + v.y * m[1][3] + v.z * m[2][3] + m[3][3]; 
+
+		if (w != T(1)) {
+			ret.x /= w;
+			ret.y /= w;
+			ret.z /= w;
+		}
+
+		return ret;
+	}
 	Vec4<T> mult_homogeneous(
 		const Vec4<T>& v
 	) const {
@@ -101,10 +120,24 @@ public:		// functions
 		T b = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + m[1][3];
 		T c = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + m[2][3];
 		T w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + m[3][3];
-		ret.x = a / w;
-		ret.y = b / w;
-		ret.z = c / w;
-		ret.w = w;
+		if (w != T(1)) {
+			ret.x = a / w;
+			ret.y = b / w;
+			ret.z = c / w;
+			ret.w = T(1);
+		}
+
+		//printout(
+		//	"Mat4x4<T>::mult_homogeneous():\n",
+		//	*this,
+		//	"v", v, "\n",
+		//	"a{", a, "} ",
+		//	"b{", b, "} ",
+		//	"c{", c, "} ",
+		//	"w{", w, "}\n",
+		//	"ret", ret,
+		//	"\n\n"
+		//);
 		//if (w != T(1)) {
 		//	ret.x = a / w;
 		//	ret.y = b / w;

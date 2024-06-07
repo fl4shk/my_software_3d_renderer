@@ -2,7 +2,7 @@
 
 BaryLerp::BaryLerp(
 	const Tri& tri,
-	const Vec2<MyCxFixedPt>& v
+	const Vec2<MyCxFixedPt>& v1
 ) {
 	const Vert& svt0 = tri.screen_v.at(0);
 	const Vert& svt1 = tri.screen_v.at(1);
@@ -13,8 +13,8 @@ BaryLerp::BaryLerp(
 		rwb = tri.rw_arr.at(1),
 		rwc = tri.rw_arr.at(2);
 	const MyCxFixedPt
-		x = v.x,
-		y = v.y,
+		x = v1.x,
+		y = v1.y,
 		//rwa = tri.rw_arr.at(0), //MyCxFixedPt(1) / vt0.v.w,
 		//rwb = tri.rw_arr.at(1), //MyCxFixedPt(1) / vt1.v.w,
 		//rwc = tri.rw_arr.at(2), //MyCxFixedPt(1) / vt2.v.w,
@@ -23,10 +23,13 @@ BaryLerp::BaryLerp(
 		//wc = svt2.v.w,
 		xa = svt0.v.x, // * rw0,
 		ya = svt0.v.y, // * rw0,
+		za = svt0.v.z, // * rw0,
 		xb = svt1.v.x, // * rw1,
 		yb = svt1.v.y, // * rw1,
+		zb = svt1.v.z, // * rw1,
 		xc = svt2.v.x, // * rw2,
 		yc = svt2.v.y, // * rw2,
+		zc = svt2.v.z, // * rw2,
 		ua = svt0.uv.x, // * rwa,
 		ub = svt1.uv.x, // * rwa,
 		uc = svt2.uv.x, // * rwb,
@@ -104,6 +107,15 @@ BaryLerp::BaryLerp(
 	//	)
 	//);
 	_one_over_interp_rw = my_recip(interp_rw);
+
+	_v = {
+		.x=x,
+		.y=y,
+		.z=mult_cx_rw(
+			(A * za + B * zb + C * zc),
+			_one_over_interp_rw
+		)
+	};
 
 	_uv = {
 		//.x=(A * ua + B * ub + C * uc) / interp_rw,
