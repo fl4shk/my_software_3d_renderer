@@ -108,11 +108,11 @@ void Transform::set_rot_scale(
 	rot_m_v.z.m.at(2).at(1) = 0.0;
 	rot_m_v.z.m.at(2).at(2) = 1.0;
 	//rot_m_v.z = MAT3X3_IDENTITY<MyCxFixedPt>;
-	printout("set_rot_scale() 2-args:\n");
-	printout("3x3 rotation matrices:\n");
-	printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
-	printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
-	printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
+	//printout("set_rot_scale() 2-args:\n");
+	//printout("3x3 rotation matrices:\n");
+	//printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
+	//printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
+	//printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
 	//--------
 	//Vec3<Mat3x3<MyCxFixedPt>> rot_scale_m_v;
 	//for (size_t k=0; k<rot_scale_m_v.SIZE; ++k) {
@@ -121,11 +121,11 @@ void Transform::set_rot_scale(
 	//}
 	const auto scale_m = _calc_scale_mat(scale);
 
-	printout("scale 3x3 matrix:\n");
-	printout(Mat3x3<double>::cast_from(scale_m), "\n");
-	//printout("x:\n", Mat3x3<double>::cast_from(rot_scale_m_v.x), "\n");
-	//printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
-	//printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
+	//printout("scale 3x3 matrix:\n");
+	//printout(Mat3x3<double>::cast_from(scale_m), "\n");
+	////printout("x:\n", Mat3x3<double>::cast_from(rot_scale_m_v.x), "\n");
+	////printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
+	////printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
 	//--------
 	const Mat3x3<MyCxFixedPt> rot_scale_m = (
 		// scale should be applied first, otherwise you're scaling your
@@ -135,9 +135,9 @@ void Transform::set_rot_scale(
 	//const Mat3x3<MyCxFixedPt> rot_scale_m = (
 	//	rot_scale_m_zy * rot_scale_m_v.x
 	//);
-	printout("multiplied rotation/scaling matrices:\n");
-	//printout(Mat3x3<double>::cast_from(rot_scale_m_zy), "\n");
-	printout(Mat3x3<double>::cast_from(rot_scale_m), "\n");
+	//printout("multiplied rotation/scaling matrices:\n");
+	////printout(Mat3x3<double>::cast_from(rot_scale_m_zy), "\n");
+	//printout(Mat3x3<double>::cast_from(rot_scale_m), "\n");
 	set_rot_scale(rot_scale_m);
 }
 void Transform::set_rot_scale(
@@ -188,18 +188,25 @@ void Transform::set_perspective(
 	//	temp, "\n",
 	//	std::dec
 	//);
-	const MyCxFixedPt s(MyCxFixedPt(1) / temp);
-	mat.m.at(0).at(0) = s;
-	mat.m.at(1).at(1) = s;
+	const MyCxFixedPt e(MyCxFixedPt(1) / temp);
+	mat.m.at(0).at(0) = (
+		e / (
+			MyCxFixedPt(SCREEN_SIZE_2D.x) / MyCxFixedPt(SCREEN_SIZE_2D.y)
+		)
+	);
+	mat.m.at(1).at(1) = e;
 	const double near_dbl = double(near);
 	const double far_dbl = double(far);
+	// https://jsantell.com/3d-projection/
 	const MyCxFixedPt temp_0 = MyCxFixedPt(
 		//-(far / (far - near))
-		-(far_dbl / (far_dbl - near_dbl))
+		//-(far_dbl / (far_dbl - near_dbl))
+		(far_dbl + near_dbl) / (near_dbl - far_dbl)
 	);
 	const MyCxFixedPt temp_1 = MyCxFixedPt(
 		//-((far * near) / (far - near))
-		-((far_dbl * near_dbl) / (far_dbl - near_dbl))
+		//-((far_dbl * near_dbl) / (far_dbl - near_dbl))
+		(2.0 * far_dbl * near_dbl) / (near_dbl - far_dbl)
 	);
 	//printout(
 	//	"Transform::set_perspective():\n",
@@ -257,30 +264,45 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//const auto& m = mvp.m;
 
 	const Vec4<MyCxFixedPt>
-		//model_v = model.mat.mult_homogeneous(
-		//	//Vec4<MyCxFixedPt>::build_homogeneous(v)
-		//	v
-		//),
-		//view_v = view.mat.mult_homogeneous(model_v),
-		//almost_ret = mat.mult_homogeneous(view_v),
-		persp_v = mat.mult_homogeneous(v),
-		view_v = view.mat.mult_homogeneous(persp_v),
 		model_v = model.mat.mult_homogeneous(
 			//Vec4<MyCxFixedPt>::build_homogeneous(v)
-			view_v
+			v
 		),
+		view_v = view.mat.mult_homogeneous(model_v),
+		persp_v = mat.mult_homogeneous(view_v),
+		//persp_v = mat.mult_homogeneous(model_v),
+		//persp_v = mat * view_v,
+		//persp_v = mat.mult_homogeneous(v),
+		//view_v = view.mat.mult_homogeneous(persp_v),
+		//model_v = model.mat.mult_homogeneous(
+		//	//Vec4<MyCxFixedPt>::build_homogeneous(v)
+		//	view_v
+		//),
 		//almost_ret = mat * view_v,
-		ret{
+		ret(
 			//.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
 			//.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
-			.x=(model_v.x /*+ HALF_SCREEN_SIZE_2D.x*/),
-			.y=(model_v.y /*+ HALF_SCREEN_SIZE_2D.y*/),
-			.z=model_v.z,
-			.w=model_v.w,
-		};
-	Mat4x4<MyCxFixedPt>
-		temp_model(model.mat),
-		temp_view(view.mat);
+			//(persp_v.x /*+ HALF_SCREEN_SIZE_2D.x*/),
+			//(persp_v.y /*+ HALF_SCREEN_SIZE_2D.y*/),
+			//persp_v.z,
+			//persp_v.w
+			persp_v
+		);
+	//Mat4x4<MyCxFixedPt>
+	//	temp_model(model.mat),
+	//	temp_view(view.mat);
+	printout(
+		"Transform::do_project():\n",
+		"persp_mat:\n", mat, "\n",
+		"view_mat:\n", view.mat, "\n",
+		"model_mat:\n", model.mat, "\n",
+		"v", v, "\n",
+		"persp_v", persp_v, "\n",
+		"view_v", view_v, "\n",
+		"model_v", model_v, "\n",
+		"\n"
+	);
+
 	////temp_model.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
 	////temp_model.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
 	////temp_view.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;

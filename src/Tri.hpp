@@ -34,6 +34,7 @@ public:		// variables
 	TriVert
 		v,
 		proj_v,
+		clip_v,
 		screen_v;
 	std::array<MyRwCxFixedPt, TRI_VERT_SIZE> rw_arr;
 	//std::array<MyCxFixedPt, TRI_VERT_SIZE> rw_arr;

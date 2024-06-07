@@ -4,9 +4,9 @@ BaryLerp::BaryLerp(
 	const Tri& tri,
 	const Vec2<MyCxFixedPt>& v1
 ) {
-	const Vert& svt0 = tri.screen_v.at(0);
-	const Vert& svt1 = tri.screen_v.at(1);
-	const Vert& svt2 = tri.screen_v.at(2);
+	const Vert& svt0 = tri.clip_v.at(0);
+	const Vert& svt1 = tri.clip_v.at(1);
+	const Vert& svt2 = tri.clip_v.at(2);
 
 	const MyRwCxFixedPt
 		rwa = tri.rw_arr.at(0),
@@ -85,13 +85,11 @@ BaryLerp::BaryLerp(
 	B = mult_cx_rw(b_numer_det, one_over_denom_det),
 	C = mult_cx_rw(c_numer_det, one_over_denom_det),
 	A = MyCxFixedPt(1) - B - C;
-	if (
-		!(
-			A < MyCxFixedPt(0) || A > MyCxFixedPt(1)
-			|| B < MyCxFixedPt(0) || B > MyCxFixedPt(1)
-			|| C < MyCxFixedPt(0) || C > MyCxFixedPt(1)
-		)
-	) {
+	if (!(
+		A < MyCxFixedPt(0) || A > MyCxFixedPt(1)
+		|| B < MyCxFixedPt(0) || B > MyCxFixedPt(1)
+		|| C < MyCxFixedPt(0) || C > MyCxFixedPt(1)
+	)) {
 		_inside_tri = true;
 	}
 	const MyCxFixedPt

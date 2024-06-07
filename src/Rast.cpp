@@ -574,12 +574,14 @@ void Rast::_do_push_back(
 		//	lerp.v().y >= MyCxFixedPt(-1.0)
 		//	&& lerp.v().y <= MyCxFixedPt(1.0)
 		//) 
-		&& (
-			//lerp.v().z >= MyCxFixedPt(0.0)
-			lerp.v().z >= MyCxFixedPt(-1.0)
-			&& lerp.v().z <= MyCxFixedPt(1.0)
-		)
+		//&& (
+		//	//lerp.v().z >= MyCxFixedPt(0.0)
+		//	lerp.v().z >= MyCxFixedPt(-1.0)
+		//	&& lerp.v().z <= MyCxFixedPt(1.0)
+		//)
+		//true
 	) {
+		//printout("test\n");
 		ret.push_back(
 			//to_push
 			VertTextureCoords{
@@ -777,13 +779,13 @@ void Rast::calc_visib(
 	//--------
 	//auto temp_v = tri.screen_v;
 	// 28.4 fixed-point coordinates
-	const int Y1 = std::round(16.0 * double((tri.screen_v.at(0).v.y)));
-	const int Y2 = std::round(16.0 * double((tri.screen_v.at(1).v.y)));
-	const int Y3 = std::round(16.0 * double((tri.screen_v.at(2).v.y)));
+	const int Y1 = std::round(16.0 * double((tri.clip_v.at(0).v.y)));
+	const int Y2 = std::round(16.0 * double((tri.clip_v.at(1).v.y)));
+	const int Y3 = std::round(16.0 * double((tri.clip_v.at(2).v.y)));
 
-	const int X1 = std::round(16.0 * double((tri.screen_v.at(0).v.x)));
-	const int X2 = std::round(16.0 * double((tri.screen_v.at(1).v.x)));
-	const int X3 = std::round(16.0 * double((tri.screen_v.at(2).v.x)));
+	const int X1 = std::round(16.0 * double((tri.clip_v.at(0).v.x)));
+	const int X2 = std::round(16.0 * double((tri.clip_v.at(1).v.x)));
+	const int X3 = std::round(16.0 * double((tri.clip_v.at(2).v.x)));
 	//const std::array<Vec2<int>, 3> coords{
 	//	{
 	//		{.x=X1, .y=Y1},
@@ -848,18 +850,18 @@ void Rast::calc_visib(
 	minx &= ~(q - 1);
 	miny &= ~(q - 1);
 
-	if (minx < (0)) {
-		minx = (0);
-	}
-	if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
-		maxx = (SCREEN_SIZE_2D.x - 1);
-	}
-	if (miny < (0)) {
-		miny = (0);
-	}
-	if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
-		maxy = (SCREEN_SIZE_2D.y - 1);
-	}
+	//if (minx < (0)) {
+	//	minx = (0);
+	//}
+	//if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
+	//	maxx = (SCREEN_SIZE_2D.x - 1);
+	//}
+	//if (miny < (0)) {
+	//	miny = (0);
+	//}
+	//if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
+	//	maxy = (SCREEN_SIZE_2D.y - 1);
+	//}
 
 	printout(
 		"minmax_x{", minx, " ", maxx, "}\n",

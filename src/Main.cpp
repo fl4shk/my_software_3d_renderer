@@ -42,21 +42,31 @@ int main(int argc, char** argv) {
 	//		tri_base_height.x / 2.0,
 	//		tri_base_height.y / 2.0
 	//	);
-	Vec3<MyCxFixedPt> sq_pos{
-		//.x=HALF_SCREEN_SIZE_2D.x ,
-		//.y=HALF_SCREEN_SIZE_2D.y,
-		////.x=MyCxFixedPt(60.1),
-		////.y=MyCxFixedPt(60.1),
-		//.z=0.510,
-		//.x=1.0,
-		//.y=1.0,
-		//.z=0.510,
-		.x=0.0,
-		.y=0.0,
-		.z=0.0,
+	Texture texture(
+		"gfx/obj/wood_block.bmp"
+		//"gfx/obj/foreground_common_gfx.bmp"
+	);
+	Square sq{
+		.size_2d{1.0, 1.0},
+		.pos{0.0, 0.0, -5.0},
+		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
+		.img=&texture,
 	};
+	//Vec3<MyCxFixedPt> sq_pos{
+	//	//.x=HALF_SCREEN_SIZE_2D.x ,
+	//	//.y=HALF_SCREEN_SIZE_2D.y,
+	//	////.x=MyCxFixedPt(60.1),
+	//	////.y=MyCxFixedPt(60.1),
+	//	//.z=0.510,
+	//	//.x=1.0,
+	//	//.y=1.0,
+	//	//.z=0.510,
+	//	.x=0.0,
+	//	.y=0.0,
+	//	.z=0.0,
+	//};
 	//Mat4x4<MyCxFixedPt> view_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	Vec3<MyCxFixedPt> view_pos{0.00, 0.00, -5.000};
+	Vec3<MyCxFixedPt> view_pos{0.00, 0.00, 0.000};
 	//view_pos.x = /*MyCxFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 	//	//2.0
@@ -91,12 +101,13 @@ int main(int argc, char** argv) {
 		//view_mat
 		//view_pos
 	//view.mat = MAT4X4_IDENTITY<MyCxFixedPt>;
-	view.set_translate(view_pos);
-	view.set_rot_scale(
-		//view_rot
-		MAT3X3_IDENTITY<MyCxFixedPt>
-	);
-	view.set_to_affine_finish();
+
+	//view.set_translate(view_pos);
+	//view.set_rot_scale(
+	//	//view_rot
+	//	MAT3X3_IDENTITY<MyCxFixedPt>
+	//);
+	//view.set_to_affine_finish();
 	
 	//Transform perspective(
 	//	MAT4X4_IDENTITY<MyCxFixedPt>
@@ -108,11 +119,11 @@ int main(int argc, char** argv) {
 	//};
 	//Mat4x4<MyCxFixedPt> my_sq_model = MAT4X4_IDENTITY<MyCxFixedPt>;
 	//Transform my_sq_model;
-	//my_sq_model.mat.set_translate(sq_pos);
+	//my_sq_model.mat.set_translate(sq.pos);
 	//Vec3<MyCxFixedPt>
 	//	sq_rotate{0.0, 0.0, 0.0};
-	Versor<MyCxFixedPt>
-		sq_rotate(VERSOR_IDENTITY<MyCxFixedPt>);
+	//Versor<MyCxFixedPt>
+	//	sq_rotate(VERSOR_IDENTITY<MyCxFixedPt>);
 	//const Vec3<Vec3<MyCxFixedPt>>
 	//	tri_rotate_angles(
 	//		{0.0001, 0.0, 0.0},
@@ -144,16 +155,6 @@ int main(int argc, char** argv) {
 	//my_sq_model.set_to_affine_finish();
 	//const MyCxFixedPt
 	//	my_z = MyCxFixedPt(0.0);
-	Texture texture(
-		"gfx/obj/wood_block.bmp"
-		//"gfx/obj/foreground_common_gfx.bmp"
-	);
-	Square sq{
-		.size_2d{1.0, 1.0},
-		.pos{sq_pos},
-		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
-		.img=&texture,
-	};
 	//Tri tri{
 	//	.img=&texture,
 	//	//.model=Transform(
@@ -247,25 +248,25 @@ int main(int argc, char** argv) {
 			const MyCxFixedPt
 				amount_xy(0.10),
 				amount_z(0.001),
-				amount_angle(0.00005);
+				amount_angle(0.010005);
 			if (
 				disp.key_down_now(SnesKeyKind::DpadLeft)
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
 			) {
-				view_pos.x += amount_xy;
+				sq.pos.x += amount_xy;
 				printout(
 					"moving left: ",
-					double(view_pos.x),
+					double(sq.pos.x),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadRight)
 				&& disp.key_up_now(SnesKeyKind::DpadLeft)
 			) {
-				view_pos.x -= amount_xy;
+				sq.pos.x -= amount_xy;
 				printout(
 					"moving right: ",
-					double(view_pos.x),
+					double(sq.pos.x),
 					"\n"
 				);
 			}
@@ -274,20 +275,20 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::DpadUp)
 				&& disp.key_up_now(SnesKeyKind::DpadDown)
 			) {
-				view_pos.y += amount_xy;
+				sq.pos.y += amount_xy;
 				printout(
 					"moving up: ",
-					double(view_pos.y),
+					double(sq.pos.y),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadDown)
 				&& disp.key_up_now(SnesKeyKind::DpadUp)
 			) {
-				view_pos.y -= amount_xy;
+				sq.pos.y -= amount_xy;
 				printout(
 					"moving down: ",
-					double(view_pos.y),
+					double(sq.pos.y),
 					"\n"
 				);
 			}
@@ -296,20 +297,20 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::Y)
 				&& disp.key_up_now(SnesKeyKind::A)
 			) {
-				view_pos.z -= amount_z;
+				sq.pos.z -= amount_z;
 				printout(
 					"moving backward: ",
-					double(view_pos.z),
+					double(sq.pos.z),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::A)
 				&& disp.key_up_now(SnesKeyKind::Y)
 			) {
-				view_pos.z += amount_z;
+				sq.pos.z += amount_z;
 				printout(
 					"moving forward: ",
-					double(view_pos.z),
+					double(sq.pos.z),
 					"\n"
 				);
 			}
@@ -318,42 +319,42 @@ int main(int argc, char** argv) {
 			//	disp.key_down_now(SnesKeyKind::B)
 			//	&& disp.key_up_now(SnesKeyKind::X)
 			//) {
-			//	//sq_rotate.v.x = (
+			//	//sq.rot.v.x = (
 			//	//	/*-std::fabs*/(std::fmod(
-			//	//		double(sq_rotate.v.x - amount_angle),
+			//	//		double(sq.rot.v.x - amount_angle),
 			//	//		(2.0 * double(MATH_PI))
 			//	//	))
 			//	//);
-			//	//sq_rotate.v.x -= amount_angle;
-			//	sq_rotate = (
-			//		sq_rotate
+			//	//sq.rot.v.x -= amount_angle;
+			//	sq.rot = (
+			//		sq.rot
 			//		* Versor<MyCxFixedPt>::from_x_angle(-sq_rotate_angles.x)
 			//	);
-			//	//sq_rotate = sq_rotate.norm();
+			//	//sq.rot = sq.rot.norm();
 			//	printout(
 			//		"rotating x minus: ",
-			//		double(sq_rotate.v.x),
+			//		double(sq.rot.v.x),
 			//		"\n"
 			//	);
 			//} else if (
 			//	disp.key_down_now(SnesKeyKind::X)
 			//	&& disp.key_up_now(SnesKeyKind::B)
 			//) {
-			//	//sq_rotate.x = (
+			//	//sq.rot.x = (
 			//	//	/*-std::fabs*/(std::fmod(
-			//	//		double(sq_rotate.x + amount_angle),
+			//	//		double(sq.rot.x + amount_angle),
 			//	//		(2.0 * double(MATH_PI))
 			//	//	))
 			//	//);
-			//	//sq_rotate.v.x += amount_angle;
-			//	sq_rotate = (
-			//		sq_rotate
+			//	//sq.rot.v.x += amount_angle;
+			//	sq.rot = (
+			//		sq.rot
 			//		* Versor<MyCxFixedPt>::from_x_angle(sq_rotate_angles.x)
 			//	);
-			//	//sq_rotate = sq_rotate.norm();
+			//	//sq.rot = sq.rot.norm();
 			//	printout(
 			//		"rotating x plus: ",
-			//		double(sq_rotate.v.x),
+			//		double(sq.rot.v.x),
 			//		"\n"
 			//	);
 			//}
@@ -362,44 +363,44 @@ int main(int argc, char** argv) {
 				disp.key_down_now(SnesKeyKind::L)
 				&& disp.key_up_now(SnesKeyKind::R)
 			) {
-				//sq_rotate.y = (
-				//	std::fabs(std::fmod(
-				//		double(sq_rotate.y - amount_angle),
-				//		(2.0 * double(MATH_PI))
-				//	))
-				//);
-				//sq_rotate.v.y -= amount_angle;
-				sq_rotate = (
-					sq_rotate
-					* Versor<MyCxFixedPt>::from_y_angle(-sq_rotate_angles.y)
+				sq.rot.y = (
+					/*std::fabs*/(std::fmod(
+						double(sq.rot.y - amount_angle),
+						(2.0 * double(MATH_PI))
+					))
 				);
-				//sq_rotate = sq_rotate.norm();
+				//sq.rot.y -= amount_angle;
+				//sq.rot = (
+				//	sq.rot
+				//	* Versor<MyCxFixedPt>::from_y_angle(-sq_rotate_angles.y)
+				//);
+				//sq.rot = sq.rot.norm();
 				printout(
 					"rotating y minus: ",
-					double(sq_rotate.v.y),
-					//double(sq_rotate.y),
+					//double(sq.rot.v.y),
+					double(sq.rot.y),
 					"\n"
 				);
 			} else if (
 				disp.key_down_now(SnesKeyKind::R)
 				&& disp.key_up_now(SnesKeyKind::L)
 			) {
-				//sq_rotate.y = (
-				//	std::fabs(std::fmod(
-				//		double(sq_rotate.y + amount_angle),
-				//		(2.0 * double(MATH_PI))
-				//	))
-				//);
-				//sq_rotate.v.y += amount_angle;
-				sq_rotate = (
-					sq_rotate
-					* Versor<MyCxFixedPt>::from_y_angle(sq_rotate_angles.y)
+				sq.rot.y = (
+					/*std::fabs*/(std::fmod(
+						double(sq.rot.y + amount_angle),
+						(2.0 * double(MATH_PI))
+					))
 				);
-				//sq_rotate = sq_rotate.norm();
+				//sq.rot.y += amount_angle;
+				//sq.rot = (
+				//	sq.rot
+				//	* Versor<MyCxFixedPt>::from_y_angle(sq_rotate_angles.y)
+				//);
+				//sq.rot = sq.rot.norm();
 				printout(
 					"rotating y plus: ",
-					double(sq_rotate.v.y),
-					//double(sq_rotate.y),
+					//double(sq.rot.v.y),
+					double(sq.rot.y),
 					"\n"
 				);
 			}
@@ -407,11 +408,11 @@ int main(int argc, char** argv) {
 		//sq.model.set_rot_scale(
 		//	sq_rotate
 		//);
-		sq.rot = sq_rotate;
-		//my_sq_model.set_translate(sq_pos);
+		//sq.rot = sq_rotate;
+		//my_sq_model.set_translate(sq.pos);
 		auto& tri_arr = sq.update_tri_arr();
 
-		view.set_translate(view_pos);
+		//view.set_translate(view_pos);
 		//tri.model = &my_sq_model;
 		const auto n_view = (
 			//view.look_at(my_sq_model)
