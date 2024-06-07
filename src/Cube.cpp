@@ -1,5 +1,25 @@
 #include "Cube.hpp"
 
+auto Cube::update_face_arr() -> std::array<Square, size_t(FaceIdx::LIM)>& {
+
+	auto& top = face_arr.at(size_t(FaceIdx::TOP));
+	auto& bot = face_arr.at(size_t(FaceIdx::BOT));
+	auto& left = face_arr.at(size_t(FaceIdx::LEFT));
+	auto& right = face_arr.at(size_t(FaceIdx::RIGHT));
+	auto& front = face_arr.at(size_t(FaceIdx::FRONT));
+	auto& back = face_arr.at(size_t(FaceIdx::BACK));
+
+	top.size_2d = bot.size_2d = {dim, dim};
+	left.size_2d = right.size_2d = {dim, dim};
+	front.size_2d = back.size_2d = {dim, dim};
+
+	for (size_t i=0; i<face_arr.size(); ++i) {
+		face_arr.at(i).img = img;
+		face_arr.at(i).update_tri_arr();
+	}
+
+	return face_arr;
+}
 //auto Cube::to_tri_arr() const 
 //-> std::array<std::array<Tri, 2>, size_t(TriIdx::LIM)> {
 //	std::array<std::array<Tri, 2>, size_t(TriIdx::LIM)> ret;

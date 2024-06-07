@@ -6,7 +6,7 @@
 class Square {
 public:		// variables
 	Vec2<MyCxFixedPt>
-		size_2d={10.0, 10.0};
+		size_2d={1.0, 1.0};
 	Vec3<MyCxFixedPt>
 		pos{0.0, 0.0, 0.0 };
 	Versor<MyCxFixedPt>

@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 		//"gfx/obj/foreground_common_gfx.bmp"
 	);
 	Square sq{
-		.size_2d{10.0, 10.0},
+		.size_2d{1.0, 1.0},
 		.pos{0.0, 0.0, 0.0},
 		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
 		.img=&texture,
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 	//		{0.0, 0.0, 0.0001}
 	//	);
 	const Vec3<MyCxFixedPt>
-		sq_rotate_angles{0.0101, 0.0101, 0.0101};
+		sq_rotate_angles{0.00101, 0.00101, 0.00101};
 		
 	//my_sq_model.set_rot_scale(
 	//	sq_rotate
@@ -247,8 +247,8 @@ int main(int argc, char** argv) {
 			printout("checking keys\n");
 			const MyCxFixedPt
 				amount_xy(0.100),
-				amount_z(0.100),
-				amount_angle(0.010000);
+				amount_z(0.0100),
+				amount_angle(0.00010000);
 			if (
 				disp.key_down_now(SnesKeyKind::DpadLeft)
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
