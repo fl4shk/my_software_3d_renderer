@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 	//);
 	const MyCxFixedPt
 		near(0.1),
-		far(10.0);
+		far(100.0);
 	Transform perspective(
 		near, // near
 		far // far
@@ -246,7 +246,7 @@ int main(int argc, char** argv) {
 		{
 			printout("checking keys\n");
 			const MyCxFixedPt
-				amount_xy(0.010),
+				amount_xy(1.010),
 				amount_z(0.001),
 				amount_angle(0.010005);
 			if (
@@ -415,9 +415,14 @@ int main(int argc, char** argv) {
 		camera.set_translate(camera_pos);
 		//tri.model = &my_sq_model;
 		const Transform n_view(
-			//view.look_at(my_sq_model)
-			//view.look_at(sq.model)
-			camera.mat.inverse()
+			Transform(
+				//view.look_at(my_sq_model)
+				//view.look_at(sq.model)
+				//camera.mat.inverse()
+				camera.mat
+			).look_at(sq.model).mat.inverse()
+			//camera.mat.inverse()
+			//camera.look_at(sq.model).mat.inverse()
 		);
 		std::vector<VertTextureCoords> visib;
 		for (size_t i=0; i<tri_arr.size(); ++i)

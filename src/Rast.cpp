@@ -850,18 +850,18 @@ void Rast::calc_visib(
 	minx &= ~(q - 1);
 	miny &= ~(q - 1);
 
-	//if (minx < (0)) {
-	//	minx = (0);
-	//}
-	//if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
-	//	maxx = (SCREEN_SIZE_2D.x - 1);
-	//}
-	//if (miny < (0)) {
-	//	miny = (0);
-	//}
-	//if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
-	//	maxy = (SCREEN_SIZE_2D.y - 1);
-	//}
+	if (minx < (0)) {
+		minx = (0);
+	}
+	if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
+		maxx = (SCREEN_SIZE_2D.x - 1);
+	}
+	if (miny < (0)) {
+		miny = (0);
+	}
+	if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
+		maxy = (SCREEN_SIZE_2D.y - 1);
+	}
 
 	printout(
 		"minmax_x{", minx, " ", maxx, "}\n",
@@ -944,190 +944,190 @@ void Rast::calc_visib(
 			//	"\n"
 			//);
 
-			//// Evaluate half-space functions
-			//bool a00_i = C1 + DX12 * y0 - DY12 * x0 > 0;
-			//bool a10_i = C1 + DX12 * y0 - DY12 * x1 > 0;
-			//bool a01_i = C1 + DX12 * y1 - DY12 * x0 > 0;
-			//bool a11_i = C1 + DX12 * y1 - DY12 * x1 > 0;
-			////int a00 = a00_i >= 0;
-			////int a10 = a10_i >= 0;
-			////int a01 = a01_i >= 0;
-			////int a11 = a11_i >= 0;
-			//int a = (
-			//	(int(a00_i) << 0)
-			//	| (int(a10_i) << 1)
-			//	| (int(a01_i) << 2)
-			//	| (int(a11_i) << 3)
-			//);
+			// Evaluate half-space functions
+			bool a00_i = C1 + DX12 * y0 - DY12 * x0 > 0;
+			bool a10_i = C1 + DX12 * y0 - DY12 * x1 > 0;
+			bool a01_i = C1 + DX12 * y1 - DY12 * x0 > 0;
+			bool a11_i = C1 + DX12 * y1 - DY12 * x1 > 0;
+			//int a00 = a00_i >= 0;
+			//int a10 = a10_i >= 0;
+			//int a01 = a01_i >= 0;
+			//int a11 = a11_i >= 0;
+			int a = (
+				(int(a00_i) << 0)
+				| (int(a10_i) << 1)
+				| (int(a01_i) << 2)
+				| (int(a11_i) << 3)
+			);
 	
-			//bool b00_i = C2 + DX23 * y0 - DY23 * x0 > 0;
-			//bool b10_i = C2 + DX23 * y0 - DY23 * x1 > 0;
-			//bool b01_i = C2 + DX23 * y1 - DY23 * x0 > 0;
-			//bool b11_i = C2 + DX23 * y1 - DY23 * x1 > 0;
-			////int b00 = b00_i >= 0;
-			////int b10 = b10_i >= 0;
-			////int b01 = b01_i >= 0;
-			////int b11 = b11_i >= 0;
-			//int b = (
-			//	(int(b00_i) << 0)
-			//	| (int(b10_i) << 1)
-			//	| (int(b01_i) << 2)
-			//	| (int(b11_i) << 3)
-			//);
+			bool b00_i = C2 + DX23 * y0 - DY23 * x0 > 0;
+			bool b10_i = C2 + DX23 * y0 - DY23 * x1 > 0;
+			bool b01_i = C2 + DX23 * y1 - DY23 * x0 > 0;
+			bool b11_i = C2 + DX23 * y1 - DY23 * x1 > 0;
+			//int b00 = b00_i >= 0;
+			//int b10 = b10_i >= 0;
+			//int b01 = b01_i >= 0;
+			//int b11 = b11_i >= 0;
+			int b = (
+				(int(b00_i) << 0)
+				| (int(b10_i) << 1)
+				| (int(b01_i) << 2)
+				| (int(b11_i) << 3)
+			);
 	
-			//bool c00_i = C3 + DX31 * y0 - DY31 * x0 > 0;
-			//bool c10_i = C3 + DX31 * y0 - DY31 * x1 > 0;
-			//bool c01_i = C3 + DX31 * y1 - DY31 * x0 > 0;
-			//bool c11_i = C3 + DX31 * y1 - DY31 * x1 > 0;
-			////int c00 = c00_i >= 0;
-			////int c10 = c10_i >= 0;
-			////int c01 = c01_i >= 0;
-			////int c11 = c11_i >= 0;
-			//int c = (
-			//	(int(c00_i) << 0)
-			//	| (int(c10_i) << 1)
-			//	| (int(c01_i) << 2)
-			//	| (int(c11_i) << 3)
-			//);
+			bool c00_i = C3 + DX31 * y0 - DY31 * x0 > 0;
+			bool c10_i = C3 + DX31 * y0 - DY31 * x1 > 0;
+			bool c01_i = C3 + DX31 * y1 - DY31 * x0 > 0;
+			bool c11_i = C3 + DX31 * y1 - DY31 * x1 > 0;
+			//int c00 = c00_i >= 0;
+			//int c10 = c10_i >= 0;
+			//int c01 = c01_i >= 0;
+			//int c11 = c11_i >= 0;
+			int c = (
+				(int(c00_i) << 0)
+				| (int(c10_i) << 1)
+				| (int(c01_i) << 2)
+				| (int(c11_i) << 3)
+			);
 
-			//// Skip block when outside an edge
-			//if (a == 0x0 || b == 0x0 || c == 0x0) {
-			//	//printout(
-			//	//	"skip block: ",
-			//	//	Vec2<int>{.x=x, .y=y}, " ",
-			//	//	"{", a, " ", b, " ", c, "}",
-			//	//	//"\n"
-			//	//	//" ",
-			//	//	//"a_i{",
-			//	//	//	a00_i, " ",
-			//	//	//	a10_i, " ",
-			//	//	//	a01_i, " ",
-			//	//	//	a11_i,
-			//	//	//"}", 
-			//	//	//" ",
-			//	//	//"b_i{",
-			//	//	//	b00_i, " ",
-			//	//	//	b10_i, " ",
-			//	//	//	b01_i, " ",
-			//	//	//	b11_i,
-			//	//	//"}", 
-			//	//	//" ",
-			//	//	//"c_i{",
-			//	//	//	c00_i, " ",
-			//	//	//	c10_i, " ",
-			//	//	//	c01_i, " ",
-			//	//	//	c11_i,
-			//	//	//"}",
-			//	//	"\n"
-			//	//);
-			//	continue;
-			//}
+			// Skip block when outside an edge
+			if (a == 0x0 || b == 0x0 || c == 0x0) {
+				//printout(
+				//	"skip block: ",
+				//	Vec2<int>{.x=x, .y=y}, " ",
+				//	"{", a, " ", b, " ", c, "}",
+				//	//"\n"
+				//	//" ",
+				//	//"a_i{",
+				//	//	a00_i, " ",
+				//	//	a10_i, " ",
+				//	//	a01_i, " ",
+				//	//	a11_i,
+				//	//"}", 
+				//	//" ",
+				//	//"b_i{",
+				//	//	b00_i, " ",
+				//	//	b10_i, " ",
+				//	//	b01_i, " ",
+				//	//	b11_i,
+				//	//"}", 
+				//	//" ",
+				//	//"c_i{",
+				//	//	c00_i, " ",
+				//	//	c10_i, " ",
+				//	//	c01_i, " ",
+				//	//	c11_i,
+				//	//"}",
+				//	"\n"
+				//);
+				continue;
+			}
 
 			//unsigned int *buffer = colorBuffer;
 			//u8* buf = col_buf;
-			for (int iy=0; iy<q; ++iy) {
-				for (int ix=x; ix<x + q; ++ix) {
-					_do_push_back(
-						tri,
-						Vec2<DrawT>{
-							.x=DrawT(ix),
-							.y=DrawT(y + iy),
-						},
-						ret
-					);
-				}
-			}
-
-			// Accept whole block when totally covered
-			//if (a == 0xF && b == 0xF && c == 0xF) {
-			//	printout(
-			//		"whole block: ", Vec2<int>{.x=x, .y=y}, "\n"
-			//	);
-			//	for (int iy = 0; iy < q; ++iy) {
-			//		for (int ix = x; ix < x + q; ++ix) {
-			//			printout("testificate 1\n");
-			//			//buffer[ix] = 0x00007F00;	 // Green
-			//			//to_push_idx = ix;
-			//			//ret.at(y).at(x) = true;
-			//			//++to_push_idx;
-			//			//buf[ix] = true;
-			//			//col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
-			//			_do_push_back(
-			//				//to_push
-			//				tri,
-			//				Vec2<DrawT>{
-			//					.x=DrawT(ix),
-			//					.y=DrawT(y + iy),
-			//				},
-			//				ret
-			//			);
-			//			//printout(
-			//			//	Vec2<double>(
-			//			//		double(ret.back().x),
-			//			//		double(ret.back().y)
-			//			//	),
-			//			//	"\n"
-			//			//);
-			//			//printout(
-			//			//	buf[ix], "\n"
-			//			//);
-			//		}
-
-			//		//(char*&)buffer += STRIDE;
-			//		//buf += STRIDE;
-			//		//to_push_idx += 8;
-			//		//++to_push_idx;
-			//	}
-			//} else { // Partially covered block
-			//	printout(
-			//		"partial block: ", Vec2<int>{.x=x, .y=y}, "\n"
-			//	);
-			//	int CY1 = C1 + DX12 * y0 - DY12 * x0;
-			//	int CY2 = C2 + DX23 * y0 - DY23 * x0;
-			//	int CY3 = C3 + DX31 * y0 - DY31 * x0;
-
-			//	for (int iy = y; iy < y + q; ++iy) {
-			//		int CX1 = CY1;
-			//		int CX2 = CY2;
-			//		int CX3 = CY3;
-	  
-			//		for (int ix = x; ix < x + q; ++ix) {
-			//			if (CX1 > 0 && CX2 > 0 && CX3 > 0) {
-			//				printout("testificate 2\n");
-			//				//buffer[ix] = 0x0000007F;	 // Blue
-			//				//ret_row.push_back(true);
-			//				//ret.at
-			//				//buf[ix] = true;
-			//				//col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
-			//				//ret.push_back(to_push);
-			//				_do_push_back(
-			//					//to_push
-			//					tri,
-			//					Vec2<DrawT>{
-			//						.x=DrawT(ix),
-			//						.y=DrawT(iy),
-			//					},
-			//					ret
-			//				);
-			//			}
-			//			//else {
-			//			//	//ret_row.push_back(false);
-			//			//}
-			//			//++to_push_idx;
-
-			//			CX1 -= FDY12;
-			//			CX2 -= FDY23;
-			//			CX3 -= FDY31;
-			//		}
-
-			//		CY1 += FDX12;
-			//		CY2 += FDX23;
-			//		CY3 += FDX31;
-
-			//		//(char*&)buffer += STRIDE;
-			//		//buf += STRIDE;
+			//for (int iy=0; iy<q; ++iy) {
+			//	for (int ix=x; ix<x + q; ++ix) {
+			//		_do_push_back(
+			//			tri,
+			//			Vec2<DrawT>{
+			//				.x=DrawT(ix),
+			//				.y=DrawT(y + iy),
+			//			},
+			//			ret
+			//		);
 			//	}
 			//}
+
+			// Accept whole block when totally covered
+			if (a == 0xF && b == 0xF && c == 0xF) {
+				//printout(
+				//	"whole block: ", Vec2<int>{.x=x, .y=y}, "\n"
+				//);
+				for (int iy = 0; iy < q; ++iy) {
+					for (int ix = x; ix < x + q; ++ix) {
+						//printout("testificate 1\n");
+						//buffer[ix] = 0x00007F00;	 // Green
+						//to_push_idx = ix;
+						//ret.at(y).at(x) = true;
+						//++to_push_idx;
+						//buf[ix] = true;
+						//col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
+						_do_push_back(
+							//to_push
+							tri,
+							Vec2<DrawT>{
+								.x=DrawT(ix),
+								.y=DrawT(y + iy),
+							},
+							ret
+						);
+						//printout(
+						//	Vec2<double>(
+						//		double(ret.back().x),
+						//		double(ret.back().y)
+						//	),
+						//	"\n"
+						//);
+						//printout(
+						//	buf[ix], "\n"
+						//);
+					}
+
+					//(char*&)buffer += STRIDE;
+					//buf += STRIDE;
+					//to_push_idx += 8;
+					//++to_push_idx;
+				}
+			} else { // Partially covered block
+				//printout(
+				//	"partial block: ", Vec2<int>{.x=x, .y=y}, "\n"
+				//);
+				int CY1 = C1 + DX12 * y0 - DY12 * x0;
+				int CY2 = C2 + DX23 * y0 - DY23 * x0;
+				int CY3 = C3 + DX31 * y0 - DY31 * x0;
+
+				for (int iy = y; iy < y + q; ++iy) {
+					int CX1 = CY1;
+					int CX2 = CY2;
+					int CX3 = CY3;
+	  
+					for (int ix = x; ix < x + q; ++ix) {
+						if (CX1 > 0 && CX2 > 0 && CX3 > 0) {
+							//printout("testificate 2\n");
+							//buffer[ix] = 0x0000007F;	 // Blue
+							//ret_row.push_back(true);
+							//ret.at
+							//buf[ix] = true;
+							//col_buf[y * SCREEN_SIZE_2D.x + ix] = true;
+							//ret.push_back(to_push);
+							_do_push_back(
+								//to_push
+								tri,
+								Vec2<DrawT>{
+									.x=DrawT(ix),
+									.y=DrawT(iy),
+								},
+								ret
+							);
+						}
+						//else {
+						//	//ret_row.push_back(false);
+						//}
+						//++to_push_idx;
+
+						CX1 -= FDY12;
+						CX2 -= FDY23;
+						CX3 -= FDY31;
+					}
+
+					CY1 += FDX12;
+					CY2 += FDX23;
+					CY3 += FDX31;
+
+					//(char*&)buffer += STRIDE;
+					//buf += STRIDE;
+				}
+			}
 		}
 		//printout("\n");
 
