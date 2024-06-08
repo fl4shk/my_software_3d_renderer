@@ -1,0 +1,97 @@
+The scalar equation of a plane is
+a*(x - x0) + b*(y - y0) + c*(z - z0) = 0
+--------
+This can be written as
+a*x + b.y + c*z = d
+
+where d = a*x0 + b*y0 + c*z0
+--------
+One normal vector to the plane is
+n_hat = {a, b, c}
+--------
+We want the unit normal vector for clipping.
+Also, I'm doing clipping in homogeneous space before the divide by `w`
+--------
+We can cover w < 0 and w > 0 with these boundaries defining the planes:
+
+B_left = w*(w - x)
+B_right = w*(w + x)
+B_bottom = w*(w + y)
+B_top = w*(w - y)
+
+// not sure that `B_near` as written is appropriate for my specific
+// perspective projection matrix
+B_near = w * z		
+
+B_far = w*(w - z)
+
+These are chosen so that they are positive in both visible regions.
+Clipping is performed one boundary at a time with teh surviving portions of
+the segment being passed on to the next boundary. This requires two plane
+intersection tests for each boundary.
+--------
+For reasons of economy we can merge the left and right clipping regions
+into one global x clipping surface by defining
+
+B_X = (w + x)*(w - x)
+
+An incoming line segment would be tested against each of these component
+planes. If it intersected only one, the visible portion would be retained
+and passed to the y clip. If it intersected both, the signs of (w + x) and
+(w - x) would determine if it was the center section or the two end
+sections that was visible. The y and z visible regions are similarly
+defined by
+
+B_Y = (w + x)*(w - y)
+B_Z = w * (w - z) // again, not sure this applies to my situation.
+
+--------
+B_left = 
+--------
+
+Homogeneous clipping:
+https://cs418.cs.illinois.edu/website/text/clipping.html
+
+The six clipping planes (at least that I'm using) are
+-w <= x <= w
+-w <= y <= w
+-w <= z <= w
+
+
+[A B C D][[x][y][z][w]]
+this is essentially a dot product of two 4D vectors
+
+signed_distance = A*x + B*y + C*z + D*w
+plug in the homogeneous (post perspective projection, pre-perspective
+divide; also known as homogeneous clip space) [x y z w] from your
+triangle's vertices to get the signed distance
+
+Example:
+for x <= w:
+(1 2 3 4) and (4 1 -1 2) crosses the x <= w clipping plane (because 1 < 4
+but 4 >= 2)
+Rewriting the plane x <= w as a plane distance equation, we get
+
+1*x + 0*y + 0*z - 1*w <= 0
+
+Plugging in the two vertices, we get distances -3 and 2, respectively
+the new point is
+(2.8 1.4 0.6 2.8)
+
+This point lies on the plane (2.8 = 2.8) and on the edge (being a linear
+combination of (1 2 3 4) and (4 1 -1 2)).
+
+--------
+
+x <= w
+-> x - w <= 0
+-> 1*x + 0*y + 0*z - 1*w <= 0
+
+--------
+
+What about for -w <= x?
+-> -w <= x
+-> 0 <= x + w
+-> -x - w <= 0
+-> -1*x + 0*y + 0*z - 1*w <= 0
+-> 1*x + 0*y + 0*z + 1*w >= 0

@@ -10,17 +10,17 @@
 static constexpr size_t TRI_VERT_SIZE = 3;
 using TriVert = std::array<Vert, TRI_VERT_SIZE>;
 
-//constexpr inline MyCxFixedPt bary_lerp(
-//	const Vec2<MyCxFixedPt>& a,
-//	const Vec2<MyCxFixedPt>& b,
-//	const Vec2<MyCxFixedPt>& t
+//constexpr inline MyFixedPt bary_lerp(
+//	const Vec2<MyFixedPt>& a,
+//	const Vec2<MyFixedPt>& b,
+//	const Vec2<MyFixedPt>& t
 //) {
 //    return (t.x - a.x) * (b.y - a.y) - (t.y - a.y) * (b.x - a.x);
 //}
-//constexpr inline MyCxFixedPt my_lerp(
-//	MyCxFixedPt t0,
-//	MyCxFixedPt t1,
-//	MyCxFixedPt alpha
+//constexpr inline MyFixedPt my_lerp(
+//	MyFixedPt t0,
+//	MyFixedPt t1,
+//	MyFixedPt alpha
 //) {
 //	return t0 * alpha + t1 * (1 - alpha);
 //}
@@ -34,18 +34,32 @@ public:		// variables
 	TriVert
 		v,
 		proj_v,
-		clip_v,
-		screen_v;
-	std::array<MyRwCxFixedPt, TRI_VERT_SIZE> rw_arr;
-	//std::array<MyCxFixedPt, TRI_VERT_SIZE> rw_arr;
-	//std::array<Vec2<MyCxFixedPt>, TRI_VERT_SIZE> persp_v
-	//std::vector<Vec2<MyCxFixedPt>> clip_vec;
+		clip_v;
+		//screen_v;
+	std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
+	//std::array<MyFixedPt, TRI_VERT_SIZE> rw_arr;
+	//std::array<Vec2<MyFixedPt>, TRI_VERT_SIZE> persp_v
+	//std::vector<Vec2<MyFixedPt>> clip_vec;
 public:		// functions
-	void do_project_etc(
+	void do_project(
 		const Transform& view,
 		const Transform& perspective
 	);
+	//std::vector<Tri> do_clip() const;
 	//void do_clip();
+};
+class TriRast final {
+public:		// variables
+	Texture* img=nullptr;
+	TriVert v;
+	std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
+public:		// functions
+	//static TriRast from_subdiv_tri(
+	//	const Tri& tri,
+	//	const Vec4<MyFixedPt>& v0,
+	//	const Vec4<MyFixedPt>& v1,
+	//	const Vec4<MyFixedPt>& v2
+	//);
 };
 
 //using TriDrawVert = std::array<Vec2<i32>, TRI_VERT_SIZE>;

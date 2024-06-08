@@ -6,9 +6,9 @@ std::array<Tri, 2>& Square::update_tri_arr() {
 		& b = tri_arr.at(1);
 
 
-	const Vec2<MyCxFixedPt>
-		hs(size_2d / MyCxFixedPt(2.0));
-	const MyCxFixedPt
+	const Vec2<MyFixedPt>
+		hs(size_2d / MyFixedPt(2.0));
+	const MyFixedPt
 		zero(0.0),
 		one(1.0),
 		uv_min(0.01),

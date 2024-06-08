@@ -5,20 +5,20 @@
 
 class Square {
 public:		// variables
-	Vec2<MyCxFixedPt>
+	Vec2<MyFixedPt>
 		size_2d={1.0, 1.0};
-	Vec3<MyCxFixedPt>
-		pos{0.0, 0.0, 0.0 };
-	Versor<MyCxFixedPt>
-		rot=Versor<MyCxFixedPt>::identity();
-	//Vec3<MyCxFixedPt>
+	Vec3<MyFixedPt>
+		pos{0.0, 0.0, 0.0};
+	Versor<MyFixedPt>
+		rot=Versor<MyFixedPt>::identity();
+	//Vec3<MyFixedPt>
 	//	rot{0.0, 0.0, 0.0};
 
 	//Transform model;
 	Texture* img=nullptr;
 	std::array<Tri, 2> tri_arr;
 	Transform model;
-public:		//
+public:		// functions
 	std::array<Tri, 2>& update_tri_arr();
 };
 

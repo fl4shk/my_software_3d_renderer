@@ -57,6 +57,13 @@ public:		// functions
 		}
 		return ret;
 	}
+	constexpr inline T dot(const Vec4& other) const {
+		T ret = 0;
+		for (size_t i=0; i<SIZE; ++i) {
+			ret += at(i) * other.at(i);
+		}
+		return ret;
+	}
 	constexpr inline Vec4 norm() const {
 		return *this / mag();
 	}

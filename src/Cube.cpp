@@ -37,16 +37,16 @@ auto Cube::update_face_arr() -> std::array<Square, size_t(FaceIdx::LIM)>& {
 //			arr.at(i).model = &model;
 //
 //			arr.at(i).v.at(0).uv = {
-//				.x=MyCxFixedPt(0.1),
-//				.y=MyCxFixedPt(0.1),
+//				.x=MyFixedPt(0.1),
+//				.y=MyFixedPt(0.1),
 //			};
 //			arr.at(i).v.at(1).uv = {
-//				.x=MyCxFixedPt(15.0 / 16.0),
-//				.y=MyCxFixedPt(0.1),
+//				.x=MyFixedPt(15.0 / 16.0),
+//				.y=MyFixedPt(0.1),
 //			};
 //			arr.at(i).v.at(2).uv = {
-//				.x=MyCxFixedPt(15.0 / 16.0),
-//				.y=MyCxFixedPt(15.0 / 16.0),
+//				.x=MyFixedPt(15.0 / 16.0),
+//				.y=MyFixedPt(15.0 / 16.0),
 //			};
 //		}
 //	};
@@ -55,7 +55,7 @@ auto Cube::update_face_arr() -> std::array<Square, size_t(FaceIdx::LIM)>& {
 //	}
 //
 //	const auto
-//		hs = size_3d / MyCxFixedPt(2);
+//		hs = size_3d / MyFixedPt(2);
 //
 //	top.at(0).v.at(0).v.x = hs.x;
 //	top.at(0).v.at(0).v.y = hs.y;

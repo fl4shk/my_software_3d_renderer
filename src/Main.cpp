@@ -15,25 +15,25 @@ int main(int argc, char** argv) {
 	Rast rast;
 	//Transform model(
 	//	// affine
-	//	Vec3<MyCxFixedPt>{ // rotate
-	//		.x=MyCxFixedPt(0),
-	//		.y=MyCxFixedPt(0),
-	//		.z=MyCxFixedPt(0),
+	//	Vec3<MyFixedPt>{ // rotate
+	//		.x=MyFixedPt(0),
+	//		.y=MyFixedPt(0),
+	//		.z=MyFixedPt(0),
 	//	},
-	//	Vec3<MyCxFixedPt>{ // translate
-	//		.x=MyCxFixedPt(30),
-	//		.y=MyCxFixedPt(30),
-	//		.z=MyCxFixedPt(30),
+	//	Vec3<MyFixedPt>{ // translate
+	//		.x=MyFixedPt(30),
+	//		.y=MyFixedPt(30),
+	//		.z=MyFixedPt(30),
 	//	}
 	//);
-	const MyCxFixedPt
+	const MyFixedPt
 		near(0.1),
 		far(10.0);
 	Transform perspective(
 		near, // near
 		far // far
 	);
-	//const Vec2<MyCxFixedPt>
+	//const Vec2<MyFixedPt>
 	//	tri_base_height(
 	//		50.0,
 	//		50.0
@@ -49,14 +49,14 @@ int main(int argc, char** argv) {
 	Square sq{
 		.size_2d{1.0, 1.0},
 		.pos{0.0, 0.0, 0.0},
-		//.rot{VERSOR_IDENTITY<MyCxFixedPt>},
+		//.rot{VERSOR_IDENTITY<MyFixedPt>},
 		.img=&texture,
 	};
-	//Vec3<MyCxFixedPt> sq_pos{
+	//Vec3<MyFixedPt> sq_pos{
 	//	//.x=HALF_SCREEN_SIZE_2D.x ,
 	//	//.y=HALF_SCREEN_SIZE_2D.y,
-	//	////.x=MyCxFixedPt(60.1),
-	//	////.y=MyCxFixedPt(60.1),
+	//	////.x=MyFixedPt(60.1),
+	//	////.y=MyFixedPt(60.1),
 	//	//.z=0.510,
 	//	//.x=1.0,
 	//	//.y=1.0,
@@ -65,33 +65,33 @@ int main(int argc, char** argv) {
 	//	.y=0.0,
 	//	.z=0.0,
 	//};
-	//Mat4x4<MyCxFixedPt> camera_mat(MAT4X4_IDENTITY<MyCxFixedPt>);
-	Vec3<MyCxFixedPt> camera_pos{0.00, 0.00, -5.000};
-	//camera_pos.x = /*MyCxFixedPt*/(
+	//Mat4x4<MyFixedPt> camera_mat(MAT4X4_IDENTITY<MyFixedPt>);
+	Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.000};
+	//camera_pos.x = /*MyFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 	//	//2.0
 	//	0.1
 	//	//-HALF_SCREEN_SIZE_2D.x
 	//);
-	//camera_pos.y = /*MyCxFixedPt*/(
+	//camera_pos.y = /*MyFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.y - tri_half_base_height.x
 	//	//2.0
 	//	0.1
 	//	//-HALF_SCREEN_SIZE_2D.y
 	//);
-	//camera_pos.z = /*MyCxFixedPt*/(
-	//	//MyCxFixedPt(near) + MyCxFixedPt(0.1)
-	//	//MyCxFixedPt(1.00)
+	//camera_pos.z = /*MyFixedPt*/(
+	//	//MyFixedPt(near) + MyFixedPt(0.1)
+	//	//MyFixedPt(1.00)
 	//	0.100
 	//);
 	//camera_pos = camera_pos.norm();
-	Versor<MyCxFixedPt>
+	Versor<MyFixedPt>
 		camera_rot;
-	//Mat4x4<MyCxFixedPt>
+	//Mat4x4<MyFixedPt>
 	//	camera_mat;
 	Transform camera(
-		MAT4X4_IDENTITY<MyCxFixedPt>
-		//Mat4x4<MyCxFixedPt>{.m{{
+		MAT4X4_IDENTITY<MyFixedPt>
+		//Mat4x4<MyFixedPt>{.m{{
 		//	{},
 		//	{},
 		//	{},
@@ -100,87 +100,87 @@ int main(int argc, char** argv) {
 	);
 		//camera_mat
 		//camera_pos
-	//view.mat = MAT4X4_IDENTITY<MyCxFixedPt>;
+	//view.mat = MAT4X4_IDENTITY<MyFixedPt>;
 
 	//view.set_translate(camera_pos);
 	//view.set_rot_scale(
 	//	//camera_rot
-	//	MAT3X3_IDENTITY<MyCxFixedPt>
+	//	MAT3X3_IDENTITY<MyFixedPt>
 	//);
 	//view.set_to_affine_finish();
 	
 	//Transform perspective(
-	//	MAT4X4_IDENTITY<MyCxFixedPt>
+	//	MAT4X4_IDENTITY<MyFixedPt>
 	//);
 	//TransformMvp mvp{
 	//	.model=&model,
 	//	.view=&view,
 	//	.perspective=&perspective,
 	//};
-	//Mat4x4<MyCxFixedPt> my_sq_model = MAT4X4_IDENTITY<MyCxFixedPt>;
+	//Mat4x4<MyFixedPt> my_sq_model = MAT4X4_IDENTITY<MyFixedPt>;
 	//Transform my_sq_model;
 	//my_sq_model.mat.set_translate(sq.pos);
-	//Vec3<MyCxFixedPt>
+	//Vec3<MyFixedPt>
 	//	sq_rotate{0.0, 0.0, 0.0};
-	//Versor<MyCxFixedPt>
-	//	sq_rotate(VERSOR_IDENTITY<MyCxFixedPt>);
-	//const Vec3<Vec3<MyCxFixedPt>>
+	//Versor<MyFixedPt>
+	//	sq_rotate(VERSOR_IDENTITY<MyFixedPt>);
+	//const Vec3<Vec3<MyFixedPt>>
 	//	tri_rotate_angles(
 	//		{0.0001, 0.0, 0.0},
 	//		{0.0, 0.0001, 0.0},
 	//		{0.0, 0.0, 0.0001}
 	//	);
-	const Vec3<MyCxFixedPt>
+	const Vec3<MyFixedPt>
 		sq_rotate_angles{0.00101, 0.00101, 0.00101};
 		
 	//my_sq_model.set_rot_scale(
 	//	sq_rotate
-	//	//Vec3<MyCxFixedPt>{ // rotate
+	//	//Vec3<MyFixedPt>{ // rotate
 	//	//	.x=(0.0/*0.1 * (2 * MATH_PI)*/ /** 1.3*/),
 	//	//	.y=(0.0/*MATH_PI * 1.3*/),
 	//	//	.z=(0.0),
 	//	//}
-	//	//Vec3<MyCxFixedPt>{ // scale
-	//	//	.x=MyCxFixedPt(1.00),
-	//	//	.y=MyCxFixedPt(1.00),
-	//	//	.z=MyCxFixedPt(1.0),
+	//	//Vec3<MyFixedPt>{ // scale
+	//	//	.x=MyFixedPt(1.00),
+	//	//	.y=MyFixedPt(1.00),
+	//	//	.z=MyFixedPt(1.0),
 	//	//}
-	//	//MAT3X3_IDENTITY<MyCxFixedPt>
-	//	//* MyCxFixedPt(0.10)
-	//	//* MyCxFixedPt(1 / 3.0)
+	//	//MAT3X3_IDENTITY<MyFixedPt>
+	//	//* MyFixedPt(0.10)
+	//	//* MyFixedPt(1 / 3.0)
 	//);
 	//my_sq_model.set_rot_scale(
-	//	MAT3X3_IDENTITY<MyCxFixedPt>
+	//	MAT3X3_IDENTITY<MyFixedPt>
 	//);
 	//my_sq_model.set_to_affine_finish();
-	//const MyCxFixedPt
-	//	my_z = MyCxFixedPt(0.0);
+	//const MyFixedPt
+	//	my_z = MyFixedPt(0.0);
 	//Tri tri{
 	//	.img=&texture,
 	//	//.model=Transform(
 	//	//	//// affine
-	//	//	//Vec3<MyCxFixedPt>{ // rotate
-	//	//	//	.x=MyCxFixedPt(0),
-	//	//	//	.y=MyCxFixedPt(0),
-	//	//	//	.z=MyCxFixedPt(0),
+	//	//	//Vec3<MyFixedPt>{ // rotate
+	//	//	//	.x=MyFixedPt(0),
+	//	//	//	.y=MyFixedPt(0),
+	//	//	//	.z=MyFixedPt(0),
 	//	//	//},
-	//	//	////Mat3x3<MyCxFixedPt>{
+	//	//	////Mat3x3<MyFixedPt>{
 	//	//	////	.m={
 	//	//	////	}
 	//	//	////},
-	//	//	//Vec3<MyCxFixedPt>{ // translate
-	//	//	//	.x=MyCxFixedPt(10.0),
-	//	//	//	.y=MyCxFixedPt(10.0),
-	//	//	//	.z=MyCxFixedPt(200.0),
+	//	//	//Vec3<MyFixedPt>{ // translate
+	//	//	//	.x=MyFixedPt(10.0),
+	//	//	//	.y=MyFixedPt(10.0),
+	//	//	//	.z=MyFixedPt(200.0),
 	//	//	//},
-	//	//	//Vec3<MyCxFixedPt>{ // scale
-	//	//	//	.x=MyCxFixedPt(2.0),
-	//	//	//	.y=MyCxFixedPt(2.0),
-	//	//	//	.z=MyCxFixedPt(2.0),
+	//	//	//Vec3<MyFixedPt>{ // scale
+	//	//	//	.x=MyFixedPt(2.0),
+	//	//	//	.y=MyFixedPt(2.0),
+	//	//	//	.z=MyFixedPt(2.0),
 	//	//	//}
-	//	//	//MAT4X4_IDENTITY<MyCxFixedPt>
+	//	//	//MAT4X4_IDENTITY<MyFixedPt>
 	//	//	my_sq_model
-	//	//	//Mat4x4<MyCxFixedPt>{
+	//	//	//Mat4x4<MyFixedPt>{
 	//	//	//	.m={
 	//	//	//		{
 	//	//	//			{1.0, 0.0, 0.0, 0.0},
@@ -197,33 +197,33 @@ int main(int argc, char** argv) {
 	//			.v{
 	//				.x=-tbh.x,
 	//				.y=-tbh.y,
-	//				.z=MyCxFixedPt(0.0),
+	//				.z=MyFixedPt(0.0),
 	//			},
 	//			.uv{
-	//				.x=MyCxFixedPt(0.01),
-	//				.y=MyCxFixedPt(0.01),
+	//				.x=MyFixedPt(0.01),
+	//				.y=MyFixedPt(0.01),
 	//			},
 	//		},
 	//		Vert{
 	//			.v{
 	//				.x=-tbh.x,
 	//				.y=tbh.y,
-	//				.z=MyCxFixedPt(0.0),
+	//				.z=MyFixedPt(0.0),
 	//			},
 	//			.uv{
-	//				.x=MyCxFixedPt(15.0 / 16.0),
-	//				.y=MyCxFixedPt(0.01),
+	//				.x=MyFixedPt(15.0 / 16.0),
+	//				.y=MyFixedPt(0.01),
 	//			},
 	//		},
 	//		Vert{
 	//			.v{
 	//				.x=tbh.x,
 	//				.y=tbh.y,
-	//				.z=MyCxFixedPt(0.0),
+	//				.z=MyFixedPt(0.0),
 	//			},
 	//			.uv{
-	//				.x=MyCxFixedPt(15.0 / 16.0),
-	//				.y=MyCxFixedPt(15.0 / 16.0),
+	//				.x=MyFixedPt(15.0 / 16.0),
+	//				.y=MyFixedPt(15.0 / 16.0),
 	//			},
 	//		},
 	//	},
@@ -245,7 +245,7 @@ int main(int argc, char** argv) {
 		}
 		{
 			printout("checking keys\n");
-			const MyCxFixedPt
+			const MyFixedPt
 				amount_xy(0.100),
 				amount_z(0.0100),
 				amount_angle(0.00010000);
@@ -328,7 +328,7 @@ int main(int argc, char** argv) {
 			//	//sq.rot.v.x -= amount_angle;
 			//	sq.rot = (
 			//		sq.rot
-			//		* Versor<MyCxFixedPt>::from_x_angle(-sq_rotate_angles.x)
+			//		* Versor<MyFixedPt>::from_x_angle(-sq_rotate_angles.x)
 			//	);
 			//	//sq.rot = sq.rot.norm();
 			//	printout(
@@ -349,7 +349,7 @@ int main(int argc, char** argv) {
 			//	//sq.rot.v.x += amount_angle;
 			//	sq.rot = (
 			//		sq.rot
-			//		* Versor<MyCxFixedPt>::from_x_angle(sq_rotate_angles.x)
+			//		* Versor<MyFixedPt>::from_x_angle(sq_rotate_angles.x)
 			//	);
 			//	//sq.rot = sq.rot.norm();
 			//	printout(
@@ -372,7 +372,7 @@ int main(int argc, char** argv) {
 				//sq.rot.y -= amount_angle;
 				sq.rot = (
 					sq.rot
-					* Versor<MyCxFixedPt>::from_y_angle(-sq_rotate_angles.y)
+					* Versor<MyFixedPt>::from_y_angle(-sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
 				printout(
@@ -394,7 +394,7 @@ int main(int argc, char** argv) {
 				//sq.rot.y += amount_angle;
 				sq.rot = (
 					sq.rot
-					* Versor<MyCxFixedPt>::from_y_angle(sq_rotate_angles.y)
+					* Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
 				printout(
@@ -425,55 +425,58 @@ int main(int argc, char** argv) {
 			//camera.look_at(sq.model).mat.inverse()
 		);
 		std::vector<VertTextureCoords> visib;
-		for (size_t i=0; i<tri_arr.size(); ++i)
-		{
-			//size_t i = 0;
-			auto& tri = tri_arr.at(i);
-			//printout(
-			//	"tri_arr.at(", i, "):\n",
-			//	"{",
-			//		"{",
-			//			tri_arr.at(i).v.at(0).v.x, " ",
-			//			tri_arr.at(i).v.at(0).v.y, " ",
-			//			tri_arr.at(i).v.at(0).v.z, " ",
-			//			tri_arr.at(i).v.at(0).v.w,
-			//		"} ",
-			//		tri_arr.at(i).v.at(0).uv,
-			//	"}\n",
-			//	"{",
-			//		"{",
-			//			tri_arr.at(i).v.at(1).v.x, " ",
-			//			tri_arr.at(i).v.at(1).v.y, " ",
-			//			tri_arr.at(i).v.at(1).v.z, " ",
-			//			tri_arr.at(i).v.at(1).v.w,
-			//		"} ",
-			//		tri_arr.at(i).v.at(1).uv,
-			//	"}\n",
-			//	"{",
-			//		"{",
-			//			tri_arr.at(i).v.at(2).v.x, " ",
-			//			tri_arr.at(i).v.at(2).v.y, " ",
-			//			tri_arr.at(i).v.at(2).v.z, " ",
-			//			tri_arr.at(i).v.at(2).v.w,
-			//		"} ",
-			//		tri_arr.at(i).v.at(2).uv,
-			//	"}",
-			//	"\n"
-			//);
-			tri.do_project_etc(
-				n_view,
-				perspective
-			);
-			//tri.do_clip();
-			rast.calc_visib(
-				tri,
-				visib,
-				near
-			);
-			printout(
-				"i=", i, " visib.size(): ", visib.size(), "\n"
-			);
-		}
+		//--------
+		// TODO: BEGIN: later
+		//for (size_t i=0; i<tri_arr.size(); ++i) {
+		//	//size_t i = 0;
+		//	auto& tri = tri_arr.at(i);
+		//	//printout(
+		//	//	"tri_arr.at(", i, "):\n",
+		//	//	"{",
+		//	//		"{",
+		//	//			tri_arr.at(i).v.at(0).v.x, " ",
+		//	//			tri_arr.at(i).v.at(0).v.y, " ",
+		//	//			tri_arr.at(i).v.at(0).v.z, " ",
+		//	//			tri_arr.at(i).v.at(0).v.w,
+		//	//		"} ",
+		//	//		tri_arr.at(i).v.at(0).uv,
+		//	//	"}\n",
+		//	//	"{",
+		//	//		"{",
+		//	//			tri_arr.at(i).v.at(1).v.x, " ",
+		//	//			tri_arr.at(i).v.at(1).v.y, " ",
+		//	//			tri_arr.at(i).v.at(1).v.z, " ",
+		//	//			tri_arr.at(i).v.at(1).v.w,
+		//	//		"} ",
+		//	//		tri_arr.at(i).v.at(1).uv,
+		//	//	"}\n",
+		//	//	"{",
+		//	//		"{",
+		//	//			tri_arr.at(i).v.at(2).v.x, " ",
+		//	//			tri_arr.at(i).v.at(2).v.y, " ",
+		//	//			tri_arr.at(i).v.at(2).v.z, " ",
+		//	//			tri_arr.at(i).v.at(2).v.w,
+		//	//		"} ",
+		//	//		tri_arr.at(i).v.at(2).uv,
+		//	//	"}",
+		//	//	"\n"
+		//	//);
+		//	tri.do_project_etc(
+		//		n_view,
+		//		perspective
+		//	);
+		//	//tri.do_clip();
+		//	rast.calc_visib(
+		//		tri,
+		//		visib,
+		//		near
+		//	);
+		//	printout(
+		//		"i=", i, " visib.size(): ", visib.size(), "\n"
+		//	);
+		//}
+		// TODO: END: later
+		//--------
 		for (const auto& item: visib) {
 			const Vec2<int> temp{
 				.x=int(item.v.x),
@@ -484,20 +487,20 @@ int main(int argc, char** argv) {
 			//	"visib loop: ", temp, "\n"
 			//);
 			if (
-				temp.x >= /*MyCxFixedPt*/(0)
-				&& temp.x <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.x - 1)
-				&& temp.y >= /*MyCxFixedPt*/(0)
-				&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
+				temp.x >= /*MyFixedPt*/(0)
+				&& temp.x <= /*MyFixedPt*/int(SCREEN_SIZE_2D.x - 1)
+				&& temp.y >= /*MyFixedPt*/(0)
+				&& temp.y <= /*MyFixedPt*/int(SCREEN_SIZE_2D.y - 1)
 				//true
 			) {
 				const Vec2<int>
 					pos{
 						.x=int(
-							item.uv.x * MyCxFixedPt(16)
-							//+ MyCxFixedPt(16)
+							item.uv.x * MyFixedPt(16)
+							//+ MyFixedPt(16)
 						),
 						.y=int(
-							item.uv.y * MyCxFixedPt(16)
+							item.uv.y * MyFixedPt(16)
 						),
 					};
 				//printout(
@@ -569,16 +572,16 @@ int main(int argc, char** argv) {
 			}
 		}
 		//std::array<
-		//	std::pair<u8, Vec2<MyCxFixedPt>>,
+		//	std::pair<u8, Vec2<MyFixedPt>>,
 		//	SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x
 		//> visib_buf;
 		////visib_buf.fill(false);
 		//visib_buf.fill(
-		//	std::make_pair<u8, Vec2<MyCxFixedPt>>(
+		//	std::make_pair<u8, Vec2<MyFixedPt>>(
 		//		false,
 		//		{
-		//			.x=MyCxFixedPt(0),
-		//			.y=MyCxFixedPt(0),
+		//			.x=MyFixedPt(0),
+		//			.y=MyFixedPt(0),
 		//		}
 		//	)
 		//);
@@ -594,10 +597,10 @@ int main(int argc, char** argv) {
 		//		.y=int(item.v.y),
 		//	};
 		//	if (
-		//		temp.x >= /*MyCxFixedPt*/(0)
-		//		&& temp.x <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.x - 1)
-		//		&& temp.y >= /*MyCxFixedPt*/(0)
-		//		&& temp.y <= /*MyCxFixedPt*/int(SCREEN_SIZE_2D.y - 1)
+		//		temp.x >= /*MyFixedPt*/(0)
+		//		&& temp.x <= /*MyFixedPt*/int(SCREEN_SIZE_2D.x - 1)
+		//		&& temp.y >= /*MyFixedPt*/(0)
+		//		&& temp.y <= /*MyFixedPt*/int(SCREEN_SIZE_2D.y - 1)
 		//	) {
 		//		//printout(temp);
 		//		auto& my_visib = visib_buf.at(
@@ -624,11 +627,11 @@ int main(int argc, char** argv) {
 		//			const Vec2<int>
 		//				pos{
 		//					.x=int(
-		//						item.second.x * MyCxFixedPt(16)
-		//						//+ MyCxFixedPt(16)
+		//						item.second.x * MyFixedPt(16)
+		//						//+ MyFixedPt(16)
 		//					),
 		//					.y=int(
-		//						item.second.y * MyCxFixedPt(16)
+		//						item.second.y * MyFixedPt(16)
 		//					),
 		//				};
 		//			//printout(

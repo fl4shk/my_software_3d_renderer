@@ -26,13 +26,13 @@ public:		// variables
 	//std::array<Vert, 4>
 	//	top,
 	//	bot;
-	MyCxFixedPt
+	MyFixedPt
 		dim=1.0;
-	Vec3<MyCxFixedPt>
+	Vec3<MyFixedPt>
 		//size_3d{1.0, 1.0, 1.0},
 		pos{0.0, 0.0, 0.0};
-	Versor<MyCxFixedPt>
-		rot=Versor<MyCxFixedPt>::identity();
+	Versor<MyFixedPt>
+		rot=Versor<MyFixedPt>::identity();
 
 	std::array<Square, size_t(FaceIdx::LIM)> face_arr;
 	Texture* img=nullptr;

@@ -22,7 +22,7 @@ Rast::~Rast() {
 //void Rast::calc_visib(
 //	const Tri& tri,
 //	std::vector<VertTextureCoords>& ret,
-//	MyCxFixedPt near
+//	MyFixedPt near
 //) const {
 //	const Vert
 //		& v1 = tri.screen_v.at(0),
@@ -129,22 +129,22 @@ Rast::~Rast() {
 //					"}\n"
 //				);
 //                //colorBuffer[x] = 0x00FFFFFF;
-//				Vec2<MyCxFixedPt>
+//				Vec2<MyFixedPt>
 //					v;
 //					//{
 //					//	.x=x,
 //					//	.y=y,
 //					//};
 //				//v.x.data = (
-//				//	x << (MyCxFixedPt::FRAC_WIDTH - 4)
+//				//	x << (MyFixedPt::FRAC_WIDTH - 4)
 //				//);
 //				//v.y.data = (
-//				//	y << (MyCxFixedPt::FRAC_WIDTH - 4)
+//				//	y << (MyFixedPt::FRAC_WIDTH - 4)
 //				//);
-//				//v.x.data = MyCxFixedPt(x >> 4);
-//				//v.x.data = MyCxFixedPt(x >> 4);
-//				v.x = MyCxFixedPt(x); 
-//				v.y = MyCxFixedPt(y); 
+//				//v.x.data = MyFixedPt(x >> 4);
+//				//v.x.data = MyFixedPt(x >> 4);
+//				v.x = MyFixedPt(x); 
+//				v.y = MyFixedPt(y); 
 //				ret.push_back(VertTextureCoords{
 //					.v=v,
 //					.uv=BaryLerp(tri, v).uv(),
@@ -166,7 +166,7 @@ Rast::~Rast() {
 //void Rast::calc_visib(
 //	const Tri& tri,
 //	std::vector<VertTextureCoords>& ret,
-//	MyCxFixedPt near
+//	MyFixedPt near
 //) const {
 //	// at first sort the three vertices by y-coordinate ascending so v1 is 
 //	// the topmost vertex
@@ -264,8 +264,8 @@ Rast::~Rast() {
 //				//.x=DrawT(int(
 //				//	/*int*/(v1.x)
 //				//	+ (
-//				//		(MyCxFixedPt)((v2.y) - (v1.y))
-//				//		/ (MyCxFixedPt)((v3.y) - (v1.y))
+//				//		(MyFixedPt)((v2.y) - (v1.y))
+//				//		/ (MyFixedPt)((v3.y) - (v1.y))
 //				//	) * (
 //				//		(v3.x) - (v1.x)
 //				//	)
@@ -273,9 +273,9 @@ Rast::~Rast() {
 //				.x=DrawT(/*int*/(
 //					v1.v.x
 //					+ mult_cx_rw(
-//						MyCxFixedPt(v2.v.y - v1.v.y),
-//						MyRwCxFixedPt(
-//							MyCxFixedPt(v3.v.y - v1.v.y).recip_ldbl()
+//						MyFixedPt(v2.v.y - v1.v.y),
+//						MyRwFixedPt(
+//							MyFixedPt(v3.v.y - v1.v.y).recip_ldbl()
 //						)
 //					) * (
 //						v3.v.x - v1.v.x
@@ -291,7 +291,7 @@ Rast::~Rast() {
 //		};
 //		v4.uv = BaryLerp(
 //			temp_tri,
-//			Vec2<MyCxFixedPt>{
+//			Vec2<MyFixedPt>{
 //				.x=v4.v.x,
 //				.y=v4.v.y,
 //			}
@@ -351,33 +351,33 @@ Rast::~Rast() {
 //	//const auto& v2 = tri.screen_v.at(1).v;
 //	//const auto& v3 = tri.screen_v.at(2).v;
 //
-//	const Vec2<MyCxFixedPt> v1{
-//		.x=MyCxFixedPt(tri.screen_v.at(0).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(0).v.y),
+//	const Vec2<MyFixedPt> v1{
+//		.x=MyFixedPt(tri.screen_v.at(0).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(0).v.y),
 //	};
-//	const Vec2<MyCxFixedPt> v2{
-//		.x=MyCxFixedPt(tri.screen_v.at(1).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(1).v.y),
+//	const Vec2<MyFixedPt> v2{
+//		.x=MyFixedPt(tri.screen_v.at(1).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(1).v.y),
 //	};
-//	const Vec2<MyCxFixedPt> v3{
-//		.x=MyCxFixedPt(tri.screen_v.at(2).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(2).v.y),
+//	const Vec2<MyFixedPt> v3{
+//		.x=MyFixedPt(tri.screen_v.at(2).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(2).v.y),
 //	};
-//	//MyCxFixedPt invslope1 = MyCxFixedPt(v3.x - v1.x) / MyCxFixedPt(v3.y - v1.y);
-//	//MyCxFixedPt invslope2 = MyCxFixedPt(v3.x - v2.x) / MyCxFixedPt(v3.y - v2.y);
+//	//MyFixedPt invslope1 = MyFixedPt(v3.x - v1.x) / MyFixedPt(v3.y - v1.y);
+//	//MyFixedPt invslope2 = MyFixedPt(v3.x - v2.x) / MyFixedPt(v3.y - v2.y);
 //
-//	const MyCxFixedPt
+//	const MyFixedPt
 //		invslope1 = mult_cx_rw(
-//			MyCxFixedPt(v3.x - v1.x),
-//			MyRwCxFixedPt(MyCxFixedPt(v3.y - v1.y).recip_ldbl())
+//			MyFixedPt(v3.x - v1.x),
+//			MyRwFixedPt(MyFixedPt(v3.y - v1.y).recip_ldbl())
 //		),
 //		invslope2 = mult_cx_rw(
-//			MyCxFixedPt(v3.x - v2.x),
-//			MyRwCxFixedPt(MyCxFixedPt(v3.y - v2.y).recip_ldbl())
+//			MyFixedPt(v3.x - v2.x),
+//			MyRwFixedPt(MyFixedPt(v3.y - v2.y).recip_ldbl())
 //		);
-//	MyCxFixedPt
-//		curr_x1 = MyCxFixedPt(v3.x),
-//		curr_x2 = MyCxFixedPt(v3.x);
+//	MyFixedPt
+//		curr_x1 = MyFixedPt(v3.x),
+//		curr_x2 = MyFixedPt(v3.x);
 //
 //	//printout(
 //	//	"Rast::_calc_flat_top_visib(): ",
@@ -394,22 +394,22 @@ Rast::~Rast() {
 //		Vec2<double>{.x=double(v3.x), .y=double(v3.y)}, 
 //		"\n"
 //	);
-//	std::vector<Vec2<MyCxFixedPt>> temp_ret;
+//	std::vector<Vec2<MyFixedPt>> temp_ret;
 //
 //	for (
-//		MyCxFixedPt scanline_y = /*std::round*/MyCxFixedPt(v3.y);
-//		scanline_y>=/*std::round*/MyCxFixedPt(v1.y);
-//		scanline_y-=MyCxFixedPt(1)
+//		MyFixedPt scanline_y = /*std::round*/MyFixedPt(v3.y);
+//		scanline_y>=/*std::round*/MyFixedPt(v1.y);
+//		scanline_y-=MyFixedPt(1)
 //	) {
 //		//drawLine((DrawT)curx1, scanlineY, (DrawT)curx2, scanlineY);
 //		calc_line_coords(
-//			Vec2<MyCxFixedPt>{
-//				.x=MyCxFixedPt(curr_x1),
-//				.y=MyCxFixedPt(scanline_y),
+//			Vec2<MyFixedPt>{
+//				.x=MyFixedPt(curr_x1),
+//				.y=MyFixedPt(scanline_y),
 //			},
-//			Vec2<MyCxFixedPt>{
-//				.x=MyCxFixedPt(curr_x2),
-//				.y=MyCxFixedPt(scanline_y),
+//			Vec2<MyFixedPt>{
+//				.x=MyFixedPt(curr_x2),
+//				.y=MyFixedPt(scanline_y),
 //			},
 //			SCREEN_SIZE_2D,
 //			//ret
@@ -423,7 +423,7 @@ Rast::~Rast() {
 //		//	.x=DrawT(temp_item.x),
 //		//	.y=DrawT(temp_item.y),
 //		//});
-//		const Vec2<MyCxFixedPt>
+//		const Vec2<MyFixedPt>
 //			v{
 //				.x=temp_item.x,
 //				.y=temp_item.y,
@@ -447,34 +447,34 @@ Rast::~Rast() {
 //	//for (auto& item: ret) {
 //	//	item = false;
 //	//}
-//	const Vec2<MyCxFixedPt> v1{
-//		.x=MyCxFixedPt(tri.screen_v.at(0).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(0).v.y),
+//	const Vec2<MyFixedPt> v1{
+//		.x=MyFixedPt(tri.screen_v.at(0).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(0).v.y),
 //	};
-//	const Vec2<MyCxFixedPt> v2{
-//		.x=MyCxFixedPt(tri.screen_v.at(1).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(1).v.y),
+//	const Vec2<MyFixedPt> v2{
+//		.x=MyFixedPt(tri.screen_v.at(1).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(1).v.y),
 //	};
-//	const Vec2<MyCxFixedPt> v3{
-//		.x=MyCxFixedPt(tri.screen_v.at(2).v.x),
-//		.y=MyCxFixedPt(tri.screen_v.at(2).v.y),
+//	const Vec2<MyFixedPt> v3{
+//		.x=MyFixedPt(tri.screen_v.at(2).v.x),
+//		.y=MyFixedPt(tri.screen_v.at(2).v.y),
 //	};
 //
-//	//MyCxFixedPt invslope1 = MyCxFixedPt(v2.x - v1.x) / MyCxFixedPt(v2.y - v1.y);
-//	//MyCxFixedPt invslope2 = MyCxFixedPt(v3.x - v1.x) / MyCxFixedPt(v3.y - v1.y);
-//	const MyCxFixedPt
+//	//MyFixedPt invslope1 = MyFixedPt(v2.x - v1.x) / MyFixedPt(v2.y - v1.y);
+//	//MyFixedPt invslope2 = MyFixedPt(v3.x - v1.x) / MyFixedPt(v3.y - v1.y);
+//	const MyFixedPt
 //		invslope1 = mult_cx_rw(
-//			MyCxFixedPt(v2.x - v1.x),
-//			MyRwCxFixedPt(MyCxFixedPt(v2.y - v1.y).recip_ldbl())
+//			MyFixedPt(v2.x - v1.x),
+//			MyRwFixedPt(MyFixedPt(v2.y - v1.y).recip_ldbl())
 //		),
 //		invslope2 = mult_cx_rw(
-//			MyCxFixedPt(v3.x - v1.x),
-//			MyRwCxFixedPt(MyCxFixedPt(v3.y - v1.y).recip_ldbl())
+//			MyFixedPt(v3.x - v1.x),
+//			MyRwFixedPt(MyFixedPt(v3.y - v1.y).recip_ldbl())
 //		);
 //
-//	MyCxFixedPt
-//		curr_x1 = MyCxFixedPt(v1.x),
-//		curr_x2 = MyCxFixedPt(v1.x);
+//	MyFixedPt
+//		curr_x1 = MyFixedPt(v1.x),
+//		curr_x2 = MyFixedPt(v1.x);
 //
 //	printout(
 //		"Rast::_calc_flat_bot_visib(): ",
@@ -486,11 +486,11 @@ Rast::~Rast() {
 //		"\n"
 //	);
 //
-//	std::vector<Vec2<MyCxFixedPt>> temp_ret;
+//	std::vector<Vec2<MyFixedPt>> temp_ret;
 //	for (
-//		MyCxFixedPt scanline_y=MyCxFixedPt(v1.y);
-//		scanline_y<=MyCxFixedPt(v2.y);
-//		scanline_y+=MyCxFixedPt(1)
+//		MyFixedPt scanline_y=MyFixedPt(v1.y);
+//		scanline_y<=MyFixedPt(v2.y);
+//		scanline_y+=MyFixedPt(1)
 //	) {
 //		//printout(
 //		//	curr_x1, " ",
@@ -498,7 +498,7 @@ Rast::~Rast() {
 //		//	scanline_y,
 //		//	"\n"
 //		//);
-//		//drawLine((MyCxFixedPt)curx1, scanlineY, (MyCxFixedPt)curx2, scanlineY);
+//		//drawLine((MyFixedPt)curx1, scanlineY, (MyFixedPt)curx2, scanlineY);
 //		//calc_line_coords(
 //		//	Vec2<int>{
 //		//		.x=int(std::trunc(curr_x1)),
@@ -512,13 +512,13 @@ Rast::~Rast() {
 //		//	ret
 //		//);
 //		calc_line_coords(
-//			Vec2<MyCxFixedPt>{
-//				.x=MyCxFixedPt(curr_x1),
-//				.y=MyCxFixedPt(scanline_y),
+//			Vec2<MyFixedPt>{
+//				.x=MyFixedPt(curr_x1),
+//				.y=MyFixedPt(scanline_y),
 //			},
-//			Vec2<MyCxFixedPt>{
-//				.x=MyCxFixedPt(curr_x2),
-//				.y=MyCxFixedPt(scanline_y),
+//			Vec2<MyFixedPt>{
+//				.x=MyFixedPt(curr_x2),
+//				.y=MyFixedPt(scanline_y),
 //			},
 //			SCREEN_SIZE_2D,
 //			//ret
@@ -532,7 +532,7 @@ Rast::~Rast() {
 //		//	.x=DrawT(temp_item.x),
 //		//	.y=DrawT(temp_item.y),
 //		//});
-//		const Vec2<MyCxFixedPt>
+//		const Vec2<MyFixedPt>
 //			v{
 //				.x=temp_item.x,
 //				.y=temp_item.y,
@@ -553,31 +553,31 @@ void Rast::_do_push_back(
 	//const Vert& v1,
 	//const Vert& v2,
 	//const Vert& v3,
-	const Tri& tri,
+	const TriRast& tri,
 	const Vec2<DrawT>& v,
 	std::vector<VertTextureCoords>& ret
 ) const {
 	const BaryLerp
 		lerp(
 			tri,
-			Vec2<MyCxFixedPt>{
-				.x=MyCxFixedPt(v.x),
-				.y=MyCxFixedPt(v.y),
+			Vec2<MyFixedPt>{
+				.x=MyFixedPt(v.x),
+				.y=MyFixedPt(v.y),
 			}
 		);
 	if (
 		lerp.inside_tri()
 		//&& (
-		//	lerp.v().x >= MyCxFixedPt(-1.0)
-		//	&& lerp.v().x <= MyCxFixedPt(1.0)
+		//	lerp.v().x >= MyFixedPt(-1.0)
+		//	&& lerp.v().x <= MyFixedPt(1.0)
 		//) && (
-		//	lerp.v().y >= MyCxFixedPt(-1.0)
-		//	&& lerp.v().y <= MyCxFixedPt(1.0)
+		//	lerp.v().y >= MyFixedPt(-1.0)
+		//	&& lerp.v().y <= MyFixedPt(1.0)
 		//) 
 		//&& (
-		//	//lerp.v().z >= MyCxFixedPt(0.0)
-		//	lerp.v().z >= MyCxFixedPt(-1.0)
-		//	&& lerp.v().z <= MyCxFixedPt(1.0)
+		//	//lerp.v().z >= MyFixedPt(0.0)
+		//	lerp.v().z >= MyFixedPt(-1.0)
+		//	&& lerp.v().z <= MyFixedPt(1.0)
 		//)
 		//true
 	) {
@@ -606,7 +606,7 @@ void Rast::_do_push_back(
 //	const Tri& tri,
 //	std::vector<VertTextureCoords>& ret,
 //	//const TriDraw& tri_draw
-//	MyCxFixedPt near
+//	MyFixedPt near
 //) const {
 //    // 28.4 fixed-point coordinates
 //    const int Y1 = std::round(16.0 * double(tri.screen_v.at(0).v.y));
@@ -697,7 +697,7 @@ void Rast::_do_push_back(
 //	const Tri& tri,
 //	std::vector<VertTextureCoords>& ret,
 //	//const TriDraw& tri_draw
-//	MyCxFixedPt near
+//	MyFixedPt near
 //) const {
 //	const auto
 //		& v1 = tri.v.at(0).v,
@@ -747,10 +747,10 @@ void Rast::_do_push_back(
 //}
 void Rast::calc_visib(
 	//size_t tri_idx
-	const Tri& tri,
+	const TriRast& tri,
 	std::vector<VertTextureCoords>& ret,
 	//const TriDraw& tri_draw
-	MyCxFixedPt near
+	MyFixedPt near
 ) const {
 	//--------
 	//if (_tri_at_func == nullptr) {
@@ -779,13 +779,13 @@ void Rast::calc_visib(
 	//--------
 	//auto temp_v = tri.screen_v;
 	// 28.4 fixed-point coordinates
-	const int Y1 = std::round(16.0 * double((tri.clip_v.at(0).v.y)));
-	const int Y2 = std::round(16.0 * double((tri.clip_v.at(1).v.y)));
-	const int Y3 = std::round(16.0 * double((tri.clip_v.at(2).v.y)));
+	const int Y1 = std::round(16.0 * double((tri.v.at(0).v.y)));
+	const int Y2 = std::round(16.0 * double((tri.v.at(1).v.y)));
+	const int Y3 = std::round(16.0 * double((tri.v.at(2).v.y)));
 
-	const int X1 = std::round(16.0 * double((tri.clip_v.at(0).v.x)));
-	const int X2 = std::round(16.0 * double((tri.clip_v.at(1).v.x)));
-	const int X3 = std::round(16.0 * double((tri.clip_v.at(2).v.x)));
+	const int X1 = std::round(16.0 * double((tri.v.at(0).v.x)));
+	const int X2 = std::round(16.0 * double((tri.v.at(1).v.x)));
+	const int X3 = std::round(16.0 * double((tri.v.at(2).v.x)));
 	//const std::array<Vec2<int>, 3> coords{
 	//	{
 	//		{.x=X1, .y=Y1},
@@ -857,10 +857,10 @@ void Rast::calc_visib(
 	//if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
 	//	maxx = (SCREEN_SIZE_2D.x - 1);
 	//}
-	minx = clamp(minx, 0, int(SCREEN_SIZE_2D.x - 1));
-	maxx = clamp(maxx, 0, int(SCREEN_SIZE_2D.x - 1));
-	miny = clamp(miny, 0, int(SCREEN_SIZE_2D.y - 1));
-	maxy = clamp(maxy, 0, int(SCREEN_SIZE_2D.y - 1));
+	//minx = clamp(minx, 0, int(SCREEN_SIZE_2D.x - 1));
+	//maxx = clamp(maxx, 0, int(SCREEN_SIZE_2D.x - 1));
+	//miny = clamp(miny, 0, int(SCREEN_SIZE_2D.y - 1));
+	//maxy = clamp(maxy, 0, int(SCREEN_SIZE_2D.y - 1));
 	//if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
 	//	maxy = (SCREEN_SIZE_2D.y - 1);
 	//}
@@ -900,14 +900,14 @@ void Rast::calc_visib(
 		++C3;
 	}
 	//auto area = [](
-	//	const Vec2<MyCxFixedPt>& p0,
-	//	const Vec2<MyCxFixedPt>& p1,
-	//	const Vec2<MyCxFixedPt>& p2
+	//	const Vec2<MyFixedPt>& p0,
+	//	const Vec2<MyFixedPt>& p1,
+	//	const Vec2<MyFixedPt>& p2
 	//) {
 	//	return (p1 - p0).zcross((p2 - p0));
 	//};
 	//auto interpolate = [](
-	//	const auto a[3], auto p, const Vec3<MyCxFixedPt>& coord
+	//	const auto a[3], auto p, const Vec3<MyFixedPt>& coord
 	//) {
 	//	return coord.x*a[0].*p + coord.y*a[1].*p + coord.z*a[2].*p;
 	//};
@@ -1032,13 +1032,15 @@ void Rast::calc_visib(
 					//--------
 					// implement back-face culling
 					const auto
-						& v4a = tri.clip_v.at(0).v,
-						& v4b = tri.clip_v.at(1).v,
-						& v4c = tri.clip_v.at(2).v;
-					const Vec3<MyCxFixedPt>
+						& v4a = tri.v.at(0).v,
+						& v4b = tri.v.at(1).v,
+						& v4c = tri.v.at(2).v;
+					const Vec3<MyFixedPt>
 						v0(v4a.x, v4a.y, v4a.z),
 						v1(v4b.x, v4b.y, v4b.z),
 						v2(v4c.x, v4c.y, v4c.z);
+					// Surface normal to the triangle, per the Wikipedia
+					// article on backface culling
 					const auto& N = (-(v2 - v0)).cross(v1 - v0);
 					//--------
 					if (v0.dot(N) >= 0) {

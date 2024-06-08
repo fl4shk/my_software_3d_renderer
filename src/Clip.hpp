@@ -1,37 +1,76 @@
-//// Based on
-////	https://github.com/mhdadk/sutherland-hodgman
-//// which is licensed as follows:
-//// MIT License
-//// 
-//// Copyright (c) 2022 Mahmoud Abdelkhalek
-//// 
-//// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-//// 
-//// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//// 
-//// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//#ifndef src_clip_class_hpp
-//#define src_clip_class_hpp
-//
-//#include "misc_includes.hpp"
-//#include "tri.hpp"
-//
-//class Clip final {
-//private:		// functions
-//	static Vec2<MyCxFixedPt> _compute_intersection(
-//		const Vec2<MyCxFixedPt>& p1,
-//		const Vec2<MyCxFixedPt>& p2,
-//		const Vec2<MyCxFixedPt>& p3,
-//		const Vec2<MyCxFixedPt>& p4
-//	);
+// https://www.gabrielgambetta.com/computer-graphics-from-scratch/11-clipping.html#clipping-triangles
+
+#ifndef src_clip_class_hpp
+#define src_clip_class_hpp
+
+#include "Tri.hpp"
+//#include "BoundingSphere.hpp"
+#include "Plane.hpp"
+
+//class Clip {
+//private:		// variables
+//	MyFixedPt
+//		_near,
+//		_far;
+////public:		// variables
+//	std::vector<Tri> _tri_vec;
 //public:		// functions
-//	static bool _is_inside(
-//		const Vec2<MyCxFixedPt>& p1,
-//		const Vec2<MyCxFixedPt>& p2,
-//		const Vec2<MyCxFixedPt>& q
+//	Clip(
+//		const Tri& tri,
+//		MyFixedPt s_near,
+//		MyFixedPt s_far
 //	);
-//	static void clip(Tri& tri);
-//};
+//	Clip(const Clip&) = default;
+//	Clip(Clip&&) = default;
+//	virtual ~Clip();
+//	Clip& operator = (const Clip&) = default;
+//	Clip& operator = (Clip&&) = default;
 //
-//#endif		// src_clip_class_hpp
+//	inline Tri& at(size_t idx) {
+//		return _tri_vec.at(idx);
+//	}
+//	inline const Tri& at(size_t idx) const {
+//		return _tri_vec.at(idx);
+//	}
+//	inline size_t size() const {
+//		return _tri_vec.size();
+//	}
+//	inline auto begin() {
+//		return _tri_vec.begin();
+//	}
+//	inline auto end() {
+//		return _tri_vec.end();
+//	}
+//	inline auto cbegin() const {
+//		return _tri_vec.cbegin();
+//	}
+//	inline auto cend() const {
+//		return _tri_vec.cend();
+//	}
+//	inline MyFixedPt near() const {
+//		return _near;
+//	}
+//	inline MyFixedPt far() const {
+//		return _far;
+//	}
+//	inline const decltype(_tri_vec)& tri_vec() const {
+//		return _tri_vec;
+//	}
+//private:	// functions
+//	void _do_clip(
+//		const Tri& tri
+//	);
+//	std::vector<Tri> _clip_tri_against_plane(
+//		const Tri& tri,
+//		//MyFixedPt P
+//		const Plane& plane
+//	) const;
+//	MyFixedPt _signed_distance(
+//		//MyFixedPt P, 
+//		const Plane& plane,
+//		const Vec3<MyFixedPt>& vt
+//	) const;
+//
+//};
+
+#endif		// src_clip_class_hpp

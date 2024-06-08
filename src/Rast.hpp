@@ -13,7 +13,7 @@ class Rast final {
 public:		// types
 	//using TriCRef = const Tri&;
 	//using TriAtFunc = TriCRef (*)(size_t idx);
-	using DrawT = MyCxFixedPt;
+	using DrawT = MyFixedPt;
 private:		// variables
 	//std::vector<Tri*> _tri_vec;
 	//TriAtFunc _tri_at_func=nullptr;
@@ -30,13 +30,13 @@ public:		// functions
 	//GEN_GETTER_BY_VAL(tri_at_func);
 	//std::vector<std::vector<bool>> 
 	void calc_visib(
-		const Tri& tri,
+		const TriRast& tri,
 		std::vector<VertTextureCoords>& ret,
-		MyCxFixedPt near
+		MyFixedPt near
 	) const;
 private:		// functions
 	void _calc_flat_top_visib(
-		const Tri& tri,
+		const TriRast& tri,
 		//const Vert& v1,
 		//const Vert& v2,
 		//const Vert& v3,
@@ -44,7 +44,7 @@ private:		// functions
 		std::vector<VertTextureCoords>& ret
 	) const;
 	void _calc_flat_bot_visib(
-		const Tri& tri,
+		const TriRast& tri,
 		//const Vert& v1,
 		//const Vert& v2,
 		//const Vert& v3,
@@ -55,7 +55,7 @@ private:		// functions
 		//const Vert& v1,
 		//const Vert& v2,
 		//const Vert& v3,
-		const Tri& tri,
+		const TriRast& tri,
 		const Vec2<DrawT>& v,
 		std::vector<VertTextureCoords>& ret
 	) const;

@@ -4,15 +4,15 @@
 Transform::Transform() {
 }
 Transform::Transform(
-	const Mat4x4<MyCxFixedPt>& s_mat
+	const Mat4x4<MyFixedPt>& s_mat
 )
 	: mat(s_mat) 
 {
 }
 Transform::Transform(
 	// affine
-	const Mat3x3<MyCxFixedPt>& rot_scale,
-	const Vec3<MyCxFixedPt>& translate
+	const Mat3x3<MyFixedPt>& rot_scale,
+	const Vec3<MyFixedPt>& translate
 ) {
 	set_rot_scale(rot_scale);
 	set_translate(translate);
@@ -24,9 +24,9 @@ Transform::Transform(
 }
 Transform::Transform(
 	// affine
-	const Vec3<MyCxFixedPt>& rotate,
-	const Vec3<MyCxFixedPt>& translate,
-	const Vec3<MyCxFixedPt>& scale
+	const Vec3<MyFixedPt>& rotate,
+	const Vec3<MyFixedPt>& translate,
+	const Vec3<MyFixedPt>& scale
 ) {
 	set_rot_scale(
 		rotate,
@@ -37,9 +37,9 @@ Transform::Transform(
 }
 Transform::Transform(
 	// perspective projection
-	MyCxFixedPt near,
-	MyCxFixedPt far,
-	MyCxFixedPt fov
+	MyFixedPt near,
+	MyFixedPt far,
+	MyFixedPt fov
 ) {
 	set_perspective(
 		near,
@@ -49,7 +49,7 @@ Transform::Transform(
 }
 Transform::~Transform() {
 }
-void Transform::set_rot_scale(const Mat3x3<MyCxFixedPt>& rot_scale) {
+void Transform::set_rot_scale(const Mat3x3<MyFixedPt>& rot_scale) {
 	for (size_t j=0; j<3u; ++j) {
 		for (size_t i=0; i<3u; ++i) {
 			mat.m.at(j).at(i) = rot_scale.m.at(j).at(i);
@@ -59,11 +59,11 @@ void Transform::set_rot_scale(const Mat3x3<MyCxFixedPt>& rot_scale) {
 	//printout(mat);
 }
 void Transform::set_rot_scale(
-	const Vec3<MyCxFixedPt>& rotate,
-	const Vec3<MyCxFixedPt>& scale
+	const Vec3<MyFixedPt>& rotate,
+	const Vec3<MyFixedPt>& scale
 ) {
 	//--------
-	Vec3<Mat3x3<MyCxFixedPt>> rot_m_v;
+	Vec3<Mat3x3<MyFixedPt>> rot_m_v;
 	//--------
 	const Vec3<double> rotate_dbl{
 		.x=double(rotate.x),
@@ -82,7 +82,7 @@ void Transform::set_rot_scale(
 	rot_m_v.x.m.at(2).at(0) = 0.0;
 	rot_m_v.x.m.at(2).at(1) = std::sin(rotate_dbl.x);
 	rot_m_v.x.m.at(2).at(2) = std::cos(rotate_dbl.x);
-	//rot_m_v.x = MAT3X3_IDENTITY<MyCxFixedPt>;
+	//rot_m_v.x = MAT3X3_IDENTITY<MyFixedPt>;
 	//--------
 	rot_m_v.y.m.at(0).at(0) = std::cos(rotate_dbl.y);
 	rot_m_v.y.m.at(0).at(1) = 0.0;
@@ -107,14 +107,14 @@ void Transform::set_rot_scale(
 	rot_m_v.z.m.at(2).at(0) = 0.0;
 	rot_m_v.z.m.at(2).at(1) = 0.0;
 	rot_m_v.z.m.at(2).at(2) = 1.0;
-	//rot_m_v.z = MAT3X3_IDENTITY<MyCxFixedPt>;
+	//rot_m_v.z = MAT3X3_IDENTITY<MyFixedPt>;
 	//printout("set_rot_scale() 2-args:\n");
 	//printout("3x3 rotation matrices:\n");
 	//printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
 	//printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
 	//printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
 	//--------
-	//Vec3<Mat3x3<MyCxFixedPt>> rot_scale_m_v;
+	//Vec3<Mat3x3<MyFixedPt>> rot_scale_m_v;
 	//for (size_t k=0; k<rot_scale_m_v.SIZE; ++k) {
 	//	rot_scale_m_v.at(k) = rot_m_v.at(k) * scale.at(k);
 	//	rot_scale_m_v.at(k) = rot_m_v.at(k);
@@ -127,12 +127,12 @@ void Transform::set_rot_scale(
 	////printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
 	////printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
 	//--------
-	const Mat3x3<MyCxFixedPt> rot_scale_m = (
+	const Mat3x3<MyFixedPt> rot_scale_m = (
 		// scale should be applied first, otherwise you're scaling your
 		// rotation
 		((scale_m * rot_m_v.z) * rot_m_v.y) * rot_m_v.x
 	);
-	//const Mat3x3<MyCxFixedPt> rot_scale_m = (
+	//const Mat3x3<MyFixedPt> rot_scale_m = (
 	//	rot_scale_m_zy * rot_scale_m_v.x
 	//);
 	//printout("multiplied rotation/scaling matrices:\n");
@@ -141,69 +141,69 @@ void Transform::set_rot_scale(
 	set_rot_scale(rot_scale_m);
 }
 void Transform::set_rot_scale(
-	const Versor<MyCxFixedPt>& rotate,
-	const Vec3<MyCxFixedPt>& scale
+	const Versor<MyFixedPt>& rotate,
+	const Vec3<MyFixedPt>& scale
 ) {
 	set_rot_scale(
 		_calc_scale_mat(scale) * rotate.to_rot_mat()
 	);
 }
-void Transform::set_translate(const Vec3<MyCxFixedPt>& translate) {
+void Transform::set_translate(const Vec3<MyFixedPt>& translate) {
 	for (size_t j=0; j<3u; ++j) {
 		mat.m.at(j).at(3) = translate.at(j);
 	}
 	//printout("set_translate():\n");
 	//printout(mat);
 }
-Vec3<MyCxFixedPt> Transform::translate() const {
-	Vec3<MyCxFixedPt> ret;
+Vec3<MyFixedPt> Transform::translate() const {
+	Vec3<MyFixedPt> ret;
 	for (size_t j=0; j<ret.SIZE; ++j) {
 		ret.at(j) = mat.m.at(j).at(3);
 	}
 	return ret;
 }
 void Transform::set_perspective(
-	MyCxFixedPt near,
-	MyCxFixedPt far,
-	MyCxFixedPt fov
+	MyFixedPt near,
+	MyFixedPt far,
+	MyFixedPt fov
 ) {
 	for (size_t j=0; j<mat.SIZE_2D.y; ++j) {
 		for (size_t i=0; i<mat.SIZE_2D.x; ++i) {
-			mat.m.at(j).at(i) = MyCxFixedPt(0);
+			mat.m.at(j).at(i) = MyFixedPt(0);
 		}
 	}
 	const double my_dbl = double(
 		double(fov) / (2.0) * (double(MATH_PI) / (180.0))
 	);
-	const MyCxFixedPt temp(std::tan(my_dbl));
+	const MyFixedPt temp(std::tan(my_dbl));
 	//printout("Transform::set_perspective(): 0\n");
 	//printout(
 	//	std::hex,
 	//	//fov.whole_part<i64>(), " ",
 	//	//fov.frac_part(), " ",
 	//	//fov.data, " ",
-	//	MyCxFixedPt(fov), " ",
+	//	MyFixedPt(fov), " ",
 	//	my_dbl, " ",
 	//	//temp.data, "\n",
 	//	temp, "\n",
 	//	std::dec
 	//);
-	const MyCxFixedPt e(MyCxFixedPt(1) / temp);
+	const MyFixedPt e(MyFixedPt(1) / temp);
 	mat.m.at(0).at(0) = (
 		e / (
-			MyCxFixedPt(SCREEN_SIZE_2D.x) / MyCxFixedPt(SCREEN_SIZE_2D.y)
+			MyFixedPt(SCREEN_SIZE_2D.x) / MyFixedPt(SCREEN_SIZE_2D.y)
 		)
 	);
 	mat.m.at(1).at(1) = e;
 	const double near_dbl = double(near);
 	const double far_dbl = double(far);
 	// https://jsantell.com/3d-projection/
-	const MyCxFixedPt temp_0 = MyCxFixedPt(
+	const MyFixedPt temp_0 = MyFixedPt(
 		//-(far / (far - near))
 		//-(far_dbl / (far_dbl - near_dbl))
 		(far_dbl + near_dbl) / (near_dbl - far_dbl)
 	);
-	const MyCxFixedPt temp_1 = MyCxFixedPt(
+	const MyFixedPt temp_1 = MyFixedPt(
 		//-((far * near) / (far - near))
 		//-((far_dbl * near_dbl) / (far_dbl - near_dbl))
 		(2.0 * far_dbl * near_dbl) / (near_dbl - far_dbl)
@@ -220,18 +220,18 @@ void Transform::set_perspective(
 	//printout("Transform::set_perspective(): 1\n");
 	//printout(mat);
 }
-Vec4<MyCxFixedPt> Transform::do_project(
+Vec4<MyFixedPt> Transform::do_project(
 	const Transform& model,
 	const Transform& view,
-	const Vec4<MyCxFixedPt>& v
+	const Vec4<MyFixedPt>& v
 ) const {
 	//--------
-	//Vec3<MyCxFixedPt> ret;
+	//Vec3<MyFixedPt> ret;
 	//--------
-	//MyCxFixedPt a, b, c, w; 
+	//MyFixedPt a, b, c, w; 
 	//const Transform mvp(mat * (view.mat * model.mat));
 	//const Transform mvp((model.mat * view.mat) * mat);
-	//const Mat4x4<MyCxFixedPt>
+	//const Mat4x4<MyFixedPt>
 	//	mv(model.mat.mult_homogeneous(view.mat)),
 	//	mvp(
 	//	 mv.mult_homogeneous(mat)
@@ -263,45 +263,45 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//);
 	//const auto& m = mvp.m;
 
-	const Vec4<MyCxFixedPt>
+	const Vec4<MyFixedPt>
 		model_v = model.mat.mult_homogeneous(
-			//Vec4<MyCxFixedPt>::build_homogeneous(v)
+			//Vec4<MyFixedPt>::build_homogeneous(v)
 			v
 		),
 		view_v = view.mat.mult_homogeneous(model_v),
-		persp_v = mat.mult_homogeneous(view_v),
+		//persp_v = mat.mult_homogeneous(view_v),
 		//persp_v = mat.mult_homogeneous(model_v),
-		//persp_v = mat * view_v,
+		persp_v = mat * view_v,
 		//persp_v = mat.mult_homogeneous(v),
 		//view_v = view.mat.mult_homogeneous(persp_v),
 		//model_v = model.mat.mult_homogeneous(
-		//	//Vec4<MyCxFixedPt>::build_homogeneous(v)
+		//	//Vec4<MyFixedPt>::build_homogeneous(v)
 		//	view_v
 		//),
 		//almost_ret = mat * view_v,
 		ret(
-			//.x=(almost_ret.x /* * MyCxFixedPt(SCREEN_SIZE_2D.x) */),
-			//.y=(almost_ret.y /* * MyCxFixedPt(SCREEN_SIZE_2D.y) */),
+			//.x=(almost_ret.x /* * MyFixedPt(SCREEN_SIZE_2D.x) */),
+			//.y=(almost_ret.y /* * MyFixedPt(SCREEN_SIZE_2D.y) */),
 			//(persp_v.x /*+ HALF_SCREEN_SIZE_2D.x*/),
 			//(persp_v.y /*+ HALF_SCREEN_SIZE_2D.y*/),
 			//persp_v.z,
 			//persp_v.w
 			persp_v
 		);
-	//Mat4x4<MyCxFixedPt>
+	//Mat4x4<MyFixedPt>
 	//	temp_model(model.mat),
 	//	temp_view(view.mat);
-	printout(
-		"Transform::do_project():\n",
-		"persp_mat:\n", mat, "\n",
-		"view_mat:\n", view.mat, "\n",
-		"model_mat:\n", model.mat, "\n",
-		"v", v, "\n",
-		"persp_v", persp_v, "\n",
-		"view_v", view_v, "\n",
-		"model_v", model_v, "\n",
-		"\n"
-	);
+	//printout(
+	//	"Transform::do_project():\n",
+	//	"persp_mat:\n", mat, "\n",
+	//	"view_mat:\n", view.mat, "\n",
+	//	"model_mat:\n", model.mat, "\n",
+	//	"v", v, "\n",
+	//	"persp_v", persp_v, "\n",
+	//	"view_v", view_v, "\n",
+	//	"model_v", model_v, "\n",
+	//	"\n"
+	//);
 
 	////temp_model.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
 	////temp_model.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
@@ -330,11 +330,11 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//	//mvp = mat * model_view;
 	//	pv_mat = mat * temp_view,
 	//	mvp = pv_mat * temp_model;
-	//const Vec4<MyCxFixedPt>
+	//const Vec4<MyFixedPt>
 	//	almost_ret = mvp * v,
 	//	ret(
-	//		//.x=(almost_ret.x + HALF_SCREEN_SIZE_2D.x) / MyCxFixedPt(2),
-	//		//.y=(almost_ret.y + HALF_SCREEN_SIZE_2D.y) / MyCxFixedPt(2),
+	//		//.x=(almost_ret.x + HALF_SCREEN_SIZE_2D.x) / MyFixedPt(2),
+	//		//.y=(almost_ret.y + HALF_SCREEN_SIZE_2D.y) / MyFixedPt(2),
 	//		//.z=almost_ret.z,
 	//		//.w=almost_ret.w,
 	//		almost_ret
@@ -375,8 +375,8 @@ Vec4<MyCxFixedPt> Transform::do_project(
     //b = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + m[1][3];
     //c = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + m[2][3];
     //w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + m[3][3];
-    //const Vec4<MyCxFixedPt> final_mult = (
-	//	m * Vec4<MyCxFixedPt>::build_homogeneous(v)
+    //const Vec4<MyFixedPt> final_mult = (
+	//	m * Vec4<MyFixedPt>::build_homogeneous(v)
 	//);
     //a = final_mult.x;
     //b = final_mult.y;
@@ -394,7 +394,7 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//	std::dec
     //);
  
-    //if (w != MyCxFixedPt(1)) {
+    //if (w != MyFixedPt(1)) {
 	//	// do the perspective divide
 	//	printout(
 	//		"do the perspective divide\n"
@@ -437,12 +437,12 @@ Vec4<MyCxFixedPt> Transform::do_project(
 	//--------
 }
 Transform Transform::look_at(
-	const Vec3<MyCxFixedPt>& model_pos,
+	const Vec3<MyFixedPt>& model_pos,
 	//const Transform& view,
-	const Vec3<MyCxFixedPt>& up
+	const Vec3<MyFixedPt>& up
 ) const {
 	Transform ret;
-	//const Vec3<MyCxFixedPt>
+	//const Vec3<MyFixedPt>
 	//	n_forward((model_pos - translate()).norm()),
 	//	n_up(translate().cross(up).norm()),
 	//	n_right(n_forward.cross(n_up).norm());
@@ -458,35 +458,35 @@ Transform Transform::look_at(
 	//	}
 	//}
 	//--------
-	const Vec3<MyCxFixedPt>
+	const Vec3<MyFixedPt>
 		eye(translate()),
 		center(model_pos),
 		n((eye - center).norm()),
 		u(up.cross(n).norm()),
 		v(n.cross(u));
-	const MyCxFixedPt
+	const MyFixedPt
 		neg_u_dot_eye((-u).dot(eye)),
 		neg_v_dot_eye((-v).dot(eye)),
 		neg_n_dot_eye((-n).dot(eye));
 
-	ret.mat = Mat4x4<MyCxFixedPt>{{
+	ret.mat = Mat4x4<MyFixedPt>{{
 		{
-			//{u.at(0), v.at(0), n.at(0), MyCxFixedPt(0.0)},
-			//{u.at(1), v.at(1), n.at(1), MyCxFixedPt(0.0)},
-			//{u.at(2), v.at(2), n.at(2), MyCxFixedPt(0.0)},
-			//{neg_u_dot_eye, neg_v_dot_eye, neg_n_dot_eye, MyCxFixedPt(1.0)},
+			//{u.at(0), v.at(0), n.at(0), MyFixedPt(0.0)},
+			//{u.at(1), v.at(1), n.at(1), MyFixedPt(0.0)},
+			//{u.at(2), v.at(2), n.at(2), MyFixedPt(0.0)},
+			//{neg_u_dot_eye, neg_v_dot_eye, neg_n_dot_eye, MyFixedPt(1.0)},
 			{u.at(0), u.at(1), u.at(2), neg_u_dot_eye},
 			{v.at(0), v.at(1), v.at(2), neg_v_dot_eye},
 			{n.at(0), n.at(1), n.at(2), neg_n_dot_eye},
 			{
-				MyCxFixedPt(0.0),
-				MyCxFixedPt(0.0),
-				MyCxFixedPt(0.0), 
-				MyCxFixedPt(1.0), 
+				MyFixedPt(0.0),
+				MyFixedPt(0.0),
+				MyFixedPt(0.0), 
+				MyFixedPt(1.0), 
 			},
 		}
 	}};
-	//const Vec3<MyCxFixedPt>
+	//const Vec3<MyFixedPt>
 	//	my_translate(translate()),
 	//	f((model_pos - my_translate).norm()),
 	//	up_prime(up.norm()),
@@ -498,8 +498,8 @@ Transform Transform::look_at(
 	//		{u.x, u.y, u.z, -my_translate.y},
 	//		{-f.x, -f.y, -f.z, -my_translate.z},
 	//		{
-	//			MyCxFixedPt(0), MyCxFixedPt(0), MyCxFixedPt(0),
-	//			MyCxFixedPt(1),
+	//			MyFixedPt(0), MyFixedPt(0), MyFixedPt(0),
+	//			MyFixedPt(1),
 	//		},
 	//	},
 	//};
@@ -507,7 +507,7 @@ Transform Transform::look_at(
 }
 Transform Transform::look_at(
 	const Transform& model,
-	const Vec3<MyCxFixedPt>& up
+	const Vec3<MyFixedPt>& up
 ) const {
 	return look_at(
 		model.translate(),
@@ -516,47 +516,47 @@ Transform Transform::look_at(
 }
 void Transform::set_look_at(
 	const Transform& model,
-	const Vec3<MyCxFixedPt>& up
+	const Vec3<MyFixedPt>& up
 ) {
 	*this = look_at(model, up);
 }
 void Transform::set_to_affine_finish() {
 	for (size_t i=0; i<3u; ++i) {
-		mat.m.at(3).at(i) = MyCxFixedPt(0);
+		mat.m.at(3).at(i) = MyFixedPt(0);
 	}
-	mat.m.at(3).at(3) = MyCxFixedPt(1);
+	mat.m.at(3).at(3) = MyFixedPt(1);
 }
 void Transform::_set_to_perspective_finish() {
-	mat.m.at(3).at(0) = MyCxFixedPt(0);
-	mat.m.at(3).at(1) = MyCxFixedPt(0);
-	mat.m.at(3).at(2) = MyCxFixedPt(-1);
-	mat.m.at(3).at(3) = MyCxFixedPt(0);
+	mat.m.at(3).at(0) = MyFixedPt(0);
+	mat.m.at(3).at(1) = MyFixedPt(0);
+	mat.m.at(3).at(2) = MyFixedPt(-1);
+	mat.m.at(3).at(3) = MyFixedPt(0);
 }
-//TransformRet Transform::affine(const Vec3<MyCxFixedPt>& v) const {
+//TransformRet Transform::affine(const Vec3<MyFixedPt>& v) const {
 //	TransformRet ret;
-//	const Vec3<MyCxFixedPt> v_prime = vec_mult_matrix(v, *this);
-//	//ret.p_h_prime = Vec4<MyCxFixedPt>::build_homogeneous(v_prime);
+//	const Vec3<MyFixedPt> v_prime = vec_mult_matrix(v, *this);
+//	//ret.p_h_prime = Vec4<MyFixedPt>::build_homogeneous(v_prime);
 //	//ret.p_c_prime = v_prime;
 //	return ret;
 //}
-//TransformRet Transform::project(const Vec3<MyCxFixedPt>& v) const {
+//TransformRet Transform::project(const Vec3<MyFixedPt>& v) const {
 //	TransformRet ret;
-//	//const MyCxFixedPt w_prime = (
+//	//const MyFixedPt w_prime = (
 //	//	(v.x * mat.m.at(3).at(0))
 //	//	+ (v.y * mat.m.at(3).at(1))
 //	//	+ (v.z * mat.m.at(3).at(2))
 //	//	+ (mat.m.at(3).at(3))
 //	//);
-//	//ret.p_h_prime = Vec4<MyCxFixedPt>{
+//	//ret.p_h_prime = Vec4<MyFixedPt>{
 //	//	.x=
 //	//};
 //	return ret;
 //}
-//Vec3<MyCxFixedPt> operator * (const Vec4<MyCxFixedPt>& v, const Transform& t) {
+//Vec3<MyFixedPt> operator * (const Vec4<MyFixedPt>& v, const Transform& t) {
 //	//--------
-//	Vec3<MyCxFixedPt> ret;
+//	Vec3<MyFixedPt> ret;
 //	//--------
-//	MyCxFixedPt a, b, c, w; 
+//	MyFixedPt a, b, c, w; 
 //
 //	const auto& m = t.mat.m;
 // 
@@ -573,5 +573,5 @@ void Transform::_set_to_perspective_finish() {
 //	return ret;
 //	//--------
 //}
-//Vec3<MyCxFixedPt> mult_affine(const Vec3<MyCxFixedPt>& v, const Transform& t) {
+//Vec3<MyFixedPt> mult_affine(const Vec3<MyFixedPt>& v, const Transform& t) {
 //}

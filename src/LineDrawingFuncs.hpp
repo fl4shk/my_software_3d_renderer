@@ -56,13 +56,13 @@ void calc_line_coords(
 		y = y1;
 		i = T(0);
 
-		MyCxFixedPt last_y = MyCxFixedPt(y);
+		MyFixedPt last_y = MyFixedPt(y);
 
 		while (i <= step) {
 			//putpixel(x, y, 5);
 			//printout(Vec2<double>{.x=double(x), .y=double(y)}, " ");
-			if (last_y != MyCxFixedPt(y)) {
-				last_y = MyCxFixedPt(y);
+			if (last_y != MyFixedPt(y)) {
+				last_y = MyFixedPt(y);
 				printout("\n");
 			}
 			ret.push_back(Vec2<T>{.x=x, .y=y});
