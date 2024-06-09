@@ -874,10 +874,10 @@ void Rast::calc_visib(
 	//if (maxx > int(SCREEN_SIZE_2D.x - 1)) {
 	//	maxx = (SCREEN_SIZE_2D.x - 1);
 	//}
-	//minx = clamp(minx, 0, int(SCREEN_SIZE_2D.x - 1));
-	//maxx = clamp(maxx, 0, int(SCREEN_SIZE_2D.x - 1));
-	//miny = clamp(miny, 0, int(SCREEN_SIZE_2D.y - 1));
-	//maxy = clamp(maxy, 0, int(SCREEN_SIZE_2D.y - 1));
+	minx = clamp(minx, 0, int(SCREEN_SIZE_2D.x - 1));
+	maxx = clamp(maxx, 0, int(SCREEN_SIZE_2D.x - 1));
+	miny = clamp(miny, 0, int(SCREEN_SIZE_2D.y - 1));
+	maxy = clamp(maxy, 0, int(SCREEN_SIZE_2D.y - 1));
 	//if (maxy > int(SCREEN_SIZE_2D.y - 1)) {
 	//	maxy = (SCREEN_SIZE_2D.y - 1);
 	//}

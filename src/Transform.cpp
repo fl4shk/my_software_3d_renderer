@@ -269,8 +269,8 @@ Vec4<MyFixedPt> Transform::do_project(
 			v
 		),
 		view_v = view.mat.mult_homogeneous(model_v),
-		//persp_v = mat.mult_homogeneous(view_v),
 		//persp_v = mat.mult_homogeneous(model_v),
+		//persp_v = mat.mult_homogeneous(view_v),
 		persp_v = mat * view_v,
 		//persp_v = mat.mult_homogeneous(v),
 		//view_v = view.mat.mult_homogeneous(persp_v),

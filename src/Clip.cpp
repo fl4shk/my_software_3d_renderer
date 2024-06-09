@@ -30,17 +30,25 @@ std::vector<Tri> Clip::do_clip(
 		//	//.screen_v=tri.proj_v,
 		//	//.rw_arr=tri.rw_arr,
 		//}
-		tri
+		//tri
 	};
 	//std::vector<Tri> ret;
 	//std::vector<Vec4<MyFixedPt>> temp;
-	//for (size_t i=0; i<tri.proj_v.size(); ++i) {
-	//	temp.push_back(tri.proj_v.at(i).v);
-	//}
-	for (size_t i=0; i<size_t(Plane::Kind::LIM); ++i) {
+	std::vector<Vert> temp;
+	for (size_t i=0; i<tri.proj_v.size(); ++i) {
+		temp.push_back(tri.proj_v.at(i));
+	}
+	for (
+		size_t i=0; i<size_t(Plane::Kind::LIM); ++i
+		//size_t i=0; i<1; ++i
+		//size_t i=0; i<size_t(Plane::Kind::NEAR); ++i
+	) {
 		auto& plane = _plane_arr.at(i);
 		printout(
-			"Clip::update_plane_arr(): ", i, "\n"
+			"Clip::do_clip(): ",
+			i, " ",
+			size_t(plane.kind()),
+			"\n"
 		);
 		//if (i == 0) {
 		//} 
@@ -48,14 +56,57 @@ std::vector<Tri> Clip::do_clip(
 		//	//plane.update_clip_vec(_plane_arr.at(i - 1).clip_vec);
 		//}
 		//temp = plane.do_clip(temp);
-		ret = plane.do_clip(ret);
+		printout("temp:\n");
+		for (const auto& item: temp) {
+			printout(
+				"{", item.v, " ", item.uv, "}\n"
+			);
+		}
+		printout("\n");
+		temp = plane.do_clip(temp);
 		//ret = plane::do_clip(ret);
-		if (ret.size() == 0) {
+		if (temp.size() == 0) {
+			printout("temp.size() == 0!\n");
 			break;
 		}
 	}
+	printout("temp:\n");
+	for (const auto& item: temp) {
+		printout(
+			"{", item.v, " ", item.uv, "}\n"
+		);
+	}
+	printout("\n");
 	//printout("testificate\n");
 	//return _plane_arr;
+	//void draw_ngon(vertex *v, int n) {
+	//	vertex *last = v + (n - 1);
+	//	vertex *first = v++;
+	//	while(v != last) {
+	//		draw_triangle(first, v, v + 1);
+	//		v++;
+	//	}
+	//}
+	if (temp.size() > 0) {
+		printout("temp.size() > 0: ", temp.size(), "\n");
+		const Vert
+			* temp_data = temp.data(),
+			* v = temp_data,
+			* last = v + (temp.size() - 1),
+			* first = v++;
+		while (v != last) {
+			ret.push_back(Tri{
+				.img=tri.img,
+				.model=tri.model,
+				.proj_v{
+					*first,
+					*v,
+					*(v + 1),
+				}
+			});
+			++v;
+		}
+	}
 	return ret;
 }
 //Clip::Clip(

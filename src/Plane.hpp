@@ -26,7 +26,7 @@ private:		// variables
 private:		// fvariables
 	//std::vector<Tri> clip_vec;
 	//Vec4<MyFixedPt> _old_pos{0.0, 0.0, 0.0, 1.0};
-	u32 _old_out_code = 0;
+	//u32 _old_out_code = 0;
 public:		// functions
 	Plane(
 		Kind s_kind
@@ -39,11 +39,11 @@ public:		// functions
 	Plane& operator = (Plane&&) = default;
 
 	//bool inside(const Vec4<MyFixedPt>& v) const;
-	constexpr inline MyFixedPt dist(
-		const Vec4<MyFixedPt>& v
-	) const {
-		return n().dot(v);
-	}
+	//constexpr inline MyFixedPt dist(
+	//	const Vec4<MyFixedPt>& v
+	//) const {
+	//	return n().dot(v);
+	//}
 	//u32 inside(
 	//	const Vec4<MyFixedPt>& v1,
 	//	const Vec4<MyFixedPt>& v2,
@@ -52,70 +52,91 @@ public:		// functions
 	//std::vector<Vec4<MyFixedPt>> do_clip(
 	//	const std::vector<Vec4<MyFixedPt>>& prev_vec
 	//) const;
-	std::vector<Tri> do_clip(
-		const std::vector<Tri>& prev_vec
+	//std::vector<Tri> do_clip(
+	//	const std::vector<Tri>& prev_vec
+	//) const;
+	std::vector<Vert> do_clip(
+		const std::vector<Vert>& prev_vec
 	) const;
 
 	constexpr inline Kind kind() const {
 		return _kind;
 	}
-	constexpr inline Vec4<MyFixedPt> n() const {
-		//return _n;
-		switch (kind()) {
-			//case Kind::W_ZERO: {
-			//	return {0.0, 0.0, 0.0, 0.00001};
-			//	//_p = {0.0, 0.0, 0.0, 0.0};
-			//}
-			//	break;
-			case Kind::LEFT: {
-				//return v.x + v.w;
-				return {1.0, 0.0, 0.0, 1.0};
-				//_p = {-1.0, 0.0, 0.0, 1.0};
-			}
-				break;
-			case Kind::RIGHT: {
-				//return -v.x + v.w;
-				return {-1.0, 0.0, 0.0, 1.0};
-				//_p = {1.0, 0.0, 0.0, 1.0};
-			}
-				break;
-			case Kind::TOP: {
-				//return v.y + v.w;
-				return {0.0, 1.0, 0.0, 1.0};
-				//_p = {0.0, -1.0, 0.0, 1.0};
-			}
-				break;
-			case Kind::BOTTOM: {
-				//return -v.y + v.w;
-				return {0.0, -1.0, 0.0, 1.0};
-				//_p = {0.0, 1.0, 0.0, 1.0};
-			}
-				break;
-			case Kind::NEAR: {
-				//return -v.z;
-				//return {0.0, 0.0, 1.0, 1.0};
-				return {0.0, 0.0, 1.0, 0.0};
-				//_p = {0.0, 0.0, -1.0, 1.0};
-			}
-				break;
-				//return -v.z + v.w;
-			case Kind::FAR: {
-				//return -v.z + v.w;
-				//_n = {0.0, 0.0, -1.0, 0.0};
-				//return {0.0, 0.0, 1.0, 0.0};
-				return {0.0, 0.0, -1.0, 1.0};
-				//return {0.0, 0.0, -1.0, 1.0};
-				//_p = {0.0, 0.0, -1.0, 0.0};
-			}
-				break;
-			//case Kind::LIM: 
-			default: {
-				//return MyFixedPt(-1.0);
-				return {0.0, 0.0, 0.0, 0.0};
-			}
-				break;
-		}
+	static constexpr Vert lerp(
+		const Vert& v0,
+		const Vert& v1,
+		MyFixedPt t
+	) {
+		return Vert{
+			.v{
+				.x=lerp(v0.v.x, v1.v.x, t),
+				.y=lerp(v0.v.y, v1.v.y, t),
+				.z=lerp(v0.v.z, v1.v.z, t),
+				.w=lerp(v0.v.w, v1.v.w, t),
+			},
+			.uv{
+				.x=lerp(v0.uv.x, v1.uv.x, t),
+				.y=lerp(v0.uv.y, v1.uv.y, t),
+			},
+		};
 	}
+	//constexpr inline Vec4<MyFixedPt> n() const {
+	//	//return _n;
+	//	switch (kind()) {
+	//		//case Kind::W_ZERO: {
+	//		//	return {0.0, 0.0, 0.0, 0.0001};
+	//		//	//_p = {0.0, 0.0, 0.0, 0.0};
+	//		//}
+	//		//	break;
+	//		case Kind::LEFT: {
+	//			//return v.x + v.w;
+	//			return {1.0, 0.0, 0.0, 1.0};
+	//			//_p = {-1.0, 0.0, 0.0, 1.0};
+	//		}
+	//			break;
+	//		case Kind::RIGHT: {
+	//			//return -v.x + v.w;
+	//			return {-1.0, 0.0, 0.0, 1.0};
+	//			//_p = {1.0, 0.0, 0.0, 1.0};
+	//		}
+	//			break;
+	//		case Kind::TOP: {
+	//			//return v.y + v.w;
+	//			return {0.0, 1.0, 0.0, 1.0};
+	//			//_p = {0.0, -1.0, 0.0, 1.0};
+	//		}
+	//			break;
+	//		case Kind::BOTTOM: {
+	//			//return -v.y + v.w;
+	//			return {0.0, -1.0, 0.0, 1.0};
+	//			//_p = {0.0, 1.0, 0.0, 1.0};
+	//		}
+	//			break;
+	//		//case Kind::NEAR: {
+	//		//	//return -v.z;
+	//		//	//return {0.0, 0.0, 1.0, 1.0};
+	//		//	return {0.0, 0.0, 1.0, 0.0};
+	//		//	//_p = {0.0, 0.0, -1.0, 1.0};
+	//		//}
+	//		//	break;
+	//		//	//return -v.z + v.w;
+	//		//case Kind::FAR: {
+	//		//	//return -v.z + v.w;
+	//		//	//_n = {0.0, 0.0, -1.0, 0.0};
+	//		//	//return {0.0, 0.0, 1.0, 0.0};
+	//		//	return {0.0, 0.0, -1.0, 1.0};
+	//		//	//return {0.0, 0.0, -1.0, 1.0};
+	//		//	//_p = {0.0, 0.0, -1.0, 0.0};
+	//		//}
+	//			break;
+	//		//case Kind::LIM: 
+	//		default: {
+	//			//return MyFixedPt(-1.0);
+	//			return {0.0, 0.0, 0.0, 0.0};
+	//		}
+	//			break;
+	//	}
+	//}
 	//inline const Vec4<MyFixedPt>& p() const {
 	//	return _p;
 	//}
@@ -126,16 +147,20 @@ public:		// functions
 	//	const Vec4<MyFixedPt>& v
 	//);
 	//u32 out_code(const Vec4<MyFixedPt>& v) const;
-	Vec4<MyFixedPt> intersect(
-		const Vec4<MyFixedPt>& q1,
-		const Vec4<MyFixedPt>& q2,
-		MyFixedPt alpha
-	) const;
-	//static MyFixedPt lerp(
-	//	MyFixedPt a,
-	//	MyFixedPt b,
+	//Vec4<MyFixedPt> intersect(
+	//	const Vec4<MyFixedPt>& q1,
+	//	const Vec4<MyFixedPt>& q2,
 	//	MyFixedPt alpha
-	//);
+	//) const;
+	static constexpr MyFixedPt lerp(
+		MyFixedPt a,
+		MyFixedPt b,
+		MyFixedPt t
+	) {
+		//const MyFixedPt a1 = MyFixedPt(1.0) - t;
+		//return MyFixedPt(a1 * a + t * b);
+		return a + (b - a) * t;
+	}
 	//static Vec4<MyFixedPt> lerp(
 	//	const Vec4<MyFixedPt>& a,
 	//	const Vec4<MyFixedPt>& b,

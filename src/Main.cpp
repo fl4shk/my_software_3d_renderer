@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 	//);
 	const MyFixedPt
 		near(0.1),
-		far(100.0);
+		far(10.0);
 	Transform perspective(
 		near, // near
 		far // far
@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
 		{
 			printout("checking keys\n");
 			const MyFixedPt
-				amount_xy(0.100),
+				amount_xy(0.0100),
 				amount_z(0.0100),
 				amount_angle(0.00010000);
 			if (
@@ -475,6 +475,50 @@ int main(int argc, char** argv) {
 			);
 			for (size_t j=0; j<clip_vec.size(); ++j) {
 				clip_vec.at(j).persp_div();
+				//const Vec4<double>
+				//	my_screen_v{
+				//		.x=double(clip_vec.at(j).screen_v.at(0).v.x),
+				//		.y=double(clip_vec.at(j).screen_v.at(0).v.y),
+				//		.z=double(clip_vec.at(j).screen_v.at(0).v.z),
+				//		.w=double(clip_vec.at(j).screen_v.at(0).v.w),
+				//	};
+				printout(
+					"post persp_div():\n",
+					"clip_vec.at(", j, ").proj_v:\n",
+					"{\n",
+					"\t{",
+						clip_vec.at(j).proj_v.at(0).v, " ",
+						clip_vec.at(j).proj_v.at(0).uv,
+					"}",
+					"\n",
+					"\t{",
+						clip_vec.at(j).proj_v.at(1).v, " ",
+						clip_vec.at(j).proj_v.at(1).uv,
+					"}",
+					"\n",
+					"\t{",
+						clip_vec.at(j).proj_v.at(2).v, " ",
+						clip_vec.at(j).proj_v.at(2).uv,
+					"}\n",
+					"}\n"
+					"clip_vec.at(", j, ").screen_v:\n",
+					"{\n",
+					"\t{",
+						clip_vec.at(j).screen_v.at(0).v, " ",
+						clip_vec.at(j).screen_v.at(0).uv,
+					"}",
+					"\n",
+					"\t{",
+						clip_vec.at(j).screen_v.at(1).v, " ",
+						clip_vec.at(j).screen_v.at(1).uv,
+					"}",
+					"\n",
+					"\t{",
+						clip_vec.at(j).screen_v.at(2).v, " ",
+						clip_vec.at(j).screen_v.at(2).uv,
+					"}\n",
+					"}\n"
+				);
 				rast.calc_visib(
 					//{tri, clip_vec.at(j)},
 					clip_vec.at(j),
