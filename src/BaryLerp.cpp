@@ -8,35 +8,38 @@
 //		
 //	);
 //}
+//BaryLerp::BaryLerp(
+//	//const Tri& tri,
+//	const std::pair<Tri, TriRast>& tri,
+//	const Vec2<MyFixedPt>& v1,
+//	bool do_rast_interp
+//):
+//	BaryLerp(
+//		//tri.v.at(0),
+//		//tri.v.at(1),
+//		//tri.v.at(2),
+//		tri.first,
+//		tri.second.screen_v,
+//		tri.first.rw_arr,
+//		v1,
+//		do_rast_interp
+//	)
+//{
+//}
 BaryLerp::BaryLerp(
-	const TriRast& tri,
-	const Vec2<MyFixedPt>& v1,
-	bool do_rast_interp
+	const Tri& tri,
+	//const Vert& vt0,
+	//const Vert& vt1,
+	//const Vert& vt2,
+	//const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
+	const Vec2<MyFixedPt>& v1//,
+	//bool do_rast_interp
 ):
 	BaryLerp(
-		//tri.v.at(0),
-		//tri.v.at(1),
-		//tri.v.at(2),
-		tri.v,
+		tri.screen_v,
 		tri.rw_arr,
-		v1,
-		do_rast_interp
-	)
-{
-}
-BaryLerp::BaryLerp(
-	const Vert& vt0,
-	const Vert& vt1,
-	const Vert& vt2,
-	const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
-	const Vec2<MyFixedPt>& v1,
-	bool do_rast_interp
-):
-	BaryLerp(
-		{vt0, vt1, vt2},
-		rw_arr,
-		v1,
-		do_rast_interp
+		v1
+		//do_rast_interp
 	)
 {
 }
@@ -45,14 +48,19 @@ BaryLerp::BaryLerp(
 	//const Vert& vt1,
 	//const Vert& vt2,
 	const std::array<Vert, TRI_VERT_SIZE>& v,
+	//const Tri& tri,
+	//const TriVert& v,
 	const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
-	const Vec2<MyFixedPt>& v1,
-	bool do_rast_interp
+	const Vec2<MyFixedPt>& v1
+	//bool do_rast_interp
 ) {
 	//const Vert& svt0 = tri.clip_v.at(0);
 	//const Vert& svt1 = tri.clip_v.at(1);
 	//const Vert& svt2 = tri.clip_v.at(2);
 	const Vert
+		//& vt0 = tri.screen_v.at(0),
+		//& vt1 = tri.screen_v.at(1),
+		//& vt2 = tri.screen_v.at(2);
 		& vt0 = v.at(0),
 		& vt1 = v.at(1),
 		& vt2 = v.at(2);
@@ -150,7 +158,8 @@ BaryLerp::BaryLerp(
 		|| C < MyFixedPt(0) || C > MyFixedPt(1)
 	)) {
 		_inside_tri = true;
-	} else if (do_rast_interp) {
+	} else /*if (do_rast_interp)*/ {
+		//printout("returning!\n");
 		return;
 	}
 	_rw = (
@@ -165,7 +174,7 @@ BaryLerp::BaryLerp(
 	//	)
 	//);
 	_one_over_rw = my_recip(_rw);
-	if (do_rast_interp) {
+	//if (do_rast_interp) {
 		_v = {
 			.x=x,
 			.y=y,
@@ -198,18 +207,18 @@ BaryLerp::BaryLerp(
 		//	//	"uv", Vec2<double>{double(_uv.x), double(_uv.y)}, "\n"
 		//	//);
 		//}
-	} else {
-		_v = {
-			.x=x,
-			.y=y,
-			.z=(A * za + B * zb + C * zc),
-			.w=(A * wa + B * wb + C * wc),
-		};
-		_uv = {
-			.x=(A * ua + B * ub + C * uc),
-			.y=(A * va + B * vb + C * vc),
-		};
-	}
+	//} else {
+	//	_v = {
+	//		.x=x,
+	//		.y=y,
+	//		.z=(A * za + B * zb + C * zc),
+	//		.w=(A * wa + B * wb + C * wc),
+	//	};
+	//	_uv = {
+	//		.x=(A * ua + B * ub + C * uc),
+	//		.y=(A * va + B * vb + C * vc),
+	//	};
+	//}
 }
 //std::optional<MyFixedPt> BaryLerp::lerp(
 //	MyFixedPt v

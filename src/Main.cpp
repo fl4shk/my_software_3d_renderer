@@ -3,6 +3,7 @@
 #include "Rast.hpp"
 #include "Mat4x4.hpp"
 #include "Square.hpp"
+#include "Clip.hpp"
 #include <cmath>
 
 int main(int argc, char** argv) {
@@ -28,7 +29,7 @@ int main(int argc, char** argv) {
 	//);
 	const MyFixedPt
 		near(0.1),
-		far(10.0);
+		far(100.0);
 	Transform perspective(
 		near, // near
 		far // far
@@ -48,7 +49,7 @@ int main(int argc, char** argv) {
 	);
 	Square sq{
 		.size_2d{1.0, 1.0},
-		.pos{0.0, 0.0, 0.0},
+		.pos{00.0, 0.0, 0.00},
 		//.rot{VERSOR_IDENTITY<MyFixedPt>},
 		.img=&texture,
 	};
@@ -66,7 +67,7 @@ int main(int argc, char** argv) {
 	//	.z=0.0,
 	//};
 	//Mat4x4<MyFixedPt> camera_mat(MAT4X4_IDENTITY<MyFixedPt>);
-	Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.000};
+	Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.001};
 	//camera_pos.x = /*MyFixedPt*/(
 	//	//HALF_SCREEN_SIZE_2D.x - tri_half_base_height.x
 	//	//2.0
@@ -425,56 +426,83 @@ int main(int argc, char** argv) {
 			//camera.look_at(sq.model).mat.inverse()
 		);
 		std::vector<VertTextureCoords> visib;
+		Clip clip;
 		//--------
 		// TODO: BEGIN: later
-		//for (size_t i=0; i<tri_arr.size(); ++i) {
-		//	//size_t i = 0;
-		//	auto& tri = tri_arr.at(i);
-		//	//printout(
-		//	//	"tri_arr.at(", i, "):\n",
-		//	//	"{",
-		//	//		"{",
-		//	//			tri_arr.at(i).v.at(0).v.x, " ",
-		//	//			tri_arr.at(i).v.at(0).v.y, " ",
-		//	//			tri_arr.at(i).v.at(0).v.z, " ",
-		//	//			tri_arr.at(i).v.at(0).v.w,
-		//	//		"} ",
-		//	//		tri_arr.at(i).v.at(0).uv,
-		//	//	"}\n",
-		//	//	"{",
-		//	//		"{",
-		//	//			tri_arr.at(i).v.at(1).v.x, " ",
-		//	//			tri_arr.at(i).v.at(1).v.y, " ",
-		//	//			tri_arr.at(i).v.at(1).v.z, " ",
-		//	//			tri_arr.at(i).v.at(1).v.w,
-		//	//		"} ",
-		//	//		tri_arr.at(i).v.at(1).uv,
-		//	//	"}\n",
-		//	//	"{",
-		//	//		"{",
-		//	//			tri_arr.at(i).v.at(2).v.x, " ",
-		//	//			tri_arr.at(i).v.at(2).v.y, " ",
-		//	//			tri_arr.at(i).v.at(2).v.z, " ",
-		//	//			tri_arr.at(i).v.at(2).v.w,
-		//	//		"} ",
-		//	//		tri_arr.at(i).v.at(2).uv,
-		//	//	"}",
-		//	//	"\n"
-		//	//);
-		//	tri.do_project_etc(
-		//		n_view,
-		//		perspective
-		//	);
-		//	//tri.do_clip();
-		//	rast.calc_visib(
-		//		tri,
-		//		visib,
-		//		near
-		//	);
-		//	printout(
-		//		"i=", i, " visib.size(): ", visib.size(), "\n"
-		//	);
-		//}
+		for (size_t i=0; i<tri_arr.size(); ++i) {
+			//size_t i = 0;
+			auto& tri = tri_arr.at(i);
+			//printout(
+			//	"tri_arr.at(", i, "):\n",
+			//	"{",
+			//		"{",
+			//			tri_arr.at(i).v.at(0).v.x, " ",
+			//			tri_arr.at(i).v.at(0).v.y, " ",
+			//			tri_arr.at(i).v.at(0).v.z, " ",
+			//			tri_arr.at(i).v.at(0).v.w,
+			//		"} ",
+			//		tri_arr.at(i).v.at(0).uv,
+			//	"}\n",
+			//	"{",
+			//		"{",
+			//			tri_arr.at(i).v.at(1).v.x, " ",
+			//			tri_arr.at(i).v.at(1).v.y, " ",
+			//			tri_arr.at(i).v.at(1).v.z, " ",
+			//			tri_arr.at(i).v.at(1).v.w,
+			//		"} ",
+			//		tri_arr.at(i).v.at(1).uv,
+			//	"}\n",
+			//	"{",
+			//		"{",
+			//			tri_arr.at(i).v.at(2).v.x, " ",
+			//			tri_arr.at(i).v.at(2).v.y, " ",
+			//			tri_arr.at(i).v.at(2).v.z, " ",
+			//			tri_arr.at(i).v.at(2).v.w,
+			//		"} ",
+			//		tri_arr.at(i).v.at(2).uv,
+			//	"}",
+			//	"\n"
+			//);
+			tri.do_project_etc(
+				n_view,
+				perspective
+			);
+			auto&& clip_vec = clip.do_clip(tri);
+			printout(
+				"clip_vec.size(): ",
+				clip_vec.size(),
+				"\n"
+			);
+			for (size_t j=0; j<clip_vec.size(); ++j) {
+				clip_vec.at(j).persp_div();
+				rast.calc_visib(
+					//{tri, clip_vec.at(j)},
+					clip_vec.at(j),
+					visib
+				);
+			}
+			//tri.do_clip();
+			//auto& plane_arr = clip.update_plane_arr(tri);
+			////for (
+			////	//size_t j=0; j<plane_arr.size(); ++j
+			////)
+			//{
+			//	const size_t j = plane_arr.size() - 1;
+			//	for (size_t k=0; k<plane_arr.at(j).clip_vec.size(); ++k) {
+			//		auto& tri_rast = plane_arr.at(j).clip_vec.at(k);
+			//		tri_rast.update_screen_v();
+			//		//tri_rast.update_screen_v();
+			//		rast.calc_visib(
+			//			tri_rast,
+			//			visib,
+			//			near
+			//		);
+			//	}
+			//}
+			printout(
+				"i=", i, " visib.size(): ", visib.size(), "\n"
+			);
+		}
 		// TODO: END: later
 		//--------
 		for (const auto& item: visib) {

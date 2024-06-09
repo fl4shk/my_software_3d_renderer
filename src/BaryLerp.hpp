@@ -19,29 +19,32 @@ private:		// variables
 	Vec2<MyFixedPt>
 		_uv;
 public:		// functions
+	BaryLerp(
+		const Tri& tri,
+		const Vec2<MyFixedPt>& v1//,
+		//bool just_coords=false
+	);
 	//BaryLerp(
-	//	const Tri& tri,
-	//	const Vec2<MyFixedPt>& v1//,
-	//	//bool just_coords=false
+	//	//const std::pair<Tri, TriRast>& tri,
+	//	const Vec2<MyFixedPt>& v1,
+	//	bool do_rast_interp=true
+	//);
+	//BaryLerp(
+	//	//const Tri& tri,
+	//	const Vert& vt0,
+	//	const Vert& vt1,
+	//	const Vert& vt2,
+	//	const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
+	//	const Vec2<MyFixedPt>& v1,
+	//	bool do_rast_interp=true
 	//);
 	BaryLerp(
-		const TriRast& tri,
-		const Vec2<MyFixedPt>& v1,
-		bool do_rast_interp=true
-	);
-	BaryLerp(
-		const Vert& vt0,
-		const Vert& vt1,
-		const Vert& vt2,
+		//const std::array<Vert, TRI_VERT_SIZE>& v,
+		//const Tri& tri,
+		const TriVert& v,
 		const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
-		const Vec2<MyFixedPt>& v1,
-		bool do_rast_interp=true
-	);
-	BaryLerp(
-		const std::array<Vert, TRI_VERT_SIZE>& v,
-		const std::array<MyRwFixedPt, TRI_VERT_SIZE>& rw_arr,
-		const Vec2<MyFixedPt>& v1,
-		bool do_rast_interp=true
+		const Vec2<MyFixedPt>& v1
+		//bool do_rast_interp=true
 	);
 	BaryLerp(const BaryLerp&) = default;
 	~BaryLerp() = default;

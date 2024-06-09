@@ -553,12 +553,16 @@ void Rast::_do_push_back(
 	//const Vert& v1,
 	//const Vert& v2,
 	//const Vert& v3,
-	const TriRast& tri,
+	//const std::pair<Tri, TriRast>& tri,
+	const Tri& tri,
 	const Vec2<DrawT>& v,
 	std::vector<VertTextureCoords>& ret
 ) const {
 	const BaryLerp
 		lerp(
+			//tri.first,
+			//tri.second.screen_v,
+			//tri.first.rw_arr,
 			tri,
 			Vec2<MyFixedPt>{
 				.x=MyFixedPt(v.x),
@@ -747,10 +751,11 @@ void Rast::_do_push_back(
 //}
 void Rast::calc_visib(
 	//size_t tri_idx
-	const TriRast& tri,
-	std::vector<VertTextureCoords>& ret,
+	//const std::pair<Tri, TriRast>& tri,
+	const Tri& tri,
+	std::vector<VertTextureCoords>& ret//,
 	//const TriDraw& tri_draw
-	MyFixedPt near
+	//MyFixedPt near
 ) const {
 	//--------
 	//if (_tri_at_func == nullptr) {
@@ -779,13 +784,25 @@ void Rast::calc_visib(
 	//--------
 	//auto temp_v = tri.screen_v;
 	// 28.4 fixed-point coordinates
-	const int Y1 = std::round(16.0 * double((tri.v.at(0).v.y)));
-	const int Y2 = std::round(16.0 * double((tri.v.at(1).v.y)));
-	const int Y3 = std::round(16.0 * double((tri.v.at(2).v.y)));
+	const int Y1 = std::round(
+		16.0 * double((tri.screen_v.at(0).v.y))
+	);
+	const int Y2 = std::round(
+		16.0 * double((tri.screen_v.at(1).v.y))
+	);
+	const int Y3 = std::round(
+		16.0 * double((tri.screen_v.at(2).v.y))
+	);
 
-	const int X1 = std::round(16.0 * double((tri.v.at(0).v.x)));
-	const int X2 = std::round(16.0 * double((tri.v.at(1).v.x)));
-	const int X3 = std::round(16.0 * double((tri.v.at(2).v.x)));
+	const int X1 = std::round(
+		16.0 * double((tri.screen_v.at(0).v.x))
+	);
+	const int X2 = std::round(
+		16.0 * double((tri.screen_v.at(1).v.x))
+	);
+	const int X3 = std::round(
+		16.0 * double((tri.screen_v.at(2).v.x))
+	);
 	//const std::array<Vec2<int>, 3> coords{
 	//	{
 	//		{.x=X1, .y=Y1},
@@ -1032,9 +1049,12 @@ void Rast::calc_visib(
 					//--------
 					// implement back-face culling
 					const auto
-						& v4a = tri.v.at(0).v,
-						& v4b = tri.v.at(1).v,
-						& v4c = tri.v.at(2).v;
+						//& v4a = tri.second.screen_v.at(0),
+						//& v4b = tri.second.screen_v.at(1),
+						//& v4c = tri.second.screen_v.at(2);
+						& v4a = tri.screen_v.at(0).v,
+						& v4b = tri.screen_v.at(1).v,
+						& v4c = tri.screen_v.at(2).v;
 					const Vec3<MyFixedPt>
 						v0(v4a.x, v4a.y, v4a.z),
 						v1(v4b.x, v4b.y, v4b.z),
@@ -1045,6 +1065,7 @@ void Rast::calc_visib(
 					//--------
 					if (v0.dot(N) >= 0) {
 						_do_push_back(
+							//tri.first,
 							tri,
 							Vec2<DrawT>{
 								.x=DrawT(ix),

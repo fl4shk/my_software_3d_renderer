@@ -6,20 +6,27 @@
 class Plane final {
 public:		// types
 	enum class Kind: size_t {
-		LEFT,		// v * (1 0 0 1)
-		RIGHT,		// v * (-1 0 0 1)
-		TOP,		// v * (0 1 0 1)
-		BOTTOM,		// v * (0 -1 0 1)
-		NEAR,		// v * (0 0 1 1)
-		FAR,		// v * (0 0 -1 0)
+		//W_ZERO,		// v dot (0 0 0 0)
+		LEFT,		// v dot (1 0 0 1)
+		RIGHT,		// v dot (-1 0 0 1)
+		TOP,		// v dot (0 1 0 1)
+		BOTTOM,		// v dot (0 -1 0 1)
+		NEAR,		// v dot (0 0 1 0)
+		FAR,		// v dot (0 0 -1 1)
+		//BX,		// (w + x)*(w - x)
+		//BY,		// (w + y)*(w - y)
+		//BZ,		// (w)*(w - z)
 		LIM,
 	};
 private:		// variables
 	Kind _kind;
-	Vec4<MyFixedPt> _n{0.0, 0.0, 0.0, 1.0};
-	std::vector<TriRast> _clip_vec;
+	//Vec4<MyFixedPt>
+	//	_n{0.0, 0.0, 0.0, 1.0};
+	//	//_p{0.0, 0.0, 0.0, 1.0};
+private:		// fvariables
+	//std::vector<Tri> clip_vec;
 	//Vec4<MyFixedPt> _old_pos{0.0, 0.0, 0.0, 1.0};
-	//u8 _old_out_code = 0;
+	u32 _old_out_code = 0;
 public:		// functions
 	Plane(
 		Kind s_kind
@@ -31,41 +38,109 @@ public:		// functions
 	Plane& operator = (const Plane&) = default;
 	Plane& operator = (Plane&&) = default;
 
-	bool inside(const Vec4<MyFixedPt>& v) const;
-	MyFixedPt dist(const Vec4<MyFixedPt>& v) const;
+	//bool inside(const Vec4<MyFixedPt>& v) const;
+	constexpr inline MyFixedPt dist(
+		const Vec4<MyFixedPt>& v
+	) const {
+		return n().dot(v);
+	}
 	//u32 inside(
 	//	const Vec4<MyFixedPt>& v1,
 	//	const Vec4<MyFixedPt>& v2,
 	//	const Vec4<MyFixedPt>& v3
 	//) const;
-	std::vector<TriRast>& update_clip_vec(const Tri& tri);
+	//std::vector<Vec4<MyFixedPt>> do_clip(
+	//	const std::vector<Vec4<MyFixedPt>>& prev_vec
+	//) const;
+	std::vector<Tri> do_clip(
+		const std::vector<Tri>& prev_vec
+	) const;
 
-	inline Kind kind() const {
+	constexpr inline Kind kind() const {
 		return _kind;
 	}
-	inline const Vec4<MyFixedPt>& n() const {
-		return _n;
+	constexpr inline Vec4<MyFixedPt> n() const {
+		//return _n;
+		switch (kind()) {
+			//case Kind::W_ZERO: {
+			//	return {0.0, 0.0, 0.0, 0.00001};
+			//	//_p = {0.0, 0.0, 0.0, 0.0};
+			//}
+			//	break;
+			case Kind::LEFT: {
+				//return v.x + v.w;
+				return {1.0, 0.0, 0.0, 1.0};
+				//_p = {-1.0, 0.0, 0.0, 1.0};
+			}
+				break;
+			case Kind::RIGHT: {
+				//return -v.x + v.w;
+				return {-1.0, 0.0, 0.0, 1.0};
+				//_p = {1.0, 0.0, 0.0, 1.0};
+			}
+				break;
+			case Kind::TOP: {
+				//return v.y + v.w;
+				return {0.0, 1.0, 0.0, 1.0};
+				//_p = {0.0, -1.0, 0.0, 1.0};
+			}
+				break;
+			case Kind::BOTTOM: {
+				//return -v.y + v.w;
+				return {0.0, -1.0, 0.0, 1.0};
+				//_p = {0.0, 1.0, 0.0, 1.0};
+			}
+				break;
+			case Kind::NEAR: {
+				//return -v.z;
+				//return {0.0, 0.0, 1.0, 1.0};
+				return {0.0, 0.0, 1.0, 0.0};
+				//_p = {0.0, 0.0, -1.0, 1.0};
+			}
+				break;
+				//return -v.z + v.w;
+			case Kind::FAR: {
+				//return -v.z + v.w;
+				//_n = {0.0, 0.0, -1.0, 0.0};
+				//return {0.0, 0.0, 1.0, 0.0};
+				return {0.0, 0.0, -1.0, 1.0};
+				//return {0.0, 0.0, -1.0, 1.0};
+				//_p = {0.0, 0.0, -1.0, 0.0};
+			}
+				break;
+			//case Kind::LIM: 
+			default: {
+				//return MyFixedPt(-1.0);
+				return {0.0, 0.0, 0.0, 0.0};
+			}
+				break;
+		}
 	}
+	//inline const Vec4<MyFixedPt>& p() const {
+	//	return _p;
+	//}
+
 
 	//static MyFixedPt dot(
 	//	Kind kind,
 	//	const Vec4<MyFixedPt>& v
 	//);
-	//static u8 out_code(const Vec4<MyFixedPt>& v);
+	//u32 out_code(const Vec4<MyFixedPt>& v) const;
 	Vec4<MyFixedPt> intersect(
-		const Vec4<MyFixedPt>& q,
-		const Vec4<MyFixedPt>& p
+		const Vec4<MyFixedPt>& q1,
+		const Vec4<MyFixedPt>& q2,
+		MyFixedPt alpha
 	) const;
-	static MyFixedPt lerp(
-		MyFixedPt a,
-		MyFixedPt b,
-		MyFixedPt alpha
-	);
-	static Vec4<MyFixedPt> lerp(
-		const Vec4<MyFixedPt>& a,
-		const Vec4<MyFixedPt>& b,
-		MyFixedPt alpha
-	);
+	//static MyFixedPt lerp(
+	//	MyFixedPt a,
+	//	MyFixedPt b,
+	//	MyFixedPt alpha
+	//);
+	//static Vec4<MyFixedPt> lerp(
+	//	const Vec4<MyFixedPt>& a,
+	//	const Vec4<MyFixedPt>& b,
+	//	MyFixedPt alpha
+	//);
 };
 
 

@@ -62,8 +62,8 @@ BoundingSphere bounding_sphere_of_tri_clip_v(
 	const Tri& tri
 ) {
 	return BoundingSphere(
-		tri.clip_v.at(0).v,
-		tri.clip_v.at(1).v,
-		tri.clip_v.at(2).v
+		tri.proj_v.at(0).v,
+		tri.proj_v.at(1).v,
+		tri.proj_v.at(2).v
 	);
 }

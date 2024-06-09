@@ -30,32 +30,42 @@ public:		// functions
 	//GEN_GETTER_BY_VAL(tri_at_func);
 	//std::vector<std::vector<bool>> 
 	void calc_visib(
-		const TriRast& tri,
-		std::vector<VertTextureCoords>& ret,
-		MyFixedPt near
+		//const TriRast& tri,
+		const Tri& tri,
+		//const std::pair<Tri, TriRast>& tri,
+		std::vector<VertTextureCoords>& ret//,
+		//MyFixedPt near
 	) const;
 private:		// functions
-	void _calc_flat_top_visib(
-		const TriRast& tri,
-		//const Vert& v1,
-		//const Vert& v2,
-		//const Vert& v3,
-		//std::vector<Vec2<DrawT>>& ret
-		std::vector<VertTextureCoords>& ret
-	) const;
-	void _calc_flat_bot_visib(
-		const TriRast& tri,
-		//const Vert& v1,
-		//const Vert& v2,
-		//const Vert& v3,
-		//std::vector<Vec2<DrawT>>& ret
-		std::vector<VertTextureCoords>& ret
-	) const;
+	//void _calc_visib_worker(
+	//	//size_t tri_idx
+	//	const std::pair<Tri, TriRast>& tri,
+	//	std::vector<VertTextureCoords>& ret//,
+	//	//const TriDraw& tri_draw
+	//	//MyFixedPt near
+	//) const;
+	//void _calc_flat_top_visib(
+	//	const TriRast& tri,
+	//	//const Vert& v1,
+	//	//const Vert& v2,
+	//	//const Vert& v3,
+	//	//std::vector<Vec2<DrawT>>& ret
+	//	std::vector<VertTextureCoords>& ret
+	//) const;
+	//void _calc_flat_bot_visib(
+	//	const TriRast& tri,
+	//	//const Vert& v1,
+	//	//const Vert& v2,
+	//	//const Vert& v3,
+	//	//std::vector<Vec2<DrawT>>& ret
+	//	std::vector<VertTextureCoords>& ret
+	//) const;
 	void _do_push_back(
 		//const Vert& v1,
 		//const Vert& v2,
 		//const Vert& v3,
-		const TriRast& tri,
+		//const std::pair<Tri, TriRast>& tri,
+		const Tri& tri,
 		const Vec2<DrawT>& v,
 		std::vector<VertTextureCoords>& ret
 	) const;

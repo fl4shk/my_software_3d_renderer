@@ -1,5 +1,63 @@
 #include "Clip.hpp"
 
+Clip::Clip(
+	//const Tri& tri
+	//MyFixedPt s_near,
+	//MyFixedPt s_far
+)
+	: _plane_arr{
+		//Plane(Plane::Kind::W_ZERO),
+		Plane(Plane::Kind::LEFT),
+		Plane(Plane::Kind::RIGHT),
+		Plane(Plane::Kind::TOP),
+		Plane(Plane::Kind::BOTTOM),
+		Plane(Plane::Kind::NEAR),
+		Plane(Plane::Kind::FAR),
+	}
+{
+}
+Clip::~Clip() {
+}
+std::vector<Tri> Clip::do_clip(
+	const Tri& tri
+) const {
+	std::vector<Tri> ret{
+		//Tri{
+		//	//.img=tri.img,
+		//	.img=tri.img,
+		//	.model=tri.model,
+		//	.proj_v=tri.proj_v,
+		//	//.screen_v=tri.proj_v,
+		//	//.rw_arr=tri.rw_arr,
+		//}
+		tri
+	};
+	//std::vector<Tri> ret;
+	//std::vector<Vec4<MyFixedPt>> temp;
+	//for (size_t i=0; i<tri.proj_v.size(); ++i) {
+	//	temp.push_back(tri.proj_v.at(i).v);
+	//}
+	for (size_t i=0; i<size_t(Plane::Kind::LIM); ++i) {
+		auto& plane = _plane_arr.at(i);
+		printout(
+			"Clip::update_plane_arr(): ", i, "\n"
+		);
+		//if (i == 0) {
+		//} 
+		//else {
+		//	//plane.update_clip_vec(_plane_arr.at(i - 1).clip_vec);
+		//}
+		//temp = plane.do_clip(temp);
+		ret = plane.do_clip(ret);
+		//ret = plane::do_clip(ret);
+		if (ret.size() == 0) {
+			break;
+		}
+	}
+	//printout("testificate\n");
+	//return _plane_arr;
+	return ret;
+}
 //Clip::Clip(
 //	const Tri& tri,
 //	MyFixedPt s_near,

@@ -286,6 +286,10 @@ Vec4<MyFixedPt> Transform::do_project(
 			//(persp_v.y /*+ HALF_SCREEN_SIZE_2D.y*/),
 			//persp_v.z,
 			//persp_v.w
+			//persp_v.x / persp_v.w,
+			//persp_v.y / persp_v.w,
+			//persp_v.z,
+			//persp_v.w
 			persp_v
 		);
 	//Mat4x4<MyFixedPt>

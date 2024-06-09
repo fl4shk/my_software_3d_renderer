@@ -95,3 +95,39 @@ What about for -w <= x?
 -> -x - w <= 0
 -> -1*x + 0*y + 0*z - 1*w <= 0
 -> 1*x + 0*y + 0*z + 1*w >= 0
+--------
+
+Plane in 4D
+
+n_hat dot (r_hat - r_0_hat) = 0
+
+a*(x - x0) + b*(y - y0) + c*(z - z0) + d*(w - w0) = 0
+
+a*x - a*x0 + b*y - b*y0 + c*z - c*z0 + d*w - d*w0 = 0
+
+
+--------
+
+//a*x + b*y + c*z + d*w + n_hat dot (x0 y0 z0 w0) = 0
+
+--------
+
+BX = (w + x)*(w - x)
+= w*w - w*x + w*x - x*x
+= w*w - x*x
+= w^2 - x^2
+
+BY = (w + y)*(w - y)
+= w*w - w*y + w*y - y*y
+= w*w - y*y
+= w^2 - y^2
+
+BZ = (w)*(w - z)
+= w*w - w*z
+= w^2 - w*z
+
+// to avoid extra multiplies, it is probably better to leave the equations
+// for BX, BY, and BZ as their first forms, unless multiplies are cheaper
+// than additions/subtractions
+
+--------
