@@ -44,25 +44,25 @@ std::vector<Tri> Clip::do_clip(
 		//size_t i=0; i<size_t(Plane::Kind::NEAR); ++i
 	) {
 		auto& plane = _plane_arr.at(i);
-		printout(
-			"Clip::do_clip(): ",
-			i, " ",
-			size_t(plane.kind()),
-			"\n"
-		);
+		//printout(
+		//	"Clip::do_clip(): ",
+		//	i, " ",
+		//	size_t(plane.kind()),
+		//	"\n"
+		//);
 		//if (i == 0) {
 		//} 
 		//else {
 		//	//plane.update_clip_vec(_plane_arr.at(i - 1).clip_vec);
 		//}
 		//temp = plane.do_clip(temp);
-		printout("temp:\n");
-		for (const auto& item: temp) {
-			printout(
-				"{", item.v, " ", item.uv, "}\n"
-			);
-		}
-		printout("\n");
+		//printout("temp:\n");
+		//for (const auto& item: temp) {
+		//	printout(
+		//		"{", item.v, " ", item.uv, "}\n"
+		//	);
+		//}
+		//printout("\n");
 		temp = plane.do_clip(temp);
 		//ret = plane::do_clip(ret);
 		if (temp.size() == 0) {
@@ -70,13 +70,6 @@ std::vector<Tri> Clip::do_clip(
 			break;
 		}
 	}
-	printout("temp:\n");
-	for (const auto& item: temp) {
-		printout(
-			"{", item.v, " ", item.uv, "}\n"
-		);
-	}
-	printout("\n");
 	//printout("testificate\n");
 	//return _plane_arr;
 	//void draw_ngon(vertex *v, int n) {
@@ -88,7 +81,14 @@ std::vector<Tri> Clip::do_clip(
 	//	}
 	//}
 	if (temp.size() > 0) {
-		printout("temp.size() > 0: ", temp.size(), "\n");
+		//printout("temp.size() > 0: ", temp.size(), "\n");
+		printout("temp:\n");
+		for (const auto& item: temp) {
+			printout(
+				"{", item.v, " ", item.uv, "}\n"
+			);
+		}
+		printout("\n");
 		const Vert
 			* temp_data = temp.data(),
 			* v = temp_data,

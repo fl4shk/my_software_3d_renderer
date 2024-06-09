@@ -859,7 +859,7 @@ std::vector<Vert> Plane::do_clip(
 	if (vnum == 1) {
 		/* special case: point clipping */
 		if (inside_frustum_plane(prev_vec.front().v)) {
-			printout("point clipping\n");
+			//printout("point clipping\n");
 			ret.push_back(prev_vec.front());
 		}
 		return ret;
@@ -883,7 +883,7 @@ std::vector<Vert> Plane::do_clip(
 	if (voutnum <= 0) {
 		//assert(edges_clipped == 0);
 		//return -1;
-		printout("edges_clipped == 0\n");
+		//printout("edges_clipped == 0\n");
 		return std::vector<Vert>();
 	}
 

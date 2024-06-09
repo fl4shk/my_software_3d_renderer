@@ -35,6 +35,7 @@ public:		// variables
 		v,
 		proj_v,
 		//clip_v,
+		ndc_v,
 		screen_v;
 	std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
 	//std::array<MyFixedPt, TRI_VERT_SIZE> rw_arr;

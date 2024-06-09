@@ -468,11 +468,11 @@ int main(int argc, char** argv) {
 				perspective
 			);
 			auto&& clip_vec = clip.do_clip(tri);
-			printout(
-				"clip_vec.size(): ",
-				clip_vec.size(),
-				"\n"
-			);
+			//printout(
+			//	"clip_vec.size(): ",
+			//	clip_vec.size(),
+			//	"\n"
+			//);
 			for (size_t j=0; j<clip_vec.size(); ++j) {
 				clip_vec.at(j).persp_div();
 				//const Vec4<double>
@@ -484,23 +484,23 @@ int main(int argc, char** argv) {
 				//	};
 				printout(
 					"post persp_div():\n",
-					"clip_vec.at(", j, ").proj_v:\n",
-					"{\n",
-					"\t{",
-						clip_vec.at(j).proj_v.at(0).v, " ",
-						clip_vec.at(j).proj_v.at(0).uv,
-					"}",
-					"\n",
-					"\t{",
-						clip_vec.at(j).proj_v.at(1).v, " ",
-						clip_vec.at(j).proj_v.at(1).uv,
-					"}",
-					"\n",
-					"\t{",
-						clip_vec.at(j).proj_v.at(2).v, " ",
-						clip_vec.at(j).proj_v.at(2).uv,
-					"}\n",
-					"}\n"
+					//"clip_vec.at(", j, ").proj_v:\n",
+					//"{\n",
+					//"\t{",
+					//	clip_vec.at(j).proj_v.at(0).v, " ",
+					//	clip_vec.at(j).proj_v.at(0).uv,
+					//"}",
+					//"\n",
+					//"\t{",
+					//	clip_vec.at(j).proj_v.at(1).v, " ",
+					//	clip_vec.at(j).proj_v.at(1).uv,
+					//"}",
+					//"\n",
+					//"\t{",
+					//	clip_vec.at(j).proj_v.at(2).v, " ",
+					//	clip_vec.at(j).proj_v.at(2).uv,
+					//"}\n",
+					//"}\n"
 					"clip_vec.at(", j, ").screen_v:\n",
 					"{\n",
 					"\t{",
@@ -525,6 +525,13 @@ int main(int argc, char** argv) {
 					visib
 				);
 			}
+			//tri.persp_div();
+			//rast.calc_visib(
+			//	//{tri, clip_vec.at(j)},
+			//	//clip_vec.at(j),
+			//	tri,
+			//	visib
+			//);
 			//tri.do_clip();
 			//auto& plane_arr = clip.update_plane_arr(tri);
 			////for (
