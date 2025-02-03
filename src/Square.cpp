@@ -12,7 +12,7 @@ std::array<Tri, 2>& Square::update_tri_arr() {
 		zero(0.0),
 		one(1.0),
 		uv_min(0.01),
-		uv_max(15.0 / 16.0);
+		uv_max(15.9 / 16.0);
 	a.v.at(2).v = {
 		.x=-hs.x, 
 		.y=-hs.y,
