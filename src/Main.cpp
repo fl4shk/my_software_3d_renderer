@@ -48,7 +48,8 @@ int main(int argc, char** argv) {
 		//"gfx/obj/foreground_common_gfx.bmp"
 	);
 	Square sq{
-		.size_2d{1.0, 1.0},
+		//.size_2d{1.0, 1.0},
+		.size_2d{10.0, 10.0},
 		.pos{00.0, 0.0, 0.00},
 		//.rot{VERSOR_IDENTITY<MyFixedPt>},
 		.img=&texture,
@@ -245,7 +246,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 		{
-			printout("checking keys\n");
+			//printout("checking keys\n");
 			const MyFixedPt
 				amount_xy(0.0100),
 				amount_z(0.0100),
@@ -255,21 +256,21 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
 			) {
 				camera_pos.x += amount_xy;
-				printout(
-					"moving left: ",
-					double(camera_pos.x),
-					"\n"
-				);
+				//printout(
+				//	"moving left: ",
+				//	double(camera_pos.x),
+				//	"\n"
+				//);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadRight)
 				&& disp.key_up_now(SnesKeyKind::DpadLeft)
 			) {
 				camera_pos.x -= amount_xy;
-				printout(
-					"moving right: ",
-					double(camera_pos.x),
-					"\n"
-				);
+				//printout(
+				//	"moving right: ",
+				//	double(camera_pos.x),
+				//	"\n"
+				//);
 			}
 
 			if (
@@ -277,21 +278,21 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadDown)
 			) {
 				camera_pos.y += amount_xy;
-				printout(
-					"moving up: ",
-					double(camera_pos.y),
-					"\n"
-				);
+				//printout(
+				//	"moving up: ",
+				//	double(camera_pos.y),
+				//	"\n"
+				//);
 			} else if (
 				disp.key_down_now(SnesKeyKind::DpadDown)
 				&& disp.key_up_now(SnesKeyKind::DpadUp)
 			) {
 				camera_pos.y -= amount_xy;
-				printout(
-					"moving down: ",
-					double(camera_pos.y),
-					"\n"
-				);
+				//printout(
+				//	"moving down: ",
+				//	double(camera_pos.y),
+				//	"\n"
+				//);
 			}
 
 			if (
@@ -299,21 +300,21 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::A)
 			) {
 				camera_pos.z -= amount_z;
-				printout(
-					"moving backward: ",
-					double(camera_pos.z),
-					"\n"
-				);
+				//printout(
+				//	"moving backward: ",
+				//	double(camera_pos.z),
+				//	"\n"
+				//);
 			} else if (
 				disp.key_down_now(SnesKeyKind::A)
 				&& disp.key_up_now(SnesKeyKind::Y)
 			) {
 				camera_pos.z += amount_z;
-				printout(
-					"moving forward: ",
-					double(camera_pos.z),
-					"\n"
-				);
+				//printout(
+				//	"moving forward: ",
+				//	double(camera_pos.z),
+				//	"\n"
+				//);
 			}
 
 			//if (
@@ -376,12 +377,12 @@ int main(int argc, char** argv) {
 					* Versor<MyFixedPt>::from_y_angle(-sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
-				printout(
-					"rotating y minus: ",
-					double(sq.rot.v.y),
-					//double(sq.rot.y),
-					"\n"
-				);
+				//printout(
+				//	"rotating y minus: ",
+				//	double(sq.rot.v.y),
+				//	//double(sq.rot.y),
+				//	"\n"
+				//);
 			} else if (
 				disp.key_down_now(SnesKeyKind::R)
 				&& disp.key_up_now(SnesKeyKind::L)
@@ -398,12 +399,12 @@ int main(int argc, char** argv) {
 					* Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
-				printout(
-					"rotating y plus: ",
-					double(sq.rot.v.y),
-					//double(sq.rot.y),
-					"\n"
-				);
+				//printout(
+				//	"rotating y plus: ",
+				//	double(sq.rot.v.y),
+				//	//double(sq.rot.y),
+				//	"\n"
+				//);
 			}
 		}
 		//sq.model.set_rot_scale(
@@ -482,43 +483,43 @@ int main(int argc, char** argv) {
 				//		.z=double(clip_vec.at(j).screen_v.at(0).v.z),
 				//		.w=double(clip_vec.at(j).screen_v.at(0).v.w),
 				//	};
-				printout(
-					"post persp_div():\n",
-					//"clip_vec.at(", j, ").proj_v:\n",
-					//"{\n",
-					//"\t{",
-					//	clip_vec.at(j).proj_v.at(0).v, " ",
-					//	clip_vec.at(j).proj_v.at(0).uv,
-					//"}",
-					//"\n",
-					//"\t{",
-					//	clip_vec.at(j).proj_v.at(1).v, " ",
-					//	clip_vec.at(j).proj_v.at(1).uv,
-					//"}",
-					//"\n",
-					//"\t{",
-					//	clip_vec.at(j).proj_v.at(2).v, " ",
-					//	clip_vec.at(j).proj_v.at(2).uv,
-					//"}\n",
-					//"}\n"
-					"clip_vec.at(", j, ").screen_v:\n",
-					"{\n",
-					"\t{",
-						clip_vec.at(j).screen_v.at(0).v, " ",
-						clip_vec.at(j).screen_v.at(0).uv,
-					"}",
-					"\n",
-					"\t{",
-						clip_vec.at(j).screen_v.at(1).v, " ",
-						clip_vec.at(j).screen_v.at(1).uv,
-					"}",
-					"\n",
-					"\t{",
-						clip_vec.at(j).screen_v.at(2).v, " ",
-						clip_vec.at(j).screen_v.at(2).uv,
-					"}\n",
-					"}\n"
-				);
+				//printout(
+				//	"post persp_div():\n",
+				//	//"clip_vec.at(", j, ").proj_v:\n",
+				//	//"{\n",
+				//	//"\t{",
+				//	//	clip_vec.at(j).proj_v.at(0).v, " ",
+				//	//	clip_vec.at(j).proj_v.at(0).uv,
+				//	//"}",
+				//	//"\n",
+				//	//"\t{",
+				//	//	clip_vec.at(j).proj_v.at(1).v, " ",
+				//	//	clip_vec.at(j).proj_v.at(1).uv,
+				//	//"}",
+				//	//"\n",
+				//	//"\t{",
+				//	//	clip_vec.at(j).proj_v.at(2).v, " ",
+				//	//	clip_vec.at(j).proj_v.at(2).uv,
+				//	//"}\n",
+				//	//"}\n"
+				//	"clip_vec.at(", j, ").screen_v:\n",
+				//	"{\n",
+				//	"\t{",
+				//		clip_vec.at(j).screen_v.at(0).v, " ",
+				//		clip_vec.at(j).screen_v.at(0).uv,
+				//	"}",
+				//	"\n",
+				//	"\t{",
+				//		clip_vec.at(j).screen_v.at(1).v, " ",
+				//		clip_vec.at(j).screen_v.at(1).uv,
+				//	"}",
+				//	"\n",
+				//	"\t{",
+				//		clip_vec.at(j).screen_v.at(2).v, " ",
+				//		clip_vec.at(j).screen_v.at(2).uv,
+				//	"}\n",
+				//	"}\n"
+				//);
 				rast.calc_visib(
 					//{tri, clip_vec.at(j)},
 					clip_vec.at(j),
@@ -550,9 +551,9 @@ int main(int argc, char** argv) {
 			//		);
 			//	}
 			//}
-			printout(
-				"i=", i, " visib.size(): ", visib.size(), "\n"
-			);
+			//printout(
+			//	"i=", i, " visib.size(): ", visib.size(), "\n"
+			//);
 		}
 		// TODO: END: later
 		//--------

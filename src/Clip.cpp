@@ -66,7 +66,7 @@ std::vector<Tri> Clip::do_clip(
 		temp = plane.do_clip(temp);
 		//ret = plane::do_clip(ret);
 		if (temp.size() == 0) {
-			printout("temp.size() == 0!\n");
+			//printout("temp.size() == 0!\n");
 			break;
 		}
 	}
@@ -82,13 +82,13 @@ std::vector<Tri> Clip::do_clip(
 	//}
 	if (temp.size() > 0) {
 		//printout("temp.size() > 0: ", temp.size(), "\n");
-		printout("temp:\n");
-		for (const auto& item: temp) {
-			printout(
-				"{", item.v, " ", item.uv, "}\n"
-			);
-		}
-		printout("\n");
+		//printout("temp:\n");
+		//for (const auto& item: temp) {
+		//	printout(
+		//		"{", item.v, " ", item.uv, "}\n"
+		//	);
+		//}
+		//printout("\n");
 		const Vert
 			* temp_data = temp.data(),
 			* v = temp_data,
@@ -107,6 +107,7 @@ std::vector<Tri> Clip::do_clip(
 			++v;
 		}
 	}
+	printout("Clip::do_clip(): ret.size(): ", ret.size(), "\n");
 	return ret;
 }
 //Clip::Clip(

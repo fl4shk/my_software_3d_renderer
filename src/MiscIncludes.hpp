@@ -94,12 +94,12 @@ namespace sdl = liborangepower::sdl;
 static constexpr double MATH_PI = double(M_PI); //double(3.141592653589793);
 static constexpr Vec2<size_t>
 	SCREEN_SIZE_2D{
-		.x=640,
-		.y=480,
+		//.x=640,
+		//.y=480,
 		//.x=800,
 		//.y=600,
-		//.x=32,
-		//.y=20,
+		.x=32,
+		.y=20,
 	};
 static constexpr Vec2<MyFixedPt>
 	HALF_SCREEN_SIZE_2D{

@@ -5,6 +5,8 @@
 
 SHARED_SRC_DIRS:=src \
 
+PIPELINEC_SRC_DIRS := src_pipelinec
+
 CXX_DIRS:=$(SHARED_SRC_DIRS)
 C_DIRS:=$(SHARED_SRC_DIRS)
 S_DIRS:=$(SHARED_SRC_DIRS)
@@ -133,6 +135,18 @@ all : all_pre $(OFILES)
 	$(LD) $(OFILES) -o $(PROJ) $(LD_FLAGS)
 
 
+PIPELINEC_CPP_SRCS := $(foreach DIR,$(PIPELINEC_SRC_DIRS),$(wildcard $(DIR)/*.cpp))
+PIPELINEC_HPP_SRCS := $(foreach DIR,$(PIPELINEC_SRC_DIRS),$(wildcard $(DIR)/*.hpp))
+PIPELINEC_MAIN_SRC := Main.cpp
+PIPELINEC_ALL_SRCS := $(PIPELINEC_CPP_SRCS) $(PIPELINEC_HPP_SRCS)
+
+.PHONY : pipelinec
+pipelinec : $(PIPELINEC_ALL_SRCS)
+	@#cd src_pipelinec && pipelinec --no_synth $(PIPELINEC_MAIN_SRC)
+	cd src_pipelinec && pipelinec --coarse --sweep --start 32 --stop 48 $(PIPELINEC_MAIN_SRC)
+
+
+
 # all_objs is ENTIRELY optional
 .PHONY : all_objs
 all_objs : all_pre $(OFILES)
@@ -235,7 +249,9 @@ $(C_EFILES) : $(PREPROCDIR)/%.E : %.c
 
 .PHONY : clean
 clean :
-	rm -rfv $(OBJDIR) $(DEPDIR) $(ASMOUTDIR) $(PREPROCDIR) $(PROJ) tags *.taghl gmon.out
+	rm -rfv $(OBJDIR) $(DEPDIR) $(ASMOUTDIR) $(PREPROCDIR) $(PROJ) \
+	src_pipelinec/pipelinec_output_*.c_* \
+	src_pipelinec/pipelinec_output_*.cpp_*
 
 
 # Flags for make disassemble*
