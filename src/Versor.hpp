@@ -2,6 +2,7 @@
 #define src_versor_class_hpp
 
 #include "MiscIncludes.hpp"
+#include "MathFuncs.hpp"
 #include "Vec4.hpp"
 #include "Mat3x3.hpp"
 #include <cmath>
@@ -88,6 +89,7 @@ public:		// functions
 		return (*this * rot_v) * inv();
 	}
 
+    #ifndef __SNOWHOUSECPU__
 	constexpr Vec3<T> to_euler_angles() const {
 		Vec3<T> ret;
 
@@ -114,7 +116,7 @@ public:		// functions
 		// pitch (y-axis rotation)
 		const double sinp = std::sqrt(1 + 2 * (q.w * q.y - q.x * q.z));
 		const double cosp = std::sqrt(1 - 2 * (q.w * q.y - q.x * q.z));
-		ret.y = T(2 * std::atan2(sinp, cosp) - M_PI / 2);
+		ret.y = T(2 * std::atan2(sinp, cosp) - MATH_PI / 2);
 
 		// yaw (z-axis rotation)
 		const double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
@@ -123,6 +125,7 @@ public:		// functions
 
 		return ret;
 	}
+	#endif      // __SNOWHOUSECPU__
 
 	static constexpr Versor from_axis_angle(
 		const Vec3<T>& unit_v1,

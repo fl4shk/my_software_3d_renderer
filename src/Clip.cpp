@@ -82,13 +82,13 @@ std::vector<Tri> Clip::do_clip(
 	//}
 	if (temp.size() > 0) {
 		//printout("temp.size() > 0: ", temp.size(), "\n");
-		printout("temp:\n");
-		for (const auto& item: temp) {
-			printout(
-				"{", item.v, " ", item.uv, "}\n"
-			);
-		}
-		printout("\n");
+		//printout("temp:\n");
+		//for (const auto& item: temp) {
+		//	printout(
+		//		"{", item.v, " ", item.uv, "}\n"
+		//	);
+		//}
+		//printout("\n");
 		const Vert
 			* temp_data = temp.data(),
 			* v = temp_data,

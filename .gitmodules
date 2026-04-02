@@ -1,3 +1,6 @@
 [submodule "submodules/liborangepower"]
 	path = submodules/liborangepower
 	url = https://github.com/fl4shk/liborangepower.git
+[submodule "submodules/tiny_fs"]
+	path = submodules/tiny_fs
+	url = git@github.com:fl4shk/tiny_fs

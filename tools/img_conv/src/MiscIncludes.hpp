@@ -29,16 +29,14 @@
 //#include "liborangepower_src/math/vec4_classes.hpp"
 #include "liborangepower_src/misc/misc_includes.hpp"
 
-#include "tiny_fs.h"
-
-//#include "liborangepower_src/sdl2/sdl.hpp"
-//#include "liborangepower_src/sdl2/dpi_stuff.hpp"
-//#include "liborangepower_src/sdl2/keyboard_stuff.hpp"
-//#include "liborangepower_src/sdl2/sdl_video.hpp"
-//#include "liborangepower_src/sdl2/sdl_render.hpp"
-//#include "liborangepower_src/sdl2/sdl_surface.hpp"
-//#include "liborangepower_src/sdl2/sdl_rect.hpp"
-//#include "liborangepower_src/misc/misc_output_funcs.hpp"
+#include "liborangepower_src/sdl2/sdl.hpp"
+#include "liborangepower_src/sdl2/dpi_stuff.hpp"
+#include "liborangepower_src/sdl2/keyboard_stuff.hpp"
+#include "liborangepower_src/sdl2/sdl_video.hpp"
+#include "liborangepower_src/sdl2/sdl_render.hpp"
+#include "liborangepower_src/sdl2/sdl_surface.hpp"
+#include "liborangepower_src/sdl2/sdl_rect.hpp"
+#include "liborangepower_src/misc/misc_output_funcs.hpp"
 
 using namespace liborangepower::misc_output;
 using namespace liborangepower::integer_types;
@@ -96,10 +94,10 @@ using MyRwFixedPt = CxFixedI16p16;
 
 //using liborangepower::math::MyFixedPt;
 namespace concepts = liborangepower::concepts;
-//namespace sdl = liborangepower::sdl;
+namespace sdl = liborangepower::sdl;
 
-//#include <SDL_events.h>
-//#include <SDL_image.h>
+#include <SDL_events.h>
+#include <SDL_image.h>
 
 //static constexpr double MATH_PI = double(M_PI); //double(3.141592653589793);
 static constexpr double MATH_PI = double(3.14159265358979323846);

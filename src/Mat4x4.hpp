@@ -5,6 +5,7 @@
 #include "Mat3x3.hpp"
 #include "Vec4.hpp"
 #include "MiscIncludes.hpp"
+#include "MathFuncs.hpp"
 
 template<typename T>
 class Mat4x4 final {

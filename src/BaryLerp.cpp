@@ -1,4 +1,5 @@
 #include "BaryLerp.hpp"
+#include "liborangepower_src/misc/misc_types.hpp"
 
 //BaryLerp::BaryLerp(
 //	const Tri& tri,

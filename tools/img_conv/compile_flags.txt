@@ -1,3 +1,2 @@
 --std=c++23
 -I/usr/include/SDL2/
--D__SNOWHOUSECPU__

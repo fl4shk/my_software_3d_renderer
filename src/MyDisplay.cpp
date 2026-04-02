@@ -1,5 +1,6 @@
 #include "MyDisplay.hpp"
 //--------
+#ifndef __SNOWHOUSECPU__
 Display::Display()
 	: window(
 		SDL_CreateWindow(
@@ -128,3 +129,4 @@ void MyDisplay::handle_sdl_events() {
 		_do_exit = true;
 	}
 }
+#endif      // __SNOWHOUSECPU__

@@ -45,3 +45,6 @@ types_*.taghl
 my_software_3d_renderer
 my_software_3d_renderer_debug
 *.elf
+
+my_software_3d_renderer.bin
+my_software_3d_renderer_debug.bin

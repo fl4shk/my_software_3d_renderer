@@ -10,6 +10,7 @@
 #include "Tri.hpp"
 #include "Rast.hpp"
 
+#ifndef __SNOWHOUSECPU__
 class Display {
 public:		// variables
 	sdl::Window window;
@@ -91,5 +92,6 @@ protected:		// variables and helper functions
 	//bool _did_first_refresh = false;
 public:		// functions
 };
+#endif  // __SNOWHOUSECPU__
 
 #endif		// src_my_display_class_hpp

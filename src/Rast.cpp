@@ -1063,7 +1063,7 @@ void Rast::calc_visib(
 					// article on backface culling
 					const auto& N = (-(v2 - v0)).cross(v1 - v0);
 					//--------
-					if (v0.dot(N) >= 0) {
+					if (v0.dot(N) >= MyFixedPt(0)) {
 						_do_push_back(
 							//tri.first,
 							tri,

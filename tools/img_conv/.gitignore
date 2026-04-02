@@ -1,0 +1,10 @@
+objs
+deps
+asmouts
+
+objs_debug
+deps_debug
+asmouts_debug
+
+img_conv
+img_conv_debug
