@@ -1,4 +1,5 @@
 #include "Transform.hpp"
+#include "MathFuncs.hpp"
 #include <cmath>
 
 Transform::Transform() {

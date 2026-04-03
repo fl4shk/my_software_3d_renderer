@@ -23,7 +23,7 @@ public:		// constants
 	};
 	static constexpr MyFixedPt DEFAULT_FOV{
 		//0.25 * 360
-		70.0
+		MyFixedPt(70)
 		//0.125 * 360
 		//1
 	};
@@ -97,25 +97,25 @@ public:		// functions
 		const Vec3<MyFixedPt>& model_pos,
 		//const Transform& view,
 		const Vec3<MyFixedPt>& up={
-			.x=MyFixedPt(0.0),
-			.y=MyFixedPt(1.0),
-			.z=MyFixedPt(0.0),
+			.x=MyFixedPt(0),
+			.y=MyFixedPt(1),
+			.z=MyFixedPt(0),
 		}
 	) const;
 	Transform look_at(
 		const Transform& model,
 		const Vec3<MyFixedPt>& up={
-			.x=MyFixedPt(0.0),
-			.y=MyFixedPt(1.0),
-			.z=MyFixedPt(0.0),
+			.x=MyFixedPt(0),
+			.y=MyFixedPt(1),
+			.z=MyFixedPt(0),
 		}
 	) const;
 	void set_look_at(
 		const Transform& model,
 		const Vec3<MyFixedPt>& up={
-			.x=MyFixedPt(0.0),
-			.y=MyFixedPt(1.0),
-			.z=MyFixedPt(0.0),
+			.x=MyFixedPt(0),
+			.y=MyFixedPt(1),
+			.z=MyFixedPt(0),
 		}
 	);
 
@@ -134,9 +134,9 @@ private:		// functions
 	) {
 		return Mat3x3<MyFixedPt>{.m{
 			{
-				{scale.x, 0.0, 0.0},
-				{0.0, scale.y, 0.0},
-				{0.0, 0.0, scale.z},
+				{scale.x, MyFixedPt(0), MyFixedPt(0)},
+				{MyFixedPt(0), scale.y, MyFixedPt(0)},
+				{MyFixedPt(0), MyFixedPt(0), scale.z},
 			}
 		}};
 	}

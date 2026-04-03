@@ -6,9 +6,9 @@
 class Square {
 public:		// variables
 	Vec2<MyFixedPt>
-		size_2d={1.0, 1.0};
+		size_2d={MyFixedPt(1), MyFixedPt(1)};
 	Vec3<MyFixedPt>
-		pos{0.0, 0.0, 0.0};
+		pos{MyFixedPt(0), MyFixedPt(0), MyFixedPt(0)};
 	Versor<MyFixedPt>
 		rot=Versor<MyFixedPt>::identity();
 	//Vec3<MyFixedPt>

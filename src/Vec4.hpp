@@ -2,6 +2,7 @@
 #define src_vec4_class_hpp
 
 #include "MiscIncludes.hpp"
+#include "MathFuncs.hpp"
 
 template<typename T>
 class Vec4 {
@@ -82,17 +83,17 @@ public:		// functions
 	}
 };
 
-template<typename T>
-std::ostream& operator << (std::ostream& os, const Vec4<T>& v) {
-	os << "{";
-	for (size_t i=0; i<v.SIZE; ++i) {
-		os << v.at(i);
-		if (i + 1 < v.SIZE) {
-			osprintout(os, " ");
-		}
-	}
-	os << "}";
-	return os;
-}
+//template<typename T>
+//std::ostream& operator << (std::ostream& os, const Vec4<T>& v) {
+//	os << "{";
+//	for (size_t i=0; i<v.SIZE; ++i) {
+//		os << v.at(i);
+//		if (i + 1 < v.SIZE) {
+//			osprintout(os, " ");
+//		}
+//	}
+//	os << "}";
+//	return os;
+//}
 
 #endif		// src_vec4_class_hpp

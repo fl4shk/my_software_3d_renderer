@@ -24,7 +24,7 @@ void Texture::load(const std::string& fname) {
 
     tiny_fs_fclose(handle);
 }
-Vec2<size_t> Texture::size_2d() const {
+Vec2<size_t> Texture::size_2d() {
     return Vec2<size_t>{
         .x=size_t(_img_size_2d.x),
         .y=size_t(_img_size_2d.y),

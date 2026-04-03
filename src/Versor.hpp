@@ -5,7 +5,7 @@
 #include "MathFuncs.hpp"
 #include "Vec4.hpp"
 #include "Mat3x3.hpp"
-#include <cmath>
+//#include <cmath>
 
 // https://www.anyleaf.org/blog/quaternions:-a-practical-guide
 

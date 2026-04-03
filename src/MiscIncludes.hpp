@@ -4,7 +4,6 @@
 // src/misc_includes.hpp
 
 #include <memory>
-#include <math.h>
 
 #include "liborangepower_src/misc/misc_includes.hpp"
 #include "liborangepower_src/misc/misc_types.hpp"
@@ -25,7 +24,7 @@
 //#include "liborangepower_src/time/time_stuff.hpp"
 #include "liborangepower_src/math/vec2_classes.hpp"
 #include "liborangepower_src/math/vec3_classes.hpp"
-#include "liborangepower_src/math/cx_fixed_pt_class.hpp"
+#include "liborangepower_src/math/pure_fixed_pt_class.hpp"
 //#include "liborangepower_src/math/vec4_classes.hpp"
 #include "liborangepower_src/misc/misc_includes.hpp"
 
@@ -49,20 +48,20 @@ using namespace liborangepower::containers;
 using liborangepower::math::Vec2;
 using liborangepower::math::Vec3;
 //using liborangepower::math::MyFixedPt;
-using liborangepower::math::CxFixedI24p8;
-using liborangepower::math::CxFixedI20p12;
-using liborangepower::math::CxFixedI16p16;
-using liborangepower::math::CxFixedPt;
-using MyFixedPt = CxFixedI16p16;
-using MyRwFixedPt = CxFixedI16p16;
-//using MyFixedPt = CxFixedPt<i32, 14>;
-//using MyFixedPt = CxFixedI20p12;
+using liborangepower::math::PureFixedI24p8;
+using liborangepower::math::PureFixedI20p12;
+using liborangepower::math::PureFixedI16p16;
+using liborangepower::math::PureFixedPt;
+using MyFixedPt = PureFixedI16p16;
+using MyRwFixedPt = PureFixedI16p16;
+//using MyFixedPt = PureFixedPt<i32, 14>;
+//using MyFixedPt = PureFixedI20p12;
 
 //using MyFixedPt = double;
 //using MyRwFixedPt = double;
 
-//using MyFixedPt = CxFixedPt<i32, 16>;
-//using MyRwFixedPt = CxFixedPt<i32, 28>;
+//using MyFixedPt = PureFixedPt<i32, 16>;
+//using MyRwFixedPt = PureFixedPt<i32, 28>;
 //static constexpr size_t MY_RW_FRAC_SHIFT = (
 //	i64(MyRwFixedPt::FRAC_WIDTH) - i64(MyFixedPt::FRAC_WIDTH)
 //);
