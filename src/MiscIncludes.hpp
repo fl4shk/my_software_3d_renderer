@@ -223,4 +223,47 @@ void mm_printout(const ArgTypes&... args) {
     (..., mm_printout_base(args));
 }
 
+
+//inline u64 to_bits(double val) {
+//    u64 ret;
+//    memcpy(&ret, &val, sizeof(val));
+//    return ret;
+//}
+inline u32 to_bits(float val) {
+    u32 ret;
+    memcpy(&ret, &val, sizeof(val));
+    return ret;
+}
+
+inline Vec2<u32> to_bits(const Vec2<float>& val) {
+    Vec2<u32> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+inline Vec2<u64> to_bits(const Vec2<double>& val) {
+    Vec2<u64> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+
+inline Vec3<u32> to_bits(const Vec3<float>& val) {
+    Vec3<u32> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+inline Vec3<u64> to_bits(const Vec3<double>& val) {
+    Vec3<u64> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+
+
 #endif      // src_misc_includes_hpp

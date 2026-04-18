@@ -110,4 +110,19 @@ inline void mm_printout_base(const Vec4<T>& v) {
     mm_printout_base("}");
 }
 
+inline Vec4<u32> to_bits(const Vec4<float>& val) {
+    Vec4<u32> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+inline Vec4<u64> to_bits(const Vec4<double>& val) {
+    Vec4<u64> ret;
+    for (size_t i=0; i<ret.SIZE; ++i) {
+        ret.at(i) = to_bits(val.at(i));
+    }
+    return ret;
+}
+
 #endif      // src_vec4_class_hpp
