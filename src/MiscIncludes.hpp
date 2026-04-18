@@ -52,8 +52,8 @@ using liborangepower::math::CxFixedPt;
 //using MyFixedPt = CxFixedI16p16;
 //using MyFixedPt = CxFixedPt<i32, 14>;
 //using MyFixedPt = CxFixedI20p12;
-using MyFixedPt = double;
-using MyRwFixedPt = double;
+using MyFixedPt = float;//double;
+using MyRwFixedPt = float;//double;
 //using MyFixedPt = CxFixedPt<i32, 16>;
 //using MyRwFixedPt = CxFixedPt<i32, 28>;
 //static constexpr size_t MY_RW_FRAC_SHIFT = (
@@ -94,8 +94,10 @@ namespace sdl = liborangepower::sdl;
 static constexpr double MATH_PI = double(M_PI); //double(3.141592653589793);
 static constexpr Vec2<size_t>
 	SCREEN_SIZE_2D{
-		.x=640,
-		.y=480,
+		//.x=640,
+		//.y=480,
+		.x=320,
+		.y=240,
 		//.x=800,
 		//.y=600,
 		//.x=32,
@@ -125,5 +127,16 @@ static constexpr std::array<Vec2<MyFixedPt>, 4>
 			.y=MyFixedPt(SCREEN_SIZE_2D.y - 1),
 		},
 	};
+
+inline u64 to_bits(double val) {
+    u64 ret;
+    memcpy(&ret, &val, sizeof(val));
+    return ret;
+}
+inline u32 to_bits(float val) {
+    u32 ret;
+    memcpy(&ret, &val, sizeof(val));
+    return ret;
+}
 
 #endif		// src_misc_includes_hpp
