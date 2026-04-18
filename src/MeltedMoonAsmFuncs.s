@@ -23,7 +23,8 @@ _my_text_start:
 	cpy fp, r0
 	cpy sp, r0
 
-	bl r0, _start
+	//bl r0, _start
+	bl lr, _start
 
 	//cpy sp, 0x800
 	//bl r0, _main

@@ -35,7 +35,8 @@ PROJ_BIN=$(PROJ_BASENAME).bin
 
 # Compilers and initial compiler flags
 CXX:=$(PREFIX)g++
-CXX_FLAGS:=$(CXX_FLAGS) -std=c++23 -fcoroutines -fmodules-ts -Wall \
+CXX_FLAGS:=$(CXX_FLAGS) \
+    -std=c++23 -fconcepts-diagnostics-depth=3 -fcoroutines -fmodules-ts -Wall \
 	-nostdlib -nodefaultlibs -nostdinc \
 	-I /home/fl4shk/local/snowhousecpu-unknown-elf/include/c++/15.0.1 \
 	-I /home/fl4shk/local/snowhousecpu-unknown-elf/include/c++/15.0.1/snowhousecpu-unknown-elf/ \

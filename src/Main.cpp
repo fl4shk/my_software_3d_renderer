@@ -6,6 +6,7 @@
 #include "Square.hpp"
 #include "Clip.hpp"
 #include <cmath>
+#include <cstdlib>
 
 
 volatile u8* _melted_moon_dbg_print = (
@@ -32,26 +33,32 @@ void melted_moon_print(const char* str) {
         *_melted_moon_dbg_print = str[i];
     }
 }
+void melted_moon_write(const void* buf, size_t count) {
+    const char* str = (const char*)buf;
+    for (size_t i=0; i<count; ++i) {
+        *_melted_moon_dbg_print = str[i];
+    }
+}
 
 }
 
 
 static constexpr u32 FB_BASE = 0x4000000ull;
 
-static constexpr u32 FB_WIDTH = (
-	/*64;*/ /*76 >> 1*/
-	320u
-	//320 >> 1
-	//160
-	//160 >> 1
-);
-static constexpr u32 FB_HEIGHT = (
-	/*64;*/ 
-	240u
-	//240 >> 1
-	//76 >> 1
-);
-static constexpr u32 FB_SIZE = FB_HEIGHT * FB_WIDTH;
+//static constexpr u32 FB_WIDTH = (
+//  /*64;*/ /*76 >> 1*/
+//  320u
+//  //320 >> 1
+//  //160
+//  //160 >> 1
+//);
+//static constexpr u32 FB_HEIGHT = (
+//  /*64;*/ 
+//  240u
+//  //240 >> 1
+//  //76 >> 1
+//);
+//static constexpr u32 FB_SIZE = FB_HEIGHT * FB_WIDTH;
 
 static volatile u16* _melted_moon_fb = (
     (volatile u16*)FB_BASE
@@ -61,7 +68,7 @@ static volatile u16* _melted_moon_fb = (
 //);
 
 //volatile u32* to_keep_loop_going = (
-//	(volatile u32*)0x4ull
+//  (volatile u32*)0x4ull
 //);
 extern "C" {
 extern void do_enable_irqs(u32 irq_enable_mask);
@@ -99,9 +106,6 @@ static constexpr u32 TIMER_IRQ = u32(1ul << 1ul);
 
 static volatile bool _did_main_loop_iter = false;
 
-extern u8 wood_block_bin[];
-extern u32 wood_block_bin_size;
-
 static void _vblank_irq_handler(void) {
     // At 70 FPS, we have this:
     // 1 / 70 Hz is approximately 14.2857 ms
@@ -114,17 +118,17 @@ static void _vblank_irq_handler(void) {
 
     //const u8* raw_fb = doom_get_framebuffer(4);
     if (_did_main_loop_iter) {
-        //const unsigned char* my_screen_buf = doom_get_framebuffer(1);
-        for (size_t i=0; i<SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y; ++i) {
-            //_melted_moon_fb[i] = _rgb555_pal[my_screen_buf[i]];
-        }
+        ////const unsigned char* my_screen_buf = doom_get_framebuffer(1);
+        //for (size_t i=0; i<SCREEN_SIZE_2D.x * SCREEN_SIZE_2D.y; ++i) {
+        //    //_melted_moon_fb[i] = _rgb555_pal[my_screen_buf[i]];
+        //}
+        _did_main_loop_iter = false;
     }
 }
 
 //static void _timer_irq_handler(void) {
 //    _my_gettime_usec += 1000u;
 //}
-
 
 extern "C" {
 void irq_handler_primary_logic(u32 which_irqs) {
@@ -137,94 +141,148 @@ void irq_handler_primary_logic(u32 which_irqs) {
 }
 }
 
+static constexpr const char* WOOD_BLOCK_BMP_FILENAME = (
+    "gfx/obj/wood_block.bmp"
+);
+extern u8 wood_block_bin[];
+extern u32 wood_block_bin_size;
+
 void init_textures() {
     void* my_wood_block_img_file = tiny_fs_file_init(
-        "gfx/obj/wood_block.bmp",
+        WOOD_BLOCK_BMP_FILENAME,
         wood_block_bin,
         wood_block_bin_size
     );
     tiny_fs_fclose(my_wood_block_img_file);
 }
+//int main(int argc, char** argv) {
+//    do_enable_irqs(VBLANK_IRQ);
+//
+//    for (;;) {
+//        if (!_did_main_loop_iter) {
+//            static constexpr size_t BUF_SIZE = 128u;
+//            static constexpr size_t OUTER_BUF_SIZE = 3u;
+//            static constexpr double to_conv_dbl = 5.9;
+//
+//            char buf[BUF_SIZE][OUTER_BUF_SIZE];
+//
+//            snprintf(
+//                buf[0], BUF_SIZE,
+//                "%f",
+//                to_conv_dbl
+//            );
+//            double temp_dbl = std::stod(
+//                std::string(buf[0])
+//            );
+//            u64 temp_u64 = 0;
+//            memcpy(&temp_u64, &temp_dbl, sizeof(temp_dbl));
+//            snprintf(
+//                buf[1], BUF_SIZE,
+//                "%llx",
+//                temp_u64
+//            );
+//            mm_printout(
+//                buf[1],
+//                "\n"
+//            );
+//
+//            _did_main_loop_iter = true;
+//        }
+//    }
+//}
 int main(int argc, char** argv) {
     init_textures();
 
     //do_enable_irqs(VBLANK_IRQ | TIMER_IRQ);
     do_enable_irqs(VBLANK_IRQ);
 
-	//MyDisplay disp;
-	Rast rast;
-	const MyFixedPt
-		near(0.1),
-		far(10.0);
-	Transform perspective(
-		near, // near
-		far // far
-	);
-	Texture texture(
-		"gfx/obj/wood_block.bmp"
-		//"gfx/obj/foreground_common_gfx.bmp"
-	);
-	Square sq{
-		.size_2d{1.0, 1.0},
-		.pos{00.0, 0.0, 0.00},
-		//.rot{VERSOR_IDENTITY<MyFixedPt>},
-		.img=&texture,
-	};
-	Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.001};
-	//Versor<MyFixedPt>
-	//	camera_rot;
-	Transform camera(
-		MAT4X4_IDENTITY<MyFixedPt>
-	);
-	static constexpr Vec3<MyFixedPt>
-		sq_rotate_angles{0.00101, 0.00101, 0.00101};
-		
-	for (;;) {
-	    if (!_did_main_loop_iter) {
+    ////MyDisplay disp;
+    Rast rast;
+    const MyFixedPt
+        near(0.1),
+        far(10.0);
+    Transform perspective(
+        near, // near
+        far // far
+    );
+    Texture texture(
+        WOOD_BLOCK_BMP_FILENAME
+        //"gfx/obj/wood_block.bmp"
+        //"gfx/obj/foreground_common_gfx.bmp"
+    );
+    Square sq{
+        .size_2d{1.0, 1.0},
+        .pos{00.0, 0.0, 0.00},
+        //.rot{VERSOR_IDENTITY<MyFixedPt>},
+        .img=&texture,
+    };
+    Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.001};
+    //Versor<MyFixedPt>
+    //  camera_rot;
+    Transform camera(
+        MAT4X4_IDENTITY<MyFixedPt>
+    );
+    static constexpr Vec3<MyFixedPt>
+        sq_rotate_angles{0.00101, 0.00101, 0.00101};
+        
+    for (;;) {
+        if (!_did_main_loop_iter) {
             //disp.handle_sdl_events();
             //if (disp.do_exit()) {
-            //	break;
+            //  break;
             //}
+
+            //mm_printout(
+            //    5.9,
+            //    "\n"
+            //);
+            //mm_printout_base(
+            //    double(5.9)
+            //);
+            //mm_printout_base(
+            //    char('\n')
+            //);
+
             {
-                //printout("checking keys\n");
+                mm_printout("checking keys\n");
                 //const MyFixedPt
-                //	amount_xy(0.0100),
-                //	amount_z(0.0100),
-                //	amount_angle(0.00010000);
+                //  amount_xy(0.0100),
+                //  amount_z(0.0100),
+                //  amount_angle(0.00010000);
                 //if (
-                //	disp.key_down_now(SnesKeyKind::DpadLeft)
-                //	&& disp.key_up_now(SnesKeyKind::DpadRight)
+                //  disp.key_down_now(SnesKeyKind::DpadLeft)
+                //  && disp.key_up_now(SnesKeyKind::DpadRight)
                 //) {
-                //	camera_pos.x += amount_xy;
+                //  camera_pos.x += amount_xy;
                 //} else if (
-                //	disp.key_down_now(SnesKeyKind::DpadRight)
-                //	&& disp.key_up_now(SnesKeyKind::DpadLeft)
+                //  disp.key_down_now(SnesKeyKind::DpadRight)
+                //  && disp.key_up_now(SnesKeyKind::DpadLeft)
                 //) {
-                //	camera_pos.x -= amount_xy;
+                //  camera_pos.x -= amount_xy;
                 //}
 
                 //if (
-                //	disp.key_down_now(SnesKeyKind::DpadUp)
-                //	&& disp.key_up_now(SnesKeyKind::DpadDown)
+                //  disp.key_down_now(SnesKeyKind::DpadUp)
+                //  && disp.key_up_now(SnesKeyKind::DpadDown)
                 //) {
-                //	camera_pos.y += amount_xy;
+                //  camera_pos.y += amount_xy;
                 //} else if (
-                //	disp.key_down_now(SnesKeyKind::DpadDown)
-                //	&& disp.key_up_now(SnesKeyKind::DpadUp)
+                //  disp.key_down_now(SnesKeyKind::DpadDown)
+                //  && disp.key_up_now(SnesKeyKind::DpadUp)
                 //) {
-                //	camera_pos.y -= amount_xy;
+                //  camera_pos.y -= amount_xy;
                 //}
 
                 //if (
-                //	disp.key_down_now(SnesKeyKind::Y)
-                //	&& disp.key_up_now(SnesKeyKind::A)
+                //  disp.key_down_now(SnesKeyKind::Y)
+                //  && disp.key_up_now(SnesKeyKind::A)
                 //) {
-                //	camera_pos.z -= amount_z;
+                //  camera_pos.z -= amount_z;
                 //} else if (
-                //	disp.key_down_now(SnesKeyKind::A)
-                //	&& disp.key_up_now(SnesKeyKind::Y)
+                //  disp.key_down_now(SnesKeyKind::A)
+                //  && disp.key_up_now(SnesKeyKind::Y)
                 //) {
-                //	camera_pos.z += amount_z;
+                //  camera_pos.z += amount_z;
                 //}
 
                 if (
@@ -234,17 +292,19 @@ int main(int argc, char** argv) {
                 ) {
                     sq.rot = (
                         sq.rot
-                        * Versor<MyFixedPt>::from_y_angle(-sq_rotate_angles.y)
+                        * Versor<MyFixedPt>::from_y_angle(
+                            -sq_rotate_angles.y
+                        )
                     );
                 }
                 //else if (
-                //	disp.key_down_now(SnesKeyKind::R)
-                //	&& disp.key_up_now(SnesKeyKind::L)
+                //  disp.key_down_now(SnesKeyKind::R)
+                //  && disp.key_up_now(SnesKeyKind::L)
                 //) {
-                //	sq.rot = (
-                //		sq.rot
-                //		* Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
-                //	);
+                //  sq.rot = (
+                //      sq.rot
+                //      * Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
+                //  );
                 //}
             }
             auto& tri_arr = sq.update_tri_arr();
@@ -277,6 +337,9 @@ int main(int argc, char** argv) {
             }
             // TODO: END: later
             //--------
+            mm_printout(
+                "visib.size()=", visib.size(), "\n"
+            );
             for (const auto& item: visib) {
                 const Vec2<int> temp{
                     .x=int(item.v.x),
@@ -308,10 +371,10 @@ int main(int argc, char** argv) {
                     ) {
                         // TODO: add this back in
                         //const u32
-                        //	col = item.img->at_u32(Vec2<size_t>{
-                        //		.x=size_t(pos.x),
-                        //		.y=size_t(pos.y),
-                        //	});
+                        //  col = item.img->at_u32(Vec2<size_t>{
+                        //      .x=size_t(pos.x),
+                        //      .y=size_t(pos.y),
+                        //  });
                         const Color
                             col = item.img->at(Vec2<size_t>{
                                 .x=size_t(pos.x),
@@ -324,19 +387,38 @@ int main(int argc, char** argv) {
                             };
 
                         //disp.set(
-                        //	//col
-                        //	temp_pos,
-                        //	col
-                        //	//0xff'ff'ff'ff
-                        //	//item.second,
-                        //);
+                        //  //col
+                        //  temp_pos,
+                        //  col
+                        //  //0xff'ff'ff'ff
+                        //  //item.second,
+                        ///);
+                        mm_printout(
+                            "debug: col.data: ",
+                            size_t(col.data),
+                            "\n"
+                        );
+                        _melted_moon_fb[
+                            temp_pos.y * SCREEN_SIZE_2D.x + temp_pos.x
+                        ] = col.data;
                     }
+                    mm_printout(
+                        "inner: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
+                } else {
+                    mm_printout(
+                        "outer: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
                 }
             }
             _did_main_loop_iter = true;
             //disp.refresh();
         }
-	}
-	
-	return 0;
+    }
+    
+    return 0;
 }

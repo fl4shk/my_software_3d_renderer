@@ -28,11 +28,38 @@ int open(const char* path, int mode, ...) {
     }
 }
 
+static const int FD_STDIN = 0;
+static const int FD_STDOUT = 1;
+static const int FD_STDERR = 2;
+
+extern void melted_moon_write(const void* buf, size_t count);
+
 _ssize_t read(int fd, void* buf, size_t count) {
-    return (_ssize_t)tiny_fs_fread((void*)fd, buf, (int)count);
+    switch (fd) {
+    case FD_STDIN: {
+        for (size_t i=0; i<count; ++i) {
+            ((char*)buf)[i] = '\0';
+        }
+        return (_ssize_t)count;
+    }
+    case FD_STDOUT:
+    case FD_STDERR: 
+        return (_ssize_t)(-1);
+    default:
+        return (_ssize_t)tiny_fs_fread((void*)fd, buf, (int)count);
+    }
 }
 _ssize_t write(int fd, const void* buf, size_t count) {
-    return (_ssize_t)tiny_fs_fwrite((void*)fd, buf, (int)count);
+    switch (fd) {
+    case FD_STDIN:
+        return (_ssize_t)(-1);
+    case FD_STDOUT:
+    case FD_STDERR:
+        melted_moon_write(buf, count);
+        return (_ssize_t)count;
+    default: 
+        return (_ssize_t)tiny_fs_fwrite((void*)fd, buf, (int)count);
+    }
 }
 
 __off_t lseek(int fd, __off_t offset, int whence) {

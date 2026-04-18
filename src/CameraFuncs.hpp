@@ -6,4 +6,4 @@
 
 
 
-#endif		// src_camera_funcs_hpp
+#endif      // src_camera_funcs_hpp

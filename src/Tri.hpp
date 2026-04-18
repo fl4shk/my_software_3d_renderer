@@ -11,69 +11,69 @@ static constexpr size_t TRI_VERT_SIZE = 3;
 using TriVert = std::array<Vert, TRI_VERT_SIZE>;
 
 //constexpr inline MyFixedPt bary_lerp(
-//	const Vec2<MyFixedPt>& a,
-//	const Vec2<MyFixedPt>& b,
-//	const Vec2<MyFixedPt>& t
+//  const Vec2<MyFixedPt>& a,
+//  const Vec2<MyFixedPt>& b,
+//  const Vec2<MyFixedPt>& t
 //) {
 //    return (t.x - a.x) * (b.y - a.y) - (t.y - a.y) * (b.x - a.x);
 //}
 //constexpr inline MyFixedPt my_lerp(
-//	MyFixedPt t0,
-//	MyFixedPt t1,
-//	MyFixedPt alpha
+//  MyFixedPt t0,
+//  MyFixedPt t1,
+//  MyFixedPt alpha
 //) {
-//	return t0 * alpha + t1 * (1 - alpha);
+//  return t0 * alpha + t1 * (1 - alpha);
 //}
 class Tri final {
-//private:		// variables
-//	//sdl::Surface* _img=nullptr;
-public:		// variables
-	Texture* img=nullptr;
-	//TransformMvp* mvp=nullptr;
-	Transform* model=nullptr;
-	TriVert
-		v,
-		proj_v,
-		//clip_v,
-		ndc_v,
-		screen_v;
-	std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
-	//std::array<MyFixedPt, TRI_VERT_SIZE> rw_arr;
-	//std::array<Vec2<MyFixedPt>, TRI_VERT_SIZE> persp_v
-	//std::vector<Vec2<MyFixedPt>> clip_vec;
-public:		// functions
-	void do_project_etc(
-		const Transform& view,
-		const Transform& perspective
-	);
-	void persp_div();
-	//std::vector<Tri> do_clip() const;
-	//void do_clip();
+//private:      // variables
+//  //sdl::Surface* _img=nullptr;
+public:     // variables
+    Texture* img=nullptr;
+    //TransformMvp* mvp=nullptr;
+    Transform* model=nullptr;
+    TriVert
+        v,
+        proj_v,
+        //clip_v,
+        ndc_v,
+        screen_v;
+    std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
+    //std::array<MyFixedPt, TRI_VERT_SIZE> rw_arr;
+    //std::array<Vec2<MyFixedPt>, TRI_VERT_SIZE> persp_v
+    //std::vector<Vec2<MyFixedPt>> clip_vec;
+public:     // functions
+    void do_project_etc(
+        const Transform& view,
+        const Transform& perspective
+    );
+    void persp_div();
+    //std::vector<Tri> do_clip() const;
+    //void do_clip();
 };
 //class TriRast final {
-//public:		// variables
-//	//Texture* img=nullptr;
-//	//TriVert
-//	std::array<Vec4<MyFixedPt>, TRI_VERT_SIZE>
-//		clip_v,
-//		screen_v;
-//	std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
-//public:		// functions
-//	void update_screen_v(const Tri& tri);
-//	//static TriRast from_subdiv_tri(
-//	//	const Tri& tri,
-//	//	const Vec4<MyFixedPt>& v0,
-//	//	const Vec4<MyFixedPt>& v1,
-//	//	const Vec4<MyFixedPt>& v2
-//	//);
+//public:       // variables
+//  //Texture* img=nullptr;
+//  //TriVert
+//  std::array<Vec4<MyFixedPt>, TRI_VERT_SIZE>
+//      clip_v,
+//      screen_v;
+//  std::array<MyRwFixedPt, TRI_VERT_SIZE> rw_arr;
+//public:       // functions
+//  void update_screen_v(const Tri& tri);
+//  //static TriRast from_subdiv_tri(
+//  //  const Tri& tri,
+//  //  const Vec4<MyFixedPt>& v0,
+//  //  const Vec4<MyFixedPt>& v1,
+//  //  const Vec4<MyFixedPt>& v2
+//  //);
 //};
 
 //using TriDrawVert = std::array<Vec2<i32>, TRI_VERT_SIZE>;
 
 //class TriDraw final {
-//public:		// variables
-//	Tri* tri=nullptr;
-//	TriDrawVert v;
+//public:       // variables
+//  Tri* tri=nullptr;
+//  TriDrawVert v;
 //};
 
-#endif		// src_tri_class_hpp
+#endif      // src_tri_class_hpp

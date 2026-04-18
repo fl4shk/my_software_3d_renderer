@@ -4,22 +4,22 @@
 #include "Tri.hpp"
 
 class Square {
-public:		// variables
-	Vec2<MyFixedPt>
-		size_2d={MyFixedPt(1), MyFixedPt(1)};
-	Vec3<MyFixedPt>
-		pos{MyFixedPt(0), MyFixedPt(0), MyFixedPt(0)};
-	Versor<MyFixedPt>
-		rot=Versor<MyFixedPt>::identity();
-	//Vec3<MyFixedPt>
-	//	rot{0.0, 0.0, 0.0};
+public:     // variables
+    Vec2<MyFixedPt>
+        size_2d={MyFixedPt(1), MyFixedPt(1)};
+    Vec3<MyFixedPt>
+        pos{MyFixedPt(0), MyFixedPt(0), MyFixedPt(0)};
+    Versor<MyFixedPt>
+        rot=Versor<MyFixedPt>::identity();
+    //Vec3<MyFixedPt>
+    //  rot{0.0, 0.0, 0.0};
 
-	//Transform model;
-	Texture* img=nullptr;
-	std::array<Tri, 2> tri_arr;
-	Transform model;
-public:		// functions
-	std::array<Tri, 2>& update_tri_arr();
+    //Transform model;
+    Texture* img=nullptr;
+    std::array<Tri, 2> tri_arr;
+    Transform model;
+public:     // functions
+    std::array<Tri, 2>& update_tri_arr();
 };
 
-#endif		// src_square_class_hpp
+#endif      // src_square_class_hpp
