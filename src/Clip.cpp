@@ -85,7 +85,12 @@ std::vector<Tri> Clip::do_clip(
 		printout("temp:\n");
 		for (const auto& item: temp) {
 			printout(
-				"{", item.v, " ", item.uv, "}\n"
+				"{", 
+				    item.v, " ",
+				    item.uv, ";    ",
+				    to_bits(item.v), " ",
+				    to_bits(item.uv),
+				"}\n"
 			);
 		}
 		printout("\n");

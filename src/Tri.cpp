@@ -138,7 +138,10 @@ void Tri::do_project_etc(
 			"{",
 				temp_v, " ",
 				double(v.at(i).v.w), " ",
-				my_uv,
+				my_uv, ";    ",
+				to_bits(temp_v), " ",
+				to_bits(double(v.at(i).v.w)), " ",
+				to_bits(my_uv),
 			"}",
 			"\n"
 		);
@@ -151,7 +154,12 @@ void Tri::do_project_etc(
 		}
 		printout(
 			//project_v.at(i).v, "\n"
-			"{", temp_v, " ", double(proj_v.at(i).v.w), "}",
+			"{",
+			    temp_v, " ",
+			    double(proj_v.at(i).v.w), ";    ",
+			    to_bits(temp_v), " ",
+			    to_bits(double(proj_v.at(i).v.w)),
+			"}",
 			"\n"
 		);
 	}
@@ -312,7 +320,10 @@ void Tri::persp_div() {
 			"{",
 				temp_v, " ",
 				double(proj_v.at(i).v.w), " ",
-				my_proj_uv,
+				my_proj_uv, ";    ",
+				to_bits(temp_v), " ",
+				to_bits(double(proj_v.at(i).v.w)), " ",
+				to_bits(my_proj_uv),
 			"}",
 			"\n"
 		);
@@ -333,7 +344,10 @@ void Tri::persp_div() {
 			"{",
 				temp_v, " ",
 				double(ndc_v.at(i).v.w), " ",
-				my_ndc_uv,
+				my_ndc_uv, ";    ",
+				to_bits(temp_v), " ",
+				to_bits(double(ndc_v.at(i).v.w)), " ",
+				to_bits(my_ndc_uv),
 			"}",
 			"\n"
 		);
@@ -354,7 +368,10 @@ void Tri::persp_div() {
 			"{",
 				temp_v, " ",
 				double(screen_v.at(i).v.w), " ",
-				my_screen_uv,
+				my_screen_uv, ";    ",
+				to_bits(temp_v), " ",
+				to_bits(double(screen_v.at(i).v.w)), " ",
+				to_bits(my_screen_uv),
 			"}",
 			"\n"
 		);
