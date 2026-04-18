@@ -285,18 +285,18 @@ int main(int argc, char** argv) {
                 //  camera_pos.z += amount_z;
                 //}
 
-                if (
-                    //disp.key_down_now(SnesKeyKind::L)
-                    //&& disp.key_up_now(SnesKeyKind::R)
-                    true
-                ) {
-                    sq.rot = (
-                        sq.rot
-                        * Versor<MyFixedPt>::from_y_angle(
-                            -sq_rotate_angles.y
-                        )
-                    );
-                }
+                //if (
+                //    //disp.key_down_now(SnesKeyKind::L)
+                //    //&& disp.key_up_now(SnesKeyKind::R)
+                //    true
+                //) {
+                //    sq.rot = (
+                //        sq.rot
+                //        * Versor<MyFixedPt>::from_y_angle(
+                //            -sq_rotate_angles.y
+                //        )
+                //    );
+                //}
                 //else if (
                 //  disp.key_down_now(SnesKeyKind::R)
                 //  && disp.key_up_now(SnesKeyKind::L)
@@ -328,6 +328,43 @@ int main(int argc, char** argv) {
                 auto&& clip_vec = clip.do_clip(tri);
                 for (size_t j=0; j<clip_vec.size(); ++j) {
                     clip_vec.at(j).persp_div();
+                    mm_printout(
+                        "post persp_div():\n",
+                        //"clip_vec.at(", j, ").proj_v:\n",
+                        //"{\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(0).v, " ",
+                        //  clip_vec.at(j).proj_v.at(0).uv,
+                        //"}",
+                        //"\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(1).v, " ",
+                        //  clip_vec.at(j).proj_v.at(1).uv,
+                        //"}",
+                        //"\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(2).v, " ",
+                        //  clip_vec.at(j).proj_v.at(2).uv,
+                        //"}\n",
+                        //"}\n"
+                        "clip_vec.at(", j, ").screen_v:\n",
+                        "{\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(0).v, " ",
+                            clip_vec.at(j).screen_v.at(0).uv,
+                        "}",
+                        "\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(1).v, " ",
+                            clip_vec.at(j).screen_v.at(1).uv,
+                        "}",
+                        "\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(2).v, " ",
+                            clip_vec.at(j).screen_v.at(2).uv,
+                        "}\n",
+                        "}\n"
+                    );
                     rast.calc_visib(
                         //{tri, clip_vec.at(j)},
                         clip_vec.at(j),
