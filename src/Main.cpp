@@ -562,6 +562,9 @@ int main(int argc, char** argv) {
 		}
 		// TODO: END: later
 		//--------
+        printout(
+            "visib.size()=", visib.size(), "\n"
+        );
 		for (const auto& item: visib) {
 			const Vec2<int> temp{
 				.x=int(item.v.x),
@@ -639,6 +642,15 @@ int main(int argc, char** argv) {
 					//	std::dec,
 					//	"\n"
 					//);
+                    printout(
+                        "debug: col.data: ",
+                        size_t(
+                            (((col >> (16 + 3)) & 0x1f) << 10)
+                            | (((col >> (8 + 3)) & 0x1f) << 5)
+                            | (((col >> (0 + 3)) & 0x1f) << 0)
+                        ),
+                        "\n"
+                    );
 					disp.set(
 						//col
 						temp_pos,
@@ -646,6 +658,17 @@ int main(int argc, char** argv) {
 						//0xff'ff'ff'ff
 						//item.second,
 					);
+                    printout(
+                        "inner: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
+				} else {
+                    printout(
+                        "outer: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
 				}
 				//printout(
 				//	//uint32_t(visib.at(j * SIZE_2D.x + i)),
