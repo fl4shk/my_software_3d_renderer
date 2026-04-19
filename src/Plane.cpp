@@ -735,7 +735,7 @@ std::vector<Vert> Plane::do_clip(
                 return (a.w - a.z) / (b.z - a.z - b.w + a.w);
             }
             default: {
-                printout("oops!\n");
+                mm_printout("oops!\n");
                 return MyFixedPt(0.0);
             }
         }
@@ -764,7 +764,7 @@ std::vector<Vert> Plane::do_clip(
                 return v.z <= v.w;
             }
             default: {
-                printout("oops!\n");
+                mm_printout("oops!\n");
                 return false;
             }
         }
