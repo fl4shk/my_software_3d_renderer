@@ -377,6 +377,9 @@ int main(int argc, char** argv) {
                         visib
                     );
                 }
+                mm_printout(
+                    "i=", i, " visib.size(): ", visib.size(), "\n"
+                );
             }
             // TODO: END: later
             //--------
