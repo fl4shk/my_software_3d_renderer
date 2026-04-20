@@ -37,7 +37,7 @@ Rast::~Rast() {
 //    const i64 X1 = std::round(256.0 * int(v1.v.x));
 //    const i64 X2 = std::round(256.0 * int(v2.v.x));
 //    const i64 X3 = std::round(256.0 * int(v3.v.x));
-//    //printout(
+//    //my_printout(
 //	//	"Rast::calc_visib():\n",
 //	//	"X123{",
 //	//		double(X1) / 16.0, " ",
@@ -112,7 +112,7 @@ Rast::~Rast() {
 //   
 //        for (i64 x = minx; x < maxx; x++)
 //        {
-//			//printout(
+//			//my_printout(
 //			//	"CX{",
 //			//		double(CX1) / 256.0, " ",
 //			//		double(CX2) / 256.0, " ",
@@ -121,7 +121,7 @@ Rast::~Rast() {
 //			//);
 //            if (CX1 > 0 && CX2 > 0 && CX3 > 0)
 //            {
-//				printout(
+//				my_printout(
 //					"CX{",
 //						double(CX1) / 256.0, " ",
 //						double(CX2) / 256.0, " ",
@@ -217,7 +217,7 @@ Rast::~Rast() {
 //			//.y=DrawT(temp_tri.screen_v.at(2).v.y),
 //			temp_tri.screen_v.at(2)
 //		);
-//	//printout(
+//	//my_printout(
 //	//	"Rast::calc_visib(): ",
 //	//	"{",
 //	//		tri.screen_v.at(0).v, " ", 
@@ -296,7 +296,7 @@ Rast::~Rast() {
 //				.y=v4.v.y,
 //			}
 //		).uv();
-//		printout(
+//		my_printout(
 //			"v1.uv",
 //				Vec2<double>{double(v1.uv.x), double(v1.uv.y)},
 //			"\n"
@@ -311,7 +311,7 @@ Rast::~Rast() {
 //			"\n"
 //		);
 //
-//		//printout("v4: ", v4, "\n");
+//		//my_printout("v4: ", v4, "\n");
 //		//fillBottomFlatTriangle(g, v1, v2, v4);
 //		//fillTopFlatTriangle(g, v2, v4, v3);
 //
@@ -379,13 +379,13 @@ Rast::~Rast() {
 //		curr_x1 = MyFixedPt(v3.x),
 //		curr_x2 = MyFixedPt(v3.x);
 //
-//	//printout(
+//	//my_printout(
 //	//	"Rast::_calc_flat_top_visib(): ",
 //	//	v1.x, " ", v2.x, " ", v3.x, "\n",
 //	//	v1.y, " ", v2.y, " ", v3.y,
 //	//	"\n"
 //	//);
-//	printout(
+//	my_printout(
 //		"Rast::_calc_flat_bot_visib(): ",
 //		//v1.x, " ", v2.x, " ", v3.x, "\n",
 //		//v1.y, " ", v2.y, " ", v3.y,
@@ -476,7 +476,7 @@ Rast::~Rast() {
 //		curr_x1 = MyFixedPt(v1.x),
 //		curr_x2 = MyFixedPt(v1.x);
 //
-//	printout(
+//	my_printout(
 //		"Rast::_calc_flat_bot_visib(): ",
 //		//v1.x, " ", v2.x, " ", v3.x, "\n",
 //		//v1.y, " ", v2.y, " ", v3.y,
@@ -492,7 +492,7 @@ Rast::~Rast() {
 //		scanline_y<=MyFixedPt(v2.y);
 //		scanline_y+=MyFixedPt(1)
 //	) {
-//		//printout(
+//		//my_printout(
 //		//	curr_x1, " ",
 //		//	curr_x2, " ",
 //		//	scanline_y,
@@ -543,11 +543,11 @@ Rast::~Rast() {
 //		});
 //	}
 //	//for (const auto& item: ret) {
-//	//	printout(
+//	//	my_printout(
 //	//		item
 //	//	);
 //	//}
-//	//printout("\n");
+//	//my_printout("\n");
 //}
 void Rast::_do_push_back(
 	//const Vert& v1,
@@ -585,7 +585,7 @@ void Rast::_do_push_back(
 		//)
 		//true
 	) {
-		//printout("test\n");
+		//my_printout("test\n");
 		ret.push_back(
 			//to_push
 			VertTextureCoords{
@@ -672,7 +672,7 @@ void Rast::_do_push_back(
 //            if (CX1 > 0 && CX2 > 0 && CX3 > 0)
 //            {
 //                //colorBuffer[x] = 0x00FFFFFF;
-//                printout(
+//                my_printout(
 //					"found pixel: ",
 //					Vec2<double>{double(x), double(y)},
 //					"\n"
@@ -735,7 +735,7 @@ void Rast::_do_push_back(
 //				&& (x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) > 0.0)
 //			{
 //				//colorBuffer[x] = 0x00FFFFFF;   // White
-//				printout(
+//				my_printout(
 //					"Rast::calc_visib(): calling `_do_push_back()`\n"
 //				);
 //				_do_push_back(
@@ -773,7 +773,7 @@ void Rast::calc_visib(
 	//bool ret_arr[SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x];
 	//std::array<bool, SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x> ret;
 	//std::vector<u8> ret(SCREEN_SIZE_2D.y * SCREEN_SIZE_2D.x);
-	//printout(ret.size(), "\n");
+	//my_printout(ret.size(), "\n");
 	//ret.fill(false);
 	//for (auto& item: ret) {
 	//	item = false;
@@ -811,7 +811,7 @@ void Rast::calc_visib(
 	//	}
 	//};
 	//for (size_t i=0; i<coords.size(); ++i) {
-	//	printout(
+	//	my_printout(
 	//		tri.screen_v.at(i).v, " ",
 	//		std::hex,
 	//		coords.at(i), "\n",
@@ -882,7 +882,7 @@ void Rast::calc_visib(
 	//	maxy = (SCREEN_SIZE_2D.y - 1);
 	//}
 
-	printout(
+	my_printout(
 		"minmax_x{", minx, " ", maxx, "}\n",
 		"minmax_y{", miny, " ", maxy, "}\n"
 	);
@@ -933,7 +933,7 @@ void Rast::calc_visib(
 	// Loop through blocks
 	for (int y = miny; y < maxy; y += q) {
 		//ret.push_back(std::vector<bool>());
-		//printout(
+		//my_printout(
 		//	"y: ", y, "\n"
 		//);
 		for (int x = minx; x < maxx; x += q) {
@@ -941,7 +941,7 @@ void Rast::calc_visib(
 			////	.x=DrawT(x),
 			////	.y=DrawT(y),
 			////};
-			////printout(
+			////my_printout(
 			////	"x, q: ",
 			////	x, " ",
 			////	q, "\n"
@@ -951,7 +951,7 @@ void Rast::calc_visib(
 			//int x1 = (x + q - 1) << 4;
 			//int y0 = y << 4;
 			//int y1 = (y + q - 1) << 4;
-			////printout(
+			////my_printout(
 			////	"{",
 			////		"x01{",
 			////			double(x0) / 16.0, " ", double(x1) / 16.0,
@@ -1011,7 +1011,7 @@ void Rast::calc_visib(
 
 			//// Skip block when outside an edge
 			//if (a == 0x0 || b == 0x0 || c == 0x0) {
-			//	//printout(
+			//	//my_printout(
 			//	//	"skip block: ",
 			//	//	Vec2<int>{.x=x, .y=y}, " ",
 			//	//	"{", a, " ", b, " ", c, "}",
@@ -1080,12 +1080,12 @@ void Rast::calc_visib(
 
 			// Accept whole block when totally covered
 			//if (a == 0xF && b == 0xF && c == 0xF) {
-			//	printout(
+			//	my_printout(
 			//		"whole block: ", Vec2<int>{.x=x, .y=y}, "\n"
 			//	);
 			//	for (int iy = 0; iy < q; ++iy) {
 			//		for (int ix = x; ix < x + q; ++ix) {
-			//			printout("testificate 1\n");
+			//			my_printout("testificate 1\n");
 			//			//buffer[ix] = 0x00007F00;	 // Green
 			//			//to_push_idx = ix;
 			//			//ret.at(y).at(x) = true;
@@ -1101,14 +1101,14 @@ void Rast::calc_visib(
 			//				},
 			//				ret
 			//			);
-			//			//printout(
+			//			//my_printout(
 			//			//	Vec2<double>(
 			//			//		double(ret.back().x),
 			//			//		double(ret.back().y)
 			//			//	),
 			//			//	"\n"
 			//			//);
-			//			//printout(
+			//			//my_printout(
 			//			//	buf[ix], "\n"
 			//			//);
 			//		}
@@ -1119,7 +1119,7 @@ void Rast::calc_visib(
 			//		//++to_push_idx;
 			//	}
 			//} else { // Partially covered block
-			//	printout(
+			//	my_printout(
 			//		"partial block: ", Vec2<int>{.x=x, .y=y}, "\n"
 			//	);
 			//	int CY1 = C1 + DX12 * y0 - DY12 * x0;
@@ -1133,7 +1133,7 @@ void Rast::calc_visib(
 	  
 			//		for (int ix = x; ix < x + q; ++ix) {
 			//			if (CX1 > 0 && CX2 > 0 && CX3 > 0) {
-			//				printout("testificate 2\n");
+			//				my_printout("testificate 2\n");
 			//				//buffer[ix] = 0x0000007F;	 // Blue
 			//				//ret_row.push_back(true);
 			//				//ret.at
@@ -1169,7 +1169,7 @@ void Rast::calc_visib(
 			//	}
 			//}
 		}
-		//printout("\n");
+		//my_printout("\n");
 
 		//(char*&)colorBuffer += q * STRIDE;
 		//col_buf += q * STRIDE;

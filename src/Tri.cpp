@@ -116,14 +116,14 @@ void Tri::do_project_etc(
 		//	mult_cx_rw(temp_v.at(i).uv.y, rw_arr.at(i))
 		//);
 	}
-	printout("Tri::do_project():\n");
-	printout("v:\n");
+	my_printout("Tri::do_project():\n");
+	my_printout("v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
 			temp_v.at(j) = double(v.at(i).v.at(j));
 		}
-		//printout(
+		//my_printout(
 		//	//project_v.at(i).v, "\n"
 		//	"{", temp_v, " ", double(v.at(i).v.w), "}",
 		//	"\n"
@@ -133,7 +133,7 @@ void Tri::do_project_etc(
 				.x=double(v.at(i).uv.x),
 				.y=double(v.at(i).uv.y),
 			};
-		printout(
+		my_printout(
 			//project_v.at(i).v, "\n"
 			"{",
 				temp_v, " ",
@@ -146,13 +146,13 @@ void Tri::do_project_etc(
 			"\n"
 		);
 	}
-	printout("proj_v:\n");
+	my_printout("proj_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
 			temp_v.at(j) = double(proj_v.at(i).v.at(j));
 		}
-		printout(
+		my_printout(
 			//project_v.at(i).v, "\n"
 			"{",
 			    temp_v, " ",
@@ -163,7 +163,7 @@ void Tri::do_project_etc(
 			"\n"
 		);
 	}
-	//printout("clip_v:\n");
+	//my_printout("clip_v:\n");
 	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 	//	Vec3<double> temp_v;
 	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -174,7 +174,7 @@ void Tri::do_project_etc(
 	//			.x=double(clip_v.at(i).uv.x),
 	//			.y=double(clip_v.at(i).uv.y),
 	//		};
-	//	printout(
+	//	my_printout(
 	//		//project_v.at(i).v, "\n"
 	//		"{",
 	//			temp_v, " ",
@@ -184,7 +184,7 @@ void Tri::do_project_etc(
 	//		"\n"
 	//	);
 	//}
-	//printout("screen_v:\n");
+	//my_printout("screen_v:\n");
 	//for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 	//	Vec3<double> temp_v;
 	//	for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -195,7 +195,7 @@ void Tri::do_project_etc(
 	//			.x=double(screen_v.at(i).uv.x),
 	//			.y=double(screen_v.at(i).uv.y),
 	//		};
-	//	printout(
+	//	my_printout(
 	//		//project_v.at(i).v, "\n"
 	//		"{",
 	//			temp_v, " ",
@@ -205,7 +205,7 @@ void Tri::do_project_etc(
 	//		"\n"
 	//	);
 	//}
-	printout("\n");
+	my_printout("\n");
 }
 void Tri::persp_div() {
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
@@ -303,8 +303,8 @@ void Tri::persp_div() {
 		//	mult_cx_rw(proj_v.at(i).uv.y, rw_arr.at(i))
 		//);
 	}
-	printout("Tri::persp_div():\n");
-	printout("proj_v:\n");
+	my_printout("Tri::persp_div():\n");
+	my_printout("proj_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -315,7 +315,7 @@ void Tri::persp_div() {
 				.x=double(proj_v.at(i).uv.x),
 				.y=double(proj_v.at(i).uv.y),
 			};
-		printout(
+		my_printout(
 			//project_v.at(i).v, "\n"
 			"{",
 				temp_v, " ",
@@ -328,7 +328,7 @@ void Tri::persp_div() {
 			"\n"
 		);
 	}
-	printout("ndc_v:\n");
+	my_printout("ndc_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -339,7 +339,7 @@ void Tri::persp_div() {
 				.x=double(ndc_v.at(i).uv.x),
 				.y=double(ndc_v.at(i).uv.y),
 			};
-		printout(
+		my_printout(
 			//project_v.at(i).v, "\n"
 			"{",
 				temp_v, " ",
@@ -352,7 +352,7 @@ void Tri::persp_div() {
 			"\n"
 		);
 	}
-	printout("screen_v:\n");
+	my_printout("screen_v:\n");
 	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 		Vec3<double> temp_v;
 		for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -363,7 +363,7 @@ void Tri::persp_div() {
 				.x=double(screen_v.at(i).uv.x),
 				.y=double(screen_v.at(i).uv.y),
 			};
-		printout(
+		my_printout(
 			//project_v.at(i).v, "\n"
 			"{",
 				temp_v, " ",
@@ -376,7 +376,7 @@ void Tri::persp_div() {
 			"\n"
 		);
 	}
-	printout("\n");
+	my_printout("\n");
 }
 //void TriRast::update_screen_v(const Tri& tri) {
 //	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
@@ -466,7 +466,7 @@ void Tri::persp_div() {
 //		//	mult_cx_rw(clip_v.at(i).uv.y, rw_arr.at(i))
 //		//);
 //	}
-//	printout("clip_v:\n");
+//	my_printout("clip_v:\n");
 //	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 //		Vec3<double> temp_v;
 //		for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -477,7 +477,7 @@ void Tri::persp_div() {
 //		//		.x=double(clip_v.at(i).uv.x),
 //		//		.y=double(clip_v.at(i).uv.y),
 //		//	};
-//		printout(
+//		my_printout(
 //			//project_v.at(i).v, "\n"
 //			"{",
 //				temp_v, " ",
@@ -487,7 +487,7 @@ void Tri::persp_div() {
 //			"\n"
 //		);
 //	}
-//	printout("screen_v:\n");
+//	my_printout("screen_v:\n");
 //	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
 //		Vec3<double> temp_v;
 //		for (size_t j=0; j<temp_v.SIZE; ++j) {
@@ -498,7 +498,7 @@ void Tri::persp_div() {
 //		//		.x=double(screen_v.at(i).uv.x),
 //		//		.y=double(screen_v.at(i).uv.y),
 //		//	};
-//		printout(
+//		my_printout(
 //			//project_v.at(i).v, "\n"
 //			"{",
 //				temp_v, " ",
@@ -508,16 +508,16 @@ void Tri::persp_div() {
 //			"\n"
 //		);
 //	}
-//	printout("rw_arr:\n");
+//	my_printout("rw_arr:\n");
 //	for (size_t i=0; i<TRI_VERT_SIZE; ++i) {
-//		printout(
+//		my_printout(
 //			rw_arr.at(i)
 //		);
 //		if (i + 1 < TRI_VERT_SIZE) {
-//			printout(" ");
+//			my_printout(" ");
 //		}
 //	}
-//	printout("\n");
+//	my_printout("\n");
 //}
 //std::vector<Tri> Tri::do_clip() const {
 //	std::vector<Tri> ret;

@@ -159,7 +159,7 @@ BaryLerp::BaryLerp(
 	)) {
 		_inside_tri = true;
 	} else /*if (do_rast_interp)*/ {
-		//printout("returning!\n");
+		//my_printout("returning!\n");
 		return;
 	}
 	_rw = (
@@ -201,7 +201,7 @@ BaryLerp::BaryLerp(
 		//	double(uv().x) != 0.0
 		//	&& double(uv().y) != 0.0
 		//) {
-		//	//printout(
+		//	//my_printout(
 		//	//	"ABC", Vec3<double>{double(A), double(B), double(C)}, "\n",
 		//	//	"xy", Vec2<double>{double(x), double(y)}, "\n",
 		//	//	"uv", Vec2<double>{double(_uv.x), double(_uv.y)}, "\n"

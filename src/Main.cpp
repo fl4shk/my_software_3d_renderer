@@ -34,7 +34,7 @@
 //                "%x",
 //                temp_u32
 //            );
-//            printout(
+//            my_printout(
 //                buf[1],
 //                "\n"
 //            );
@@ -50,7 +50,7 @@
 //                "%u",
 //                to_conv_u32
 //            );
-//            printout(
+//            my_printout(
 //                buf[2],
 //                " ",
 //                buf[3],
@@ -300,7 +300,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 		{
-			printout("checking keys\n");
+			my_printout("checking keys\n");
 			const MyFixedPt
 				amount_xy(0.0100),
 				amount_z(0.0100),
@@ -310,7 +310,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadRight)
 			) {
 				camera_pos.x += amount_xy;
-				printout(
+				my_printout(
 					"moving left: ",
 					double(camera_pos.x),
 					"\n"
@@ -320,7 +320,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadLeft)
 			) {
 				camera_pos.x -= amount_xy;
-				printout(
+				my_printout(
 					"moving right: ",
 					double(camera_pos.x),
 					"\n"
@@ -332,7 +332,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadDown)
 			) {
 				camera_pos.y += amount_xy;
-				printout(
+				my_printout(
 					"moving up: ",
 					double(camera_pos.y),
 					"\n"
@@ -342,7 +342,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::DpadUp)
 			) {
 				camera_pos.y -= amount_xy;
-				printout(
+				my_printout(
 					"moving down: ",
 					double(camera_pos.y),
 					"\n"
@@ -354,7 +354,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::A)
 			) {
 				camera_pos.z -= amount_z;
-				printout(
+				my_printout(
 					"moving backward: ",
 					double(camera_pos.z),
 					"\n"
@@ -364,7 +364,7 @@ int main(int argc, char** argv) {
 				&& disp.key_up_now(SnesKeyKind::Y)
 			) {
 				camera_pos.z += amount_z;
-				printout(
+				my_printout(
 					"moving forward: ",
 					double(camera_pos.z),
 					"\n"
@@ -387,7 +387,7 @@ int main(int argc, char** argv) {
 			//		* Versor<MyFixedPt>::from_x_angle(-sq_rotate_angles.x)
 			//	);
 			//	//sq.rot = sq.rot.norm();
-			//	printout(
+			//	my_printout(
 			//		"rotating x minus: ",
 			//		double(sq.rot.v.x),
 			//		"\n"
@@ -408,7 +408,7 @@ int main(int argc, char** argv) {
 			//		* Versor<MyFixedPt>::from_x_angle(sq_rotate_angles.x)
 			//	);
 			//	//sq.rot = sq.rot.norm();
-			//	printout(
+			//	my_printout(
 			//		"rotating x plus: ",
 			//		double(sq.rot.v.x),
 			//		"\n"
@@ -431,7 +431,7 @@ int main(int argc, char** argv) {
 					* Versor<MyFixedPt>::from_y_angle(-sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
-				printout(
+				my_printout(
 					"rotating y minus: ",
 					double(sq.rot.v.y),
 					//double(sq.rot.y),
@@ -453,7 +453,7 @@ int main(int argc, char** argv) {
 					* Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
 				);
 				//sq.rot = sq.rot.norm();
-				printout(
+				my_printout(
 					"rotating y plus: ",
 					double(sq.rot.v.y),
 					//double(sq.rot.y),
@@ -487,7 +487,7 @@ int main(int argc, char** argv) {
 		for (size_t i=0; i<tri_arr.size(); ++i) {
 			//size_t i = 0;
 			auto& tri = tri_arr.at(i);
-			//printout(
+			//my_printout(
 			//	"tri_arr.at(", i, "):\n",
 			//	"{",
 			//		"{",
@@ -523,7 +523,7 @@ int main(int argc, char** argv) {
 				perspective
 			);
 			auto&& clip_vec = clip.do_clip(tri);
-			//printout(
+			//my_printout(
 			//	"clip_vec.size(): ",
 			//	clip_vec.size(),
 			//	"\n"
@@ -537,7 +537,7 @@ int main(int argc, char** argv) {
 				//		.z=double(clip_vec.at(j).screen_v.at(0).v.z),
 				//		.w=double(clip_vec.at(j).screen_v.at(0).v.w),
 				//	};
-				printout(
+				my_printout(
 					"post persp_div():\n",
 					//"clip_vec.at(", j, ").proj_v:\n",
 					//"{\n",
@@ -611,13 +611,13 @@ int main(int argc, char** argv) {
 			//		);
 			//	}
 			//}
-			printout(
+			my_printout(
 				"i=", i, " visib.size(): ", visib.size(), "\n"
 			);
 		}
 		// TODO: END: later
 		//--------
-        printout(
+        my_printout(
             "visib.size()=", visib.size(), "\n"
         );
 		for (const auto& item: visib) {
@@ -625,8 +625,8 @@ int main(int argc, char** argv) {
 				.x=int(item.v.x),
 				.y=int(item.v.y),
 			};
-			//printout("visib loop: i == ", i, "\n");
-			//printout(
+			//my_printout("visib loop: i == ", i, "\n");
+			//my_printout(
 			//	"visib loop: ", temp, "\n"
 			//);
 			if (
@@ -646,7 +646,7 @@ int main(int argc, char** argv) {
 							item.uv.y * MyFixedPt(16)
 						),
 					};
-				//printout(
+				//my_printout(
 				//	"visib: ",
 				//	//Vec2<size_t>(i, j), " ",
 				//	temp, " ",
@@ -675,7 +675,7 @@ int main(int argc, char** argv) {
 					//	double(item.uv.x) != 0
 					//	&& double(item.uv.y) != 0
 					//) {
-						//printout(
+						//my_printout(
 						//	"visib: ",
 						//	//Vec2<size_t>(
 						//	//	size_t(item.v.x), size_t(item.v.y)
@@ -691,13 +691,13 @@ int main(int argc, char** argv) {
 						//	"\n"
 						//);
 					//}
-					//printout(
+					//my_printout(
 					//	std::hex,
 					//	col,
 					//	std::dec,
 					//	"\n"
 					//);
-                    printout(
+                    my_printout(
                         "debug: col.data: ",
                         size_t(
                             (((col >> (16 + 3)) & 0x1f) << 10)
@@ -713,19 +713,19 @@ int main(int argc, char** argv) {
 						//0xff'ff'ff'ff
 						//item.second,
 					);
-                    printout(
+                    my_printout(
                         "inner: out of range (maybe?): ",
                         temp,
                         "\n"
                     );
 				} else {
-                    printout(
+                    my_printout(
                         "outer: out of range (maybe?): ",
                         temp,
                         "\n"
                     );
 				}
-				//printout(
+				//my_printout(
 				//	//uint32_t(visib.at(j * SIZE_2D.x + i)),
 				//	//"visib: ",
 				//	//Vec2<size_t>{.x=i, .y=j},
@@ -750,9 +750,9 @@ int main(int argc, char** argv) {
 		//);
 		////int last_y = 0;
 		//for (const auto& item: visib) {
-		//	//printout(item, " ");
+		//	//my_printout(item, " ");
 		//	//if (last_y != item.y) {
-		//	//	printout("\n");
+		//	//	my_printout("\n");
 		//	//}
 		//	//last_y = item.y;
 		//	const Vec2<int> temp{
@@ -765,13 +765,13 @@ int main(int argc, char** argv) {
 		//		&& temp.y >= /*MyFixedPt*/(0)
 		//		&& temp.y <= /*MyFixedPt*/int(SCREEN_SIZE_2D.y - 1)
 		//	) {
-		//		//printout(temp);
+		//		//my_printout(temp);
 		//		auto& my_visib = visib_buf.at(
 		//			int(temp.y) * SCREEN_SIZE_2D.x + int(temp.x)
 		//		);
 		//		my_visib.first = true;
 		//		my_visib.second = item.uv;
-		//		//printout(
+		//		//my_printout(
 		//		//	temp, ": ",
 		//		//	Vec2<double>{
 		//		//		.x=double(item.uv.x),
@@ -797,7 +797,7 @@ int main(int argc, char** argv) {
 		//						item.second.y * MyFixedPt(16)
 		//					),
 		//				};
-		//			//printout(
+		//			//my_printout(
 		//			//	"item.first: ",
 		//			//	Vec2<size_t>(i, j), " ",
 		//			//	double(item.second.x), " ",
@@ -815,7 +815,7 @@ int main(int argc, char** argv) {
 		//					double(item.second.x) != 0
 		//					&& double(item.second.y) != 0
 		//				) {
-		//					printout(
+		//					my_printout(
 		//						"item.first: ",
 		//						Vec2<size_t>(i, j), " ",
 		//						double(item.second.x), " ",
@@ -837,7 +837,7 @@ int main(int argc, char** argv) {
 		//					})
 		//				);
 		//			}
-		//			//printout(
+		//			//my_printout(
 		//			//	//uint32_t(visib.at(j * SIZE_2D.x + i)),
 		//			//	//"visib: ",
 		//			//	//Vec2<size_t>{.x=i, .y=j},
@@ -845,10 +845,10 @@ int main(int argc, char** argv) {
 		//			//	1
 		//			//);
 		//		} else {
-		//			//printout(" ");
+		//			//my_printout(" ");
 		//		}
 		//	}
-		//	//printout("\n");
+		//	//my_printout("\n");
 		//}
 		disp.refresh();
 	}

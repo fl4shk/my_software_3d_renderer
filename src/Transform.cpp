@@ -55,8 +55,8 @@ void Transform::set_rot_scale(const Mat3x3<MyFixedPt>& rot_scale) {
 			mat.m.at(j).at(i) = rot_scale.m.at(j).at(i);
 		}
 	}
-	//printout("Transform::set_rot_scale()\n");
-	//printout(mat);
+	//my_printout("Transform::set_rot_scale()\n");
+	//my_printout(mat);
 }
 void Transform::set_rot_scale(
 	const Vec3<MyFixedPt>& rotate,
@@ -108,11 +108,11 @@ void Transform::set_rot_scale(
 	rot_m_v.z.m.at(2).at(1) = 0.0;
 	rot_m_v.z.m.at(2).at(2) = 1.0;
 	//rot_m_v.z = MAT3X3_IDENTITY<MyFixedPt>;
-	//printout("set_rot_scale() 2-args:\n");
-	//printout("3x3 rotation matrices:\n");
-	//printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
-	//printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
-	//printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
+	//my_printout("set_rot_scale() 2-args:\n");
+	//my_printout("3x3 rotation matrices:\n");
+	//my_printout("x:\n", Mat3x3<double>::cast_from(rot_m_v.x), "\n");
+	//my_printout("y:\n", Mat3x3<double>::cast_from(rot_m_v.y), "\n");
+	//my_printout("z:\n", Mat3x3<double>::cast_from(rot_m_v.z), "\n");
 	//--------
 	//Vec3<Mat3x3<MyFixedPt>> rot_scale_m_v;
 	//for (size_t k=0; k<rot_scale_m_v.SIZE; ++k) {
@@ -121,11 +121,11 @@ void Transform::set_rot_scale(
 	//}
 	const auto scale_m = _calc_scale_mat(scale);
 
-	//printout("scale 3x3 matrix:\n");
-	//printout(Mat3x3<double>::cast_from(scale_m), "\n");
-	////printout("x:\n", Mat3x3<double>::cast_from(rot_scale_m_v.x), "\n");
-	////printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
-	////printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
+	//my_printout("scale 3x3 matrix:\n");
+	//my_printout(Mat3x3<double>::cast_from(scale_m), "\n");
+	////my_printout("x:\n", Mat3x3<double>::cast_from(rot_scale_m_v.x), "\n");
+	////my_printout("y:\n", Mat3x3<double>::cast_from(rot_scale_m_v.y), "\n");
+	////my_printout("z:\n", Mat3x3<double>::cast_from(rot_scale_m_v.z), "\n");
 	//--------
 	const Mat3x3<MyFixedPt> rot_scale_m = (
 		// scale should be applied first, otherwise you're scaling your
@@ -135,9 +135,9 @@ void Transform::set_rot_scale(
 	//const Mat3x3<MyFixedPt> rot_scale_m = (
 	//	rot_scale_m_zy * rot_scale_m_v.x
 	//);
-	//printout("multiplied rotation/scaling matrices:\n");
-	////printout(Mat3x3<double>::cast_from(rot_scale_m_zy), "\n");
-	//printout(Mat3x3<double>::cast_from(rot_scale_m), "\n");
+	//my_printout("multiplied rotation/scaling matrices:\n");
+	////my_printout(Mat3x3<double>::cast_from(rot_scale_m_zy), "\n");
+	//my_printout(Mat3x3<double>::cast_from(rot_scale_m), "\n");
 	set_rot_scale(rot_scale_m);
 }
 void Transform::set_rot_scale(
@@ -152,8 +152,8 @@ void Transform::set_translate(const Vec3<MyFixedPt>& translate) {
 	for (size_t j=0; j<3u; ++j) {
 		mat.m.at(j).at(3) = translate.at(j);
 	}
-	//printout("set_translate():\n");
-	//printout(mat);
+	//my_printout("set_translate():\n");
+	//my_printout(mat);
 }
 Vec3<MyFixedPt> Transform::translate() const {
 	Vec3<MyFixedPt> ret;
@@ -176,8 +176,8 @@ void Transform::set_perspective(
 		double(fov) / (2.0) * (double(MATH_PI) / (180.0))
 	);
 	const MyFixedPt temp(std::tan(my_dbl));
-	//printout("Transform::set_perspective(): 0\n");
-	//printout(
+	//my_printout("Transform::set_perspective(): 0\n");
+	//my_printout(
 	//	std::hex,
 	//	//fov.whole_part<i64>(), " ",
 	//	//fov.frac_part(), " ",
@@ -208,7 +208,7 @@ void Transform::set_perspective(
 		//-((far_dbl * near_dbl) / (far_dbl - near_dbl))
 		(2.0 * far_dbl * near_dbl) / (near_dbl - far_dbl)
 	);
-	//printout(
+	//my_printout(
 	//	"Transform::set_perspective():\n",
 	//	double(temp_0), " ",
 	//	double(temp_1),
@@ -217,8 +217,8 @@ void Transform::set_perspective(
 	mat.m.at(2).at(2) = temp_0;
 	mat.m.at(2).at(3) = temp_1;
 	_set_to_perspective_finish();
-	//printout("Transform::set_perspective(): 1\n");
-	//printout(mat);
+	//my_printout("Transform::set_perspective(): 1\n");
+	//my_printout(mat);
 }
 Vec4<MyFixedPt> Transform::do_project(
 	const Transform& model,
@@ -237,7 +237,7 @@ Vec4<MyFixedPt> Transform::do_project(
 	//	 mv.mult_homogeneous(mat)
 	//		//(mat * view.mat) * model.mat
 	//	);
-	//printout("Transform::do_project():\n");
+	//my_printout("Transform::do_project():\n");
 
 	//Mat4x4<double>
 	//	model_dbl,
@@ -254,7 +254,7 @@ Vec4<MyFixedPt> Transform::do_project(
 	//		mvp_dbl.m.at(j).at(i) = double(mvp.m.at(j).at(i));
 	//	}
 	//}
-	//printout(
+	//my_printout(
 	//	"model:\n", model_dbl, "\n",
 	//	"view:\n", view_dbl, "\n",
 	//	"perspective:\n", perspective_dbl, "\n",
@@ -295,7 +295,7 @@ Vec4<MyFixedPt> Transform::do_project(
 	//Mat4x4<MyFixedPt>
 	//	temp_model(model.mat),
 	//	temp_view(view.mat);
-	//printout(
+	//my_printout(
 	//	"Transform::do_project():\n",
 	//	"persp_mat:\n", mat, "\n",
 	//	"view_mat:\n", view.mat, "\n",
@@ -311,7 +311,7 @@ Vec4<MyFixedPt> Transform::do_project(
 	////temp_model.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
 	////temp_view.m.at(0).at(3) -= HALF_SCREEN_SIZE_2D.x;
 	////temp_view.m.at(1).at(3) -= HALF_SCREEN_SIZE_2D.y;
-	//printout(
+	//my_printout(
 	//	"model{",
 	//		double(model.mat.m.at(0).at(3)), " ", 
 	//		double(model.mat.m.at(1).at(3)),
@@ -366,7 +366,7 @@ Vec4<MyFixedPt> Transform::do_project(
 	//		.y=double(ret.y),
 	//		.z=double(ret.z),
 	//	};
-	//printout(
+	//my_printout(
 	//	"model_v: ", model_v_dbl, "\n",
 	//	"view_v: ", view_v_dbl, "\n",
 	//	"almost_ret: ", almost_ret_dbl, "\n",
@@ -386,7 +386,7 @@ Vec4<MyFixedPt> Transform::do_project(
     //b = final_mult.y;
     //c = final_mult.z;
     //w = final_mult.w;
-    //printout(
+    //my_printout(
 	//	std::hex,
 	//	"{",
 	//		"a:", double(a)/*.data*/, " ",
@@ -400,21 +400,21 @@ Vec4<MyFixedPt> Transform::do_project(
  
     //if (w != MyFixedPt(1)) {
 	//	// do the perspective divide
-	//	printout(
+	//	my_printout(
 	//		"do the perspective divide\n"
 	//	);
     //    ret.x = a / w; 
     //    ret.y = b / w; 
     //    ret.z = c / w; 
     //} else {
-	//	printout(
+	//	my_printout(
 	//		"DON'T do the perspective divide\n"
 	//	);
     //    ret.x = a; 
     //    ret.y = b; 
     //    ret.z = c; 
     //}
-    //printout(
+    //my_printout(
 	//	//"{",
 	//	//	"a:", double(a)/*.data*/, " ",
 	//	//	"b:", double(b)/*.data*/, " ",

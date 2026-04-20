@@ -88,7 +88,7 @@ std::ostream& operator << (std::ostream& os, const Vec4<T>& v) {
 	for (size_t i=0; i<v.SIZE; ++i) {
 		os << v.at(i);
 		if (i + 1 < v.SIZE) {
-			printout(" ");
+			my_printout(" ");
 		}
 	}
 	os << "}";

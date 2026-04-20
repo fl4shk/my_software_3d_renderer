@@ -216,7 +216,7 @@ Plane::Plane(
 //			&& d1 > MyFixedPt(0.0)
 //			&& d2 > MyFixedPt(0.0)
 //		) {
-//			printout(
+//			my_printout(
 //				"Plane::update_clip_vec(): all visib: ",
 //				Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //				size_t(kind()),
@@ -228,7 +228,7 @@ Plane::Plane(
 //			&& d1 <= MyFixedPt(0.0)
 //			&& d2 <= MyFixedPt(0.0)
 //		) {
-//			printout(
+//			my_printout(
 //				"Plane::update_clip_vec(): off screen: ",
 //				Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //				size_t(kind()),
@@ -249,7 +249,7 @@ Plane::Plane(
 //				&& d1 <= MyFixedPt(0.0)
 //			)
 //		) {
-//			printout(
+//			my_printout(
 //				"Plane::update_clip_vec(): clip one positive: ",
 //				Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //				size_t(kind()),
@@ -323,7 +323,7 @@ Plane::Plane(
 //			//		)
 //			//	);
 //		} else { // only one of (d0, d1, d2) is negative
-//			printout(
+//			my_printout(
 //				"Plane::update_clip_vec(): clip one negative: ",
 //				Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //				size_t(kind()),
@@ -444,7 +444,7 @@ Plane::Plane(
 //	//		&& d1 > MyFixedPt(0.0)
 //	//		&& d2 > MyFixedPt(0.0)
 //	//	) {
-//	//		printout(
+//	//		my_printout(
 //	//			"Plane::update_clip_vec(): all visib: ",
 //	//			Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //	//			size_t(kind()),
@@ -460,7 +460,7 @@ Plane::Plane(
 //	//		&& d1 <= MyFixedPt(0.0)
 //	//		&& d2 <= MyFixedPt(0.0)
 //	//	) {
-//	//		printout(
+//	//		my_printout(
 //	//			"Plane::update_clip_vec(): off screen: ",
 //	//			Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //	//			size_t(kind()),
@@ -481,7 +481,7 @@ Plane::Plane(
 //	//			&& d1 <= MyFixedPt(0.0)
 //	//		)
 //	//	) {
-//	//		printout(
+//	//		my_printout(
 //	//			"Plane::update_clip_vec(): clip one positive: ",
 //	//			Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //	//			size_t(kind()),
@@ -560,7 +560,7 @@ Plane::Plane(
 //	//		//	C_prime
 //	//		//));
 //	//	} else { // only one of (d0, d1, d2) is negative
-//	//		printout(
+//	//		my_printout(
 //	//			"Plane::update_clip_vec(): clip one negative: ",
 //	//			Vec3<double>{double(d0), double(d1), double(d2)}, " ",
 //	//			size_t(kind()),
@@ -735,7 +735,7 @@ std::vector<Vert> Plane::do_clip(
 				return (a.w - a.z) / (b.z - a.z - b.w + a.w);
 			}
 			default: {
-				printout("oops!\n");
+				my_printout("oops!\n");
 				return MyFixedPt(0.0);
 			}
 		}
@@ -764,7 +764,7 @@ std::vector<Vert> Plane::do_clip(
 				return v.z <= v.w;
 			}
 			default: {
-				printout("oops!\n");
+				my_printout("oops!\n");
 				return false;
 			}
 		}
@@ -859,14 +859,14 @@ std::vector<Vert> Plane::do_clip(
 	if (vnum == 1) {
 		/* special case: point clipping */
 		if (inside_frustum_plane(prev_vec.front().v)) {
-			//printout("point clipping\n");
+			//my_printout("point clipping\n");
 			ret.push_back(prev_vec.front());
 		}
 		return ret;
 	}
 
 	voutnum = 0;
-	//printout("vnum: ", vnum, "\n");
+	//my_printout("vnum: ", vnum, "\n");
 
 	for (i=0; i<vnum; i++) {
 		next_idx = i + 1;
@@ -883,7 +883,7 @@ std::vector<Vert> Plane::do_clip(
 	if (voutnum <= 0) {
 		//assert(edges_clipped == 0);
 		//return -1;
-		//printout("edges_clipped == 0\n");
+		//my_printout("edges_clipped == 0\n");
 		return std::vector<Vert>();
 	}
 

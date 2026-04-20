@@ -128,6 +128,18 @@ static constexpr std::array<Vec2<MyFixedPt>, 4>
 		},
 	};
 
+#ifdef __SNOWHOUSECPU__
+#define my_printout(...) \
+    do { \
+        mm_printout(__VA_ARGS__); \
+    } while (0)
+#else
+#define my_printout(...) \
+    do { \
+        printout(__VA_ARGS__); \
+    } while (0)
+#endif
+
 //inline u64 to_bits(double val) {
 //    u64 ret;
 //    memcpy(&ret, &val, sizeof(val));
