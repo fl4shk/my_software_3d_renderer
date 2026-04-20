@@ -6,6 +6,61 @@
 #include "Clip.hpp"
 #include <cmath>
 
+//static bool _did_main_loop_iter = false;
+//int main(int argc, char** argv) {
+//    //do_enable_irqs(VBLANK_IRQ);
+//
+//    for (;;) {
+//        if (!_did_main_loop_iter) {
+//            const size_t BUF_SIZE = 128u;
+//            const size_t OUTER_BUF_SIZE = 4u;
+//            const float to_conv_flt = 0.002f;//5.9;
+//            const u32 to_conv_u32 = 990055353;
+//
+//            char buf[OUTER_BUF_SIZE][BUF_SIZE];
+//
+//            snprintf(
+//                buf[0], BUF_SIZE,
+//                "%f",
+//                to_conv_flt
+//            );
+//            float temp_flt = std::stof(
+//                std::string(buf[0])
+//            );
+//            u32 temp_u32 = 0;
+//            memcpy(&temp_u32, &temp_flt, sizeof(temp_flt));
+//            snprintf(
+//                buf[1], BUF_SIZE,
+//                "%x",
+//                temp_u32
+//            );
+//            printout(
+//                buf[1],
+//                "\n"
+//            );
+//
+//            memcpy(&temp_flt, &to_conv_u32, sizeof(to_conv_u32));
+//            snprintf(
+//                buf[2], BUF_SIZE,
+//                "%.8f",
+//                temp_flt
+//            );
+//            snprintf(
+//                buf[3], BUF_SIZE,
+//                "%u",
+//                to_conv_u32
+//            );
+//            printout(
+//                buf[2],
+//                " ",
+//                buf[3],
+//                "\n"
+//            );
+//
+//            _did_main_loop_iter = true;
+//        }
+//    }
+//}
 int main(int argc, char** argv) {
 	//liborangepower::time::Prng a;
 	//pcg_random
