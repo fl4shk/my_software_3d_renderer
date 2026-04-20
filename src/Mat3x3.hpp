@@ -75,15 +75,15 @@ public:     // functions
                 for (size_t k=0; k<SIZE_2D.x; ++k) {
                     const T temp_sum = m.at(j).at(k) * other.m.at(k).at(i);
                     sum += temp_sum;
-                    //printout(
+                    //my_printout(
                     //  "inner loop: ", k, ": ", temp_sum, " ", sum, "\n"
                     //);
                 }
-                //printout(i, " ", j, ": ", sum, "\n");
+                //my_printout(i, " ", j, ": ", sum, "\n");
                 ret.m.at(j).at(i) = sum;
             }
         }
-        //printout("\n");
+        //my_printout("\n");
         return ret;
     }
     Mat3x3 transpose() const {
@@ -138,9 +138,9 @@ template<typename T>
 inline void mm_printout_base(const Mat3x3<T>& mat) {
     for (size_t j=0; j<mat.m.size(); ++j) {
         for (size_t i=0; i<mat.m.at(j).size(); ++i) {
-            mm_printout(mat.m.at(j).at(i), " ");
+            my_printout(mat.m.at(j).at(i), " ");
         }
-        mm_printout("\n");
+        my_printout("\n");
     }
 }
 
@@ -149,18 +149,18 @@ inline void mm_printout_base(const Mat3x3<T>& mat) {
 //  const Mat3x3<T> self, const Mat3x3<T>& other
 //) {
 //  Mat3x3<T> ret;
-//  printout("Mat3x3 multiply: \n");
-//  printout(self);
-//  printout("\n");
-//  printout(other);
-//  printout("\n");
+//  my_printout("Mat3x3 multiply: \n");
+//  my_printout(self);
+//  my_printout("\n");
+//  my_printout(other);
+//  my_printout("\n");
 //  for (size_t j=0; j<ret.SIZE_2D.y; ++j) {
 //      for (size_t i=0; i<ret.SIZE_2D.x; ++i) {
 //          T sum = T();
 //          for (size_t k=0; k<ret.SIZE_2D.x; ++k) {
 //              const T temp_sum = self.m.at(j).at(k) * other.m.at(k).at(i);
 //              sum += temp_sum;
-//              printout(
+//              my_printout(
 //                  "inner loop: ", k, ": ",
 //                  "{", j, " ", i, "}: ",
 //                  "{",
@@ -171,11 +171,11 @@ inline void mm_printout_base(const Mat3x3<T>& mat) {
 //                  sum, "\n"
 //              );
 //          }
-//          //printout(i, " ", j, ": ", sum, "\n");
+//          //my_printout(i, " ", j, ": ", sum, "\n");
 //          ret.m.at(j).at(i) = sum;
 //      }
 //  }
-//  printout("\n");
+//  my_printout("\n");
 //  return ret;
 //}
 

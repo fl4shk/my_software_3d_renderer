@@ -104,7 +104,7 @@ inline void mm_printout_base(const Vec4<T>& v) {
     for (size_t i=0; i<v.SIZE; ++i) {
         mm_printout_base(v.at(i));
         if (i + 1 < v.SIZE) {
-            mm_printout_base(" ");
+            mm_printout_base(", ");
         }
     }
     mm_printout_base("}");

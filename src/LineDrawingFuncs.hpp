@@ -60,10 +60,10 @@ void calc_line_coords(
 
         while (i <= step) {
             //putpixel(x, y, 5);
-            //printout(Vec2<double>{.x=double(x), .y=double(y)}, " ");
+            //my_printout(Vec2<double>{.x=double(x), .y=double(y)}, " ");
             if (last_y != MyFixedPt(y)) {
                 last_y = MyFixedPt(y);
-                printout("\n");
+                my_printout("\n");
             }
             ret.push_back(Vec2<T>{.x=x, .y=y});
             x = x + dx;
@@ -72,9 +72,9 @@ void calc_line_coords(
         }
     } else {
         ret.push_back(Vec2<T>{.x=x1, .y=y1});
-        //printout(Vec2<double>{.x=double(x1), .y=double(y1)});
+        //my_printout(Vec2<double>{.x=double(x1), .y=double(y1)});
     }
-    //printout("\n");
+    //my_printout("\n");
 
     //int x0 = v0.x;
     //int y0 = v0.y;
@@ -124,10 +124,10 @@ void calc_line_coords(
     //    }
     //}
     //for (const auto& item: temp_ret) {
-    //  printout(item, " ");
+    //  my_printout(item, " ");
     //  ret.push_back(item);
     //}
-    //printout("\n");
+    //my_printout("\n");
 }
 
 //template<typename T>

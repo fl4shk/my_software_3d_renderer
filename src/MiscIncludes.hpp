@@ -202,7 +202,7 @@ template<typename T>
 inline void mm_printout_base(const Vec2<T>& arg) {
     mm_printout(
         "{",
-            arg.x, " ",
+            arg.x, ", ",
             arg.y,
         "}"
     );
@@ -211,8 +211,8 @@ template<typename T>
 inline void mm_printout_base(const Vec3<T>& arg) {
     mm_printout(
         "{",
-            arg.x, " ",
-            arg.y, " ",
+            arg.x, ", ",
+            arg.y, ", ",
             arg.z,
         "}"
     );
@@ -222,7 +222,6 @@ template<typename... ArgTypes>
 void mm_printout(const ArgTypes&... args) {
     (..., mm_printout_base(args));
 }
-
 
 //inline u64 to_bits(double val) {
 //    u64 ret;
@@ -265,5 +264,16 @@ inline Vec3<u64> to_bits(const Vec3<double>& val) {
     return ret;
 }
 
+#ifdef __SNOWHOUSECPU__
+#define my_printout(...) \
+    do { \
+        mm_printout(__VA_ARGS__); \
+    } while (0)
+#else
+#define my_printout(...) \
+    do { \
+        printout(__VA_ARGS__); \
+    } while (0)
+#endif
 
 #endif      // src_misc_includes_hpp

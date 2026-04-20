@@ -17,12 +17,12 @@ void Texture::load(const std::string& fname) {
 
     tiny_fs_fread(handle, &_img_size_2d.x, sizeof(_img_size_2d.x));
     tiny_fs_fread(handle, &_img_size_2d.y, sizeof(_img_size_2d.y));
-    mm_printout(
+    my_printout(
     );
     const u32 temp_img_size = _img_size_2d.y * _img_size_2d.x;
     _img_pixels.reset(new u16[temp_img_size]);
     //memset(_img_pixels.get(), 0, sizeof(u16) * temp_img_size);
-    mm_printout(
+    my_printout(
         "Texture::load():\n",
         "_img_size_2d:", _img_size_2d, "\n",
         "temp_img_size:", temp_img_size, "\n",

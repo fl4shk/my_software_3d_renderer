@@ -44,7 +44,7 @@ std::vector<Tri> Clip::do_clip(
         //size_t i=0; i<size_t(Plane::Kind::NEAR); ++i
     ) {
         auto& plane = _plane_arr.at(i);
-        //printout(
+        //my_printout(
         //  "Clip::do_clip(): ",
         //  i, " ",
         //  size_t(plane.kind()),
@@ -56,21 +56,21 @@ std::vector<Tri> Clip::do_clip(
         //  //plane.update_clip_vec(_plane_arr.at(i - 1).clip_vec);
         //}
         //temp = plane.do_clip(temp);
-        //printout("temp:\n");
+        //my_printout("temp:\n");
         //for (const auto& item: temp) {
-        //  printout(
+        //  my_printout(
         //      "{", item.v, " ", item.uv, "}\n"
         //  );
         //}
-        //printout("\n");
+        //my_printout("\n");
         temp = plane.do_clip(temp);
         //ret = plane::do_clip(ret);
         if (temp.size() == 0) {
-            printout("temp.size() == 0!\n");
+            my_printout("temp.size() == 0!\n");
             break;
         }
     }
-    //printout("testificate\n");
+    //my_printout("testificate\n");
     //return _plane_arr;
     //void draw_ngon(vertex *v, int n) {
     //  vertex *last = v + (n - 1);
@@ -81,10 +81,10 @@ std::vector<Tri> Clip::do_clip(
     //  }
     //}
     if (temp.size() > 0) {
-        //printout("temp.size() > 0: ", temp.size(), "\n");
-        mm_printout("temp:\n");
+        //my_printout("temp.size() > 0: ", temp.size(), "\n");
+        my_printout("temp:\n");
         for (const auto& item: temp) {
-          mm_printout(
+          my_printout(
             "{",
                 item.v, " ",
                 item.uv, ";    ",
@@ -93,7 +93,7 @@ std::vector<Tri> Clip::do_clip(
             "}\n"
           );
         }
-        mm_printout("\n");
+        my_printout("\n");
         const Vert
             * temp_data = temp.data(),
             * v = temp_data,

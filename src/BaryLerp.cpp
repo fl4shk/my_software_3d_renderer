@@ -95,10 +95,10 @@ BaryLerp::BaryLerp(
         || C < MyFixedPt(0) || C > MyFixedPt(1)
     )) {
         _inside_tri = true;
-        //mm_printout("BaryLerp::BaryLerp(): setting `_inside_tri`!\n");
+        //my_printout("BaryLerp::BaryLerp(): setting `_inside_tri`!\n");
     } else /*if (do_rast_interp)*/ {
-        //printout("returning!\n");
-        //mm_printout("BaryLerp::BaryLerp(): returning!\n");
+        //my_printout("returning!\n");
+        //my_printout("BaryLerp::BaryLerp(): returning!\n");
         return;
     }
     _rw = (

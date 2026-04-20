@@ -365,9 +365,9 @@ template<typename T>
 inline void mm_printout_base(const Mat4x4<T>& mat) {
     for (size_t j=0; j<mat.m.size(); ++j) {
         for (size_t i=0; i<mat.m.at(j).size(); ++i) {
-            mm_printout(mat.m.at(j).at(i), " ");
+            my_printout(mat.m.at(j).at(i), " ");
         }
-        mm_printout("\n");
+        my_printout("\n");
     }
 }
 
