@@ -57,32 +57,32 @@ using MyRwFixedPt = float;//double;
 //using MyFixedPt = CxFixedPt<i32, 16>;
 //using MyRwFixedPt = CxFixedPt<i32, 28>;
 //static constexpr size_t MY_RW_FRAC_SHIFT = (
-//	i64(MyRwFixedPt::FRAC_WIDTH) - i64(MyFixedPt::FRAC_WIDTH)
+//    i64(MyRwFixedPt::FRAC_WIDTH) - i64(MyFixedPt::FRAC_WIDTH)
 //);
 constexpr inline MyFixedPt mult_cx_rw(
-	MyFixedPt a, MyRwFixedPt rw
+    MyFixedPt a, MyRwFixedPt rw
 ) {
-	MyFixedPt ret;
-	//ret.data = (
-	//	(i64(a.data) * i64(rw.data))
-	//	>> MyRwFixedPt::FRAC_WIDTH
-	//	// the two fractional widths are added to one another
-	//);
-	ret = a * rw;
-	return ret;
+    MyFixedPt ret;
+    //ret.data = (
+    //    (i64(a.data) * i64(rw.data))
+    //    >> MyRwFixedPt::FRAC_WIDTH
+    //    // the two fractional widths are added to one another
+    //);
+    ret = a * rw;
+    return ret;
 }
 constexpr inline MyRwFixedPt my_recip(
-	MyFixedPt a
+    MyFixedPt a
 ) {
-	MyRwFixedPt ret;
-	//ret.data = (
-	//	i64(
-	//		a.recip_ldbl()
-	//		* (1 << MyRwFixedPt::FRAC_WIDTH)
-	//	)
-	//);
-	ret = MyRwFixedPt(1.0 / double(a));
-	return ret;
+    MyRwFixedPt ret;
+    //ret.data = (
+    //    i64(
+    //        a.recip_ldbl()
+    //        * (1 << MyRwFixedPt::FRAC_WIDTH)
+    //    )
+    //);
+    ret = MyRwFixedPt(1.0 / double(a));
+    return ret;
 }
 //using liborangepower::math::MyFixedPt;
 namespace concepts = liborangepower::concepts;
@@ -93,40 +93,40 @@ namespace sdl = liborangepower::sdl;
 
 static constexpr double MATH_PI = double(M_PI); //double(3.141592653589793);
 static constexpr Vec2<size_t>
-	SCREEN_SIZE_2D{
-		//.x=640,
-		//.y=480,
-		.x=320,
-		.y=240,
-		//.x=800,
-		//.y=600,
-		//.x=32,
-		//.y=20,
-	};
+    SCREEN_SIZE_2D{
+        //.x=640,
+        //.y=480,
+        .x=320,
+        .y=240,
+        //.x=800,
+        //.y=600,
+        //.x=32,
+        //.y=20,
+    };
 static constexpr Vec2<MyFixedPt>
-	HALF_SCREEN_SIZE_2D{
-		.x=MyFixedPt(SCREEN_SIZE_2D.x) / MyFixedPt(2),
-		.y=MyFixedPt(SCREEN_SIZE_2D.y) / MyFixedPt(2),
-	};
+    HALF_SCREEN_SIZE_2D{
+        .x=MyFixedPt(SCREEN_SIZE_2D.x) / MyFixedPt(2),
+        .y=MyFixedPt(SCREEN_SIZE_2D.y) / MyFixedPt(2),
+    };
 static constexpr std::array<Vec2<MyFixedPt>, 4>
-	SCREEN_POLYGON{
-		Vec2<MyFixedPt>{
-			.x=MyFixedPt(0),
-			.y=MyFixedPt(0),
-		},
-		Vec2<MyFixedPt>{
-			.x=MyFixedPt(SCREEN_SIZE_2D.x - 1),
-			.y=MyFixedPt(0),
-		},
-		Vec2<MyFixedPt>{
-			.x=MyFixedPt(SCREEN_SIZE_2D.x - 1),
-			.y=MyFixedPt(SCREEN_SIZE_2D.y - 1),
-		},
-		Vec2<MyFixedPt>{
-			.x=MyFixedPt(0),
-			.y=MyFixedPt(SCREEN_SIZE_2D.y - 1),
-		},
-	};
+    SCREEN_POLYGON{
+        Vec2<MyFixedPt>{
+            .x=MyFixedPt(0),
+            .y=MyFixedPt(0),
+        },
+        Vec2<MyFixedPt>{
+            .x=MyFixedPt(SCREEN_SIZE_2D.x - 1),
+            .y=MyFixedPt(0),
+        },
+        Vec2<MyFixedPt>{
+            .x=MyFixedPt(SCREEN_SIZE_2D.x - 1),
+            .y=MyFixedPt(SCREEN_SIZE_2D.y - 1),
+        },
+        Vec2<MyFixedPt>{
+            .x=MyFixedPt(0),
+            .y=MyFixedPt(SCREEN_SIZE_2D.y - 1),
+        },
+    };
 
 #ifdef __SNOWHOUSECPU__
 #define my_printout(...) \
@@ -181,4 +181,4 @@ inline Vec3<u64> to_bits(const Vec3<double>& val) {
     return ret;
 }
 
-#endif		// src_misc_includes_hpp
+#endif        // src_misc_includes_hpp
