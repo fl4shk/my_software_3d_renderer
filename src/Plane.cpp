@@ -238,7 +238,7 @@ std::vector<Vert> Plane::do_clip(
         //assert(edges_clipped == 0);
         //return -1;
         //my_printout("edges_clipped == 0\n");
-        my_printout("voutnum:", voutnum, " <= 0\n",);
+        my_printout("voutnum:", voutnum, " <= 0\n");
         return std::vector<Vert>();
     }
 
