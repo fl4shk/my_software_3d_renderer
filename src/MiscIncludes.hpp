@@ -152,14 +152,26 @@ void melted_moon_print(const char* str);
 void melted_moon_write(const void* buf, size_t count);
 } // extern "C"
 
-inline void mm_printout_base(const char* arg) {
-    melted_moon_print(arg);
+#ifdef __SNOWHOUSECPU__
+#define my_final_printout(str) \
+    do { \
+        melted_moon_print(str); \
+    } while (0)
+#else
+#define my_final_printout(str) \
+    do { \
+        printout(str); \
+    } while (0)
+#endif
+
+inline void my_printout_base(const char* arg) {
+    my_final_printout(arg);
 }
-inline void mm_printout_base(char arg) {
+inline void my_printout_base(char arg) {
     const char buf[2] = {arg, '\0'};
-    melted_moon_print(buf);
+    my_final_printout(buf);
 }
-inline void mm_printout_base(double arg) {
+inline void my_printout_base(double arg) {
     static constexpr size_t BUF_SIZE = 1024;
     char buf[BUF_SIZE];
     memset(buf, 0, sizeof(char) * BUF_SIZE);
@@ -169,10 +181,10 @@ inline void mm_printout_base(double arg) {
         //"%e",
         arg
     )] = '\0';
-    melted_moon_print(buf);
+    my_final_printout(buf);
 }
 template<std::unsigned_integral UIntT>
-inline void mm_printout_base(UIntT arg) {
+inline void my_printout_base(UIntT arg) {
     static constexpr size_t BUF_SIZE = 1024;
     char buf[BUF_SIZE];
     memset(buf, 0, sizeof(char) * BUF_SIZE);
@@ -181,10 +193,10 @@ inline void mm_printout_base(UIntT arg) {
         "%llu",
         (unsigned long long int)arg
     )] = '\0';
-    melted_moon_print(buf);
+    my_final_printout(buf);
 }
 template<std::signed_integral SIntT>
-inline void mm_printout_base(SIntT arg) {
+inline void my_printout_base(SIntT arg) {
     static constexpr size_t BUF_SIZE = 1024;
     char buf[BUF_SIZE];
     memset(buf, 0, sizeof(char) * BUF_SIZE);
@@ -193,14 +205,14 @@ inline void mm_printout_base(SIntT arg) {
         "%lli",
         (long long int)arg
     )] = '\0';
-    melted_moon_print(buf);
+    my_final_printout(buf);
 }
 template<typename... ArgTypes>
-void mm_printout(const ArgTypes&... args);
+void my_printout(const ArgTypes&... args);
 
 template<typename T>
-inline void mm_printout_base(const Vec2<T>& arg) {
-    mm_printout(
+inline void my_printout_base(const Vec2<T>& arg) {
+    my_printout(
         "{",
             arg.x, ", ",
             arg.y,
@@ -208,8 +220,8 @@ inline void mm_printout_base(const Vec2<T>& arg) {
     );
 }
 template<typename T>
-inline void mm_printout_base(const Vec3<T>& arg) {
-    mm_printout(
+inline void my_printout_base(const Vec3<T>& arg) {
+    my_printout(
         "{",
             arg.x, ", ",
             arg.y, ", ",
@@ -219,8 +231,8 @@ inline void mm_printout_base(const Vec3<T>& arg) {
 }
 
 template<typename... ArgTypes>
-void mm_printout(const ArgTypes&... args) {
-    (..., mm_printout_base(args));
+void my_printout(const ArgTypes&... args) {
+    (..., my_printout_base(args));
 }
 
 //inline u64 to_bits(double val) {
@@ -263,17 +275,5 @@ inline Vec3<u64> to_bits(const Vec3<double>& val) {
     }
     return ret;
 }
-
-#ifdef __SNOWHOUSECPU__
-#define my_printout(...) \
-    do { \
-        mm_printout(__VA_ARGS__); \
-    } while (0)
-#else
-#define my_printout(...) \
-    do { \
-        printout(__VA_ARGS__); \
-    } while (0)
-#endif
 
 #endif      // src_misc_includes_hpp

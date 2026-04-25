@@ -99,15 +99,15 @@ public:     // functions
 //  return os;
 //}
 template<typename T>
-inline void mm_printout_base(const Vec4<T>& v) {
-    mm_printout_base("{");
+inline void my_printout_base(const Vec4<T>& v) {
+    my_printout_base("{");
     for (size_t i=0; i<v.SIZE; ++i) {
-        mm_printout_base(v.at(i));
+        my_printout_base(v.at(i));
         if (i + 1 < v.SIZE) {
-            mm_printout_base(", ");
+            my_printout_base(", ");
         }
     }
-    mm_printout_base("}");
+    my_printout_base("}");
 }
 
 inline Vec4<u32> to_bits(const Vec4<float>& val) {
