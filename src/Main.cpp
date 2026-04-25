@@ -155,335 +155,335 @@ void init_textures() {
     );
     tiny_fs_fclose(my_wood_block_img_file);
 }
-int main(int argc, char** argv) {
-    //do_enable_irqs(VBLANK_IRQ);
-
-    for (;;) {
-        if (!_did_main_loop_iter) {
-            const size_t BUF_SIZE = 128u;
-            const size_t OUTER_BUF_SIZE = 4u;
-            const float to_conv_flt = 0.002f;//5.9;
-            const u32 to_conv_u32 = 990055353;
-
-            char buf[OUTER_BUF_SIZE][BUF_SIZE];
-
-            snprintf(
-                buf[0], BUF_SIZE,
-                "%f",
-                to_conv_flt
-            );
-            float temp_flt = std::stof(
-                std::string(buf[0])
-            );
-            u32 temp_u32 = 0;
-            memcpy(&temp_u32, &temp_flt, sizeof(temp_flt));
-            snprintf(
-                buf[1], BUF_SIZE,
-                "%x",
-                temp_u32
-            );
-            my_printout(
-                buf[1],
-                "\n"
-            );
-
-            memcpy(&temp_flt, &to_conv_u32, sizeof(to_conv_u32));
-            snprintf(
-                buf[2], BUF_SIZE,
-                "%.8f",
-                temp_flt
-            );
-            snprintf(
-                buf[3], BUF_SIZE,
-                "%u",
-                to_conv_u32
-            );
-            my_printout(
-                buf[2],
-                " ",
-                buf[3],
-                "\n"
-            );
-
-            _did_main_loop_iter = true;
-        }
-    }
-}
 //int main(int argc, char** argv) {
-//    init_textures();
+//    //do_enable_irqs(VBLANK_IRQ);
 //
-//    //do_enable_irqs(VBLANK_IRQ | TIMER_IRQ);
-//    do_enable_irqs(VBLANK_IRQ);
-//
-//    ////MyDisplay disp;
-//    Rast rast;
-//    const MyFixedPt
-//        near(0.1),
-//        far(10.0);
-//    Transform perspective(
-//        near, // near
-//        far // far
-//    );
-//    Texture texture(
-//        WOOD_BLOCK_BMP_FILENAME
-//        //"gfx/obj/wood_block.bmp"
-//        //"gfx/obj/foreground_common_gfx.bmp"
-//    );
-//    Square sq{
-//        .size_2d{1.0, 1.0},
-//        .pos{00.0, 0.0, 0.00},
-//        //.rot{VERSOR_IDENTITY<MyFixedPt>},
-//        .img=&texture,
-//    };
-//    Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.001};
-//    //Versor<MyFixedPt>
-//    //  camera_rot;
-//    Transform camera(
-//        MAT4X4_IDENTITY<MyFixedPt>
-//    );
-//    static constexpr Vec3<MyFixedPt>
-//        sq_rotate_angles{0.00101, 0.00101, 0.00101};
-//        
 //    for (;;) {
 //        if (!_did_main_loop_iter) {
-//            //disp.handle_sdl_events();
-//            //if (disp.do_exit()) {
-//            //  break;
-//            //}
+//            const size_t BUF_SIZE = 128u;
+//            const size_t OUTER_BUF_SIZE = 4u;
+//            const float to_conv_flt = 0.002f;//5.9;
+//            const u32 to_conv_u32 = 990055353;
 //
-//            //my_printout(
-//            //    5.9,
-//            //    "\n"
-//            //);
-//            //mm_printout_base(
-//            //    double(5.9)
-//            //);
-//            //mm_printout_base(
-//            //    char('\n')
-//            //);
+//            char buf[OUTER_BUF_SIZE][BUF_SIZE];
 //
-//            {
-//                my_printout("checking keys\n");
-//                //const MyFixedPt
-//                //  amount_xy(0.0100),
-//                //  amount_z(0.0100),
-//                //  amount_angle(0.00010000);
-//                //if (
-//                //  disp.key_down_now(SnesKeyKind::DpadLeft)
-//                //  && disp.key_up_now(SnesKeyKind::DpadRight)
-//                //) {
-//                //  camera_pos.x += amount_xy;
-//                //} else if (
-//                //  disp.key_down_now(SnesKeyKind::DpadRight)
-//                //  && disp.key_up_now(SnesKeyKind::DpadLeft)
-//                //) {
-//                //  camera_pos.x -= amount_xy;
-//                //}
-//
-//                //if (
-//                //  disp.key_down_now(SnesKeyKind::DpadUp)
-//                //  && disp.key_up_now(SnesKeyKind::DpadDown)
-//                //) {
-//                //  camera_pos.y += amount_xy;
-//                //} else if (
-//                //  disp.key_down_now(SnesKeyKind::DpadDown)
-//                //  && disp.key_up_now(SnesKeyKind::DpadUp)
-//                //) {
-//                //  camera_pos.y -= amount_xy;
-//                //}
-//
-//                //if (
-//                //  disp.key_down_now(SnesKeyKind::Y)
-//                //  && disp.key_up_now(SnesKeyKind::A)
-//                //) {
-//                //  camera_pos.z -= amount_z;
-//                //} else if (
-//                //  disp.key_down_now(SnesKeyKind::A)
-//                //  && disp.key_up_now(SnesKeyKind::Y)
-//                //) {
-//                //  camera_pos.z += amount_z;
-//                //}
-//
-//                //if (
-//                //    //disp.key_down_now(SnesKeyKind::L)
-//                //    //&& disp.key_up_now(SnesKeyKind::R)
-//                //    true
-//                //) {
-//                //    sq.rot = (
-//                //        sq.rot
-//                //        * Versor<MyFixedPt>::from_y_angle(
-//                //            -sq_rotate_angles.y
-//                //        )
-//                //    );
-//                //}
-//                //else if (
-//                //  disp.key_down_now(SnesKeyKind::R)
-//                //  && disp.key_up_now(SnesKeyKind::L)
-//                //) {
-//                //  sq.rot = (
-//                //      sq.rot
-//                //      * Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
-//                //  );
-//                //}
-//            }
-//            auto& tri_arr = sq.update_tri_arr();
-//
-//            camera.set_translate(camera_pos);
-//            //tri.model = &my_sq_model;
-//            const Transform n_view(
-//                camera.mat.inverse()
+//            snprintf(
+//                buf[0], BUF_SIZE,
+//                "%f",
+//                to_conv_flt
 //            );
-//            std::vector<VertTextureCoords> visib;
-//            Clip clip;
-//            //--------
-//            // TODO: BEGIN: later
-//            for (size_t i=0; i<tri_arr.size(); ++i) {
-//                //size_t i = 0;
-//                auto& tri = tri_arr.at(i);
-//                tri.do_project_etc(
-//                    n_view,
-//                    perspective
-//                );
-//                auto&& clip_vec = clip.do_clip(tri);
-//                for (size_t j=0; j<clip_vec.size(); ++j) {
-//                    clip_vec.at(j).persp_div();
-//                    my_printout(
-//                        "post persp_div():\n",
-//                        //"clip_vec.at(", j, ").proj_v:\n",
-//                        //"{\n",
-//                        //"\t{",
-//                        //  clip_vec.at(j).proj_v.at(0).v, " ",
-//                        //  clip_vec.at(j).proj_v.at(0).uv,
-//                        //"}",
-//                        //"\n",
-//                        //"\t{",
-//                        //  clip_vec.at(j).proj_v.at(1).v, " ",
-//                        //  clip_vec.at(j).proj_v.at(1).uv,
-//                        //"}",
-//                        //"\n",
-//                        //"\t{",
-//                        //  clip_vec.at(j).proj_v.at(2).v, " ",
-//                        //  clip_vec.at(j).proj_v.at(2).uv,
-//                        //"}\n",
-//                        //"}\n"
-//                        "clip_vec.at(", j, ").screen_v:\n",
-//                        "{\n",
-//                        "\t{",
-//                            clip_vec.at(j).screen_v.at(0).v, " ",
-//                            clip_vec.at(j).screen_v.at(0).uv, ";    ",
-//                            to_bits(clip_vec.at(j).screen_v.at(0).v), " ",
-//                            to_bits(clip_vec.at(j).screen_v.at(0).uv),
-//                        "}",
-//                        "\n",
-//                        "\t{",
-//                            clip_vec.at(j).screen_v.at(1).v, " ",
-//                            clip_vec.at(j).screen_v.at(1).uv, ";    ",
-//                            to_bits(clip_vec.at(j).screen_v.at(1).v), " ",
-//                            to_bits(clip_vec.at(j).screen_v.at(1).uv),
-//                        "}",
-//                        "\n",
-//                        "\t{",
-//                            clip_vec.at(j).screen_v.at(2).v, " ",
-//                            clip_vec.at(j).screen_v.at(2).uv, ";    ",
-//                            to_bits(clip_vec.at(j).screen_v.at(2).v), " ",
-//                            to_bits(clip_vec.at(j).screen_v.at(2).uv),
-//                        "}\n",
-//                        "}\n"
-//                    );
-//                    rast.calc_visib(
-//                        //{tri, clip_vec.at(j)},
-//                        clip_vec.at(j),
-//                        visib
-//                    );
-//                }
-//                my_printout(
-//                    "i=", i, " visib.size(): ", visib.size(), "\n"
-//                );
-//            }
-//            // TODO: END: later
-//            //--------
+//            float temp_flt = std::stof(
+//                std::string(buf[0])
+//            );
+//            u32 temp_u32 = 0;
+//            memcpy(&temp_u32, &temp_flt, sizeof(temp_flt));
+//            snprintf(
+//                buf[1], BUF_SIZE,
+//                "%x",
+//                temp_u32
+//            );
 //            my_printout(
-//                "visib.size()=", visib.size(), "\n"
+//                buf[1],
+//                "\n"
 //            );
-//            for (const auto& item: visib) {
-//                const Vec2<int> temp{
-//                    .x=int(item.v.x),
-//                    .y=int(item.v.y),
-//                };
-//                if (
-//                    temp.x >= /*MyFixedPt*/(0)
-//                    && temp.x <= /*MyFixedPt*/int(SCREEN_SIZE_2D.x - 1)
-//                    && temp.y >= /*MyFixedPt*/(0)
-//                    && temp.y <= /*MyFixedPt*/int(SCREEN_SIZE_2D.y - 1)
-//                    //true
-//                ) {
-//                    const Vec2<int>
-//                        pos{
-//                            .x=int(
-//                                item.uv.x * MyFixedPt(16)
-//                                //+ MyFixedPt(16)
-//                            ),
-//                            .y=int(
-//                                item.uv.y * MyFixedPt(16)
-//                            ),
-//                        };
 //
-//                    if (
-//                        //pos.x >= 0 + 48 && pos.x < 16 + 48
-//                        //&& pos.y >= 0 && pos.y < 16
-//                        pos.x >= 0 && pos.x < 16
-//                        && pos.y >= 0 && pos.y < 16
-//                    ) {
-//                        // TODO: add this back in
-//                        //const u32
-//                        //  col = item.img->at_u32(Vec2<size_t>{
-//                        //      .x=size_t(pos.x),
-//                        //      .y=size_t(pos.y),
-//                        //  });
-//                        const Color
-//                            col = item.img->at(Vec2<size_t>{
-//                                .x=size_t(pos.x),
-//                                .y=size_t(pos.y),
-//                            });
-//                        const Vec2<size_t>
-//                            temp_pos{
-//                                .x=size_t(item.v.x),
-//                                .y=size_t(item.v.y),
-//                            };
+//            memcpy(&temp_flt, &to_conv_u32, sizeof(to_conv_u32));
+//            snprintf(
+//                buf[2], BUF_SIZE,
+//                "%.8f",
+//                temp_flt
+//            );
+//            snprintf(
+//                buf[3], BUF_SIZE,
+//                "%u",
+//                to_conv_u32
+//            );
+//            my_printout(
+//                buf[2],
+//                " ",
+//                buf[3],
+//                "\n"
+//            );
 //
-//                        //disp.set(
-//                        //  //col
-//                        //  temp_pos,
-//                        //  col
-//                        //  //0xff'ff'ff'ff
-//                        //  //item.second,
-//                        ///);
-//                        my_printout(
-//                            "debug: col.data: ",
-//                            size_t(col.data),
-//                            "\n"
-//                        );
-//                        _melted_moon_fb[
-//                            temp_pos.y * SCREEN_SIZE_2D.x + temp_pos.x
-//                        ] = col.data;
-//                    }
-//                    my_printout(
-//                        "inner: out of range (maybe?): ",
-//                        temp,
-//                        "\n"
-//                    );
-//                } else {
-//                    my_printout(
-//                        "outer: out of range (maybe?): ",
-//                        temp,
-//                        "\n"
-//                    );
-//                }
-//            }
 //            _did_main_loop_iter = true;
-//            //disp.refresh();
 //        }
 //    }
-//    
-//    return 0;
 //}
+int main(int argc, char** argv) {
+    init_textures();
+
+    //do_enable_irqs(VBLANK_IRQ | TIMER_IRQ);
+    do_enable_irqs(VBLANK_IRQ);
+
+    ////MyDisplay disp;
+    Rast rast;
+    const MyFixedPt
+        near(0.1),
+        far(10.0);
+    Transform perspective(
+        near, // near
+        far // far
+    );
+    Texture texture(
+        WOOD_BLOCK_BMP_FILENAME
+        //"gfx/obj/wood_block.bmp"
+        //"gfx/obj/foreground_common_gfx.bmp"
+    );
+    Square sq{
+        .size_2d{1.0, 1.0},
+        .pos{00.0, 0.0, 0.00},
+        //.rot{VERSOR_IDENTITY<MyFixedPt>},
+        .img=&texture,
+    };
+    Vec3<MyFixedPt> camera_pos{0.00, 0.00, -5.001};
+    //Versor<MyFixedPt>
+    //  camera_rot;
+    Transform camera(
+        MAT4X4_IDENTITY<MyFixedPt>
+    );
+    static constexpr Vec3<MyFixedPt>
+        sq_rotate_angles{0.00101, 0.00101, 0.00101};
+        
+    for (;;) {
+        if (!_did_main_loop_iter) {
+            //disp.handle_sdl_events();
+            //if (disp.do_exit()) {
+            //  break;
+            //}
+
+            //my_printout(
+            //    5.9,
+            //    "\n"
+            //);
+            //mm_printout_base(
+            //    double(5.9)
+            //);
+            //mm_printout_base(
+            //    char('\n')
+            //);
+
+            {
+                my_printout("checking keys\n");
+                //const MyFixedPt
+                //  amount_xy(0.0100),
+                //  amount_z(0.0100),
+                //  amount_angle(0.00010000);
+                //if (
+                //  disp.key_down_now(SnesKeyKind::DpadLeft)
+                //  && disp.key_up_now(SnesKeyKind::DpadRight)
+                //) {
+                //  camera_pos.x += amount_xy;
+                //} else if (
+                //  disp.key_down_now(SnesKeyKind::DpadRight)
+                //  && disp.key_up_now(SnesKeyKind::DpadLeft)
+                //) {
+                //  camera_pos.x -= amount_xy;
+                //}
+
+                //if (
+                //  disp.key_down_now(SnesKeyKind::DpadUp)
+                //  && disp.key_up_now(SnesKeyKind::DpadDown)
+                //) {
+                //  camera_pos.y += amount_xy;
+                //} else if (
+                //  disp.key_down_now(SnesKeyKind::DpadDown)
+                //  && disp.key_up_now(SnesKeyKind::DpadUp)
+                //) {
+                //  camera_pos.y -= amount_xy;
+                //}
+
+                //if (
+                //  disp.key_down_now(SnesKeyKind::Y)
+                //  && disp.key_up_now(SnesKeyKind::A)
+                //) {
+                //  camera_pos.z -= amount_z;
+                //} else if (
+                //  disp.key_down_now(SnesKeyKind::A)
+                //  && disp.key_up_now(SnesKeyKind::Y)
+                //) {
+                //  camera_pos.z += amount_z;
+                //}
+
+                //if (
+                //    //disp.key_down_now(SnesKeyKind::L)
+                //    //&& disp.key_up_now(SnesKeyKind::R)
+                //    true
+                //) {
+                //    sq.rot = (
+                //        sq.rot
+                //        * Versor<MyFixedPt>::from_y_angle(
+                //            -sq_rotate_angles.y
+                //        )
+                //    );
+                //}
+                //else if (
+                //  disp.key_down_now(SnesKeyKind::R)
+                //  && disp.key_up_now(SnesKeyKind::L)
+                //) {
+                //  sq.rot = (
+                //      sq.rot
+                //      * Versor<MyFixedPt>::from_y_angle(sq_rotate_angles.y)
+                //  );
+                //}
+            }
+            auto& tri_arr = sq.update_tri_arr();
+
+            camera.set_translate(camera_pos);
+            //tri.model = &my_sq_model;
+            const Transform n_view(
+                camera.mat.inverse()
+            );
+            std::vector<VertTextureCoords> visib;
+            Clip clip;
+            //--------
+            // TODO: BEGIN: later
+            for (size_t i=0; i<tri_arr.size(); ++i) {
+                //size_t i = 0;
+                auto& tri = tri_arr.at(i);
+                tri.do_project_etc(
+                    n_view,
+                    perspective
+                );
+                auto&& clip_vec = clip.do_clip(tri);
+                for (size_t j=0; j<clip_vec.size(); ++j) {
+                    clip_vec.at(j).persp_div();
+                    my_printout(
+                        "post persp_div():\n",
+                        //"clip_vec.at(", j, ").proj_v:\n",
+                        //"{\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(0).v, " ",
+                        //  clip_vec.at(j).proj_v.at(0).uv,
+                        //"}",
+                        //"\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(1).v, " ",
+                        //  clip_vec.at(j).proj_v.at(1).uv,
+                        //"}",
+                        //"\n",
+                        //"\t{",
+                        //  clip_vec.at(j).proj_v.at(2).v, " ",
+                        //  clip_vec.at(j).proj_v.at(2).uv,
+                        //"}\n",
+                        //"}\n"
+                        "clip_vec.at(", j, ").screen_v:\n",
+                        "{\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(0).v, " ",
+                            clip_vec.at(j).screen_v.at(0).uv, ";    ",
+                            to_bits(clip_vec.at(j).screen_v.at(0).v), " ",
+                            to_bits(clip_vec.at(j).screen_v.at(0).uv),
+                        "}",
+                        "\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(1).v, " ",
+                            clip_vec.at(j).screen_v.at(1).uv, ";    ",
+                            to_bits(clip_vec.at(j).screen_v.at(1).v), " ",
+                            to_bits(clip_vec.at(j).screen_v.at(1).uv),
+                        "}",
+                        "\n",
+                        "\t{",
+                            clip_vec.at(j).screen_v.at(2).v, " ",
+                            clip_vec.at(j).screen_v.at(2).uv, ";    ",
+                            to_bits(clip_vec.at(j).screen_v.at(2).v), " ",
+                            to_bits(clip_vec.at(j).screen_v.at(2).uv),
+                        "}\n",
+                        "}\n"
+                    );
+                    rast.calc_visib(
+                        //{tri, clip_vec.at(j)},
+                        clip_vec.at(j),
+                        visib
+                    );
+                }
+                my_printout(
+                    "i=", i, " visib.size(): ", visib.size(), "\n"
+                );
+            }
+            // TODO: END: later
+            //--------
+            my_printout(
+                "visib.size()=", visib.size(), "\n"
+            );
+            for (const auto& item: visib) {
+                const Vec2<int> temp{
+                    .x=int(item.v.x),
+                    .y=int(item.v.y),
+                };
+                if (
+                    temp.x >= /*MyFixedPt*/(0)
+                    && temp.x <= /*MyFixedPt*/int(SCREEN_SIZE_2D.x - 1)
+                    && temp.y >= /*MyFixedPt*/(0)
+                    && temp.y <= /*MyFixedPt*/int(SCREEN_SIZE_2D.y - 1)
+                    //true
+                ) {
+                    const Vec2<int>
+                        pos{
+                            .x=int(
+                                item.uv.x * MyFixedPt(16)
+                                //+ MyFixedPt(16)
+                            ),
+                            .y=int(
+                                item.uv.y * MyFixedPt(16)
+                            ),
+                        };
+
+                    if (
+                        //pos.x >= 0 + 48 && pos.x < 16 + 48
+                        //&& pos.y >= 0 && pos.y < 16
+                        pos.x >= 0 && pos.x < 16
+                        && pos.y >= 0 && pos.y < 16
+                    ) {
+                        // TODO: add this back in
+                        //const u32
+                        //  col = item.img->at_u32(Vec2<size_t>{
+                        //      .x=size_t(pos.x),
+                        //      .y=size_t(pos.y),
+                        //  });
+                        const Color
+                            col = item.img->at(Vec2<size_t>{
+                                .x=size_t(pos.x),
+                                .y=size_t(pos.y),
+                            });
+                        const Vec2<size_t>
+                            temp_pos{
+                                .x=size_t(item.v.x),
+                                .y=size_t(item.v.y),
+                            };
+
+                        //disp.set(
+                        //  //col
+                        //  temp_pos,
+                        //  col
+                        //  //0xff'ff'ff'ff
+                        //  //item.second,
+                        ///);
+                        my_printout(
+                            "debug: col.data: ",
+                            size_t(col.data),
+                            "\n"
+                        );
+                        _melted_moon_fb[
+                            temp_pos.y * SCREEN_SIZE_2D.x + temp_pos.x
+                        ] = col.data;
+                    }
+                    my_printout(
+                        "inner: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
+                } else {
+                    my_printout(
+                        "outer: out of range (maybe?): ",
+                        temp,
+                        "\n"
+                    );
+                }
+            }
+            _did_main_loop_iter = true;
+            //disp.refresh();
+        }
+    }
+    
+    return 0;
+}
