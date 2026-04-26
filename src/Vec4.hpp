@@ -82,17 +82,28 @@ public:        // functions
     }
 };
 
+//template<typename T>
+//std::ostream& operator << (std::ostream& os, const Vec4<T>& v) {
+//    os << "{";
+//    for (size_t i=0; i<v.SIZE; ++i) {
+//        os << v.at(i);
+//        if (i + 1 < v.SIZE) {
+//            my_printout(" ");
+//        }
+//    }
+//    os << "}";
+//    return os;
+//}
 template<typename T>
-std::ostream& operator << (std::ostream& os, const Vec4<T>& v) {
-    os << "{";
+inline void my_printout_base(const Vec4<T>& v) {
+    my_printout_base("{");
     for (size_t i=0; i<v.SIZE; ++i) {
-        os << v.at(i);
+        my_printout_base(v.at(i));
         if (i + 1 < v.SIZE) {
-            my_printout(" ");
+            my_printout_base(", ");
         }
     }
-    os << "}";
-    return os;
+    my_printout_base("}");
 }
 
 inline Vec4<u32> to_bits(const Vec4<float>& val) {

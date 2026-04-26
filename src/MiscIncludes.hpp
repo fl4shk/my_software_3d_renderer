@@ -129,16 +129,87 @@ static constexpr std::array<Vec2<MyFixedPt>, 4>
     };
 
 #ifdef __SNOWHOUSECPU__
-#define my_printout(...) \
+#define my_final_printout(str) \
     do { \
-        mm_printout(__VA_ARGS__); \
+        melted_moon_print(str); \
     } while (0)
 #else
-#define my_printout(...) \
+#define my_final_printout(str) \
     do { \
-        printout(__VA_ARGS__); \
+        printout(str); \
     } while (0)
 #endif
+
+inline void my_printout_base(const char* arg) {
+    my_final_printout(arg);
+}
+inline void my_printout_base(char arg) {
+    const char buf[2] = {arg, '\0'};
+    my_final_printout(buf);
+}
+inline void my_printout_base(double arg) {
+    static constexpr size_t BUF_SIZE = 1024;
+    char buf[BUF_SIZE];
+    memset(buf, 0, sizeof(char) * BUF_SIZE);
+    buf[snprintf(
+        buf, BUF_SIZE,
+        "%f",
+        //"%e",
+        arg
+    )] = '\0';
+    my_final_printout(buf);
+}
+template<std::unsigned_integral UIntT>
+inline void my_printout_base(UIntT arg) {
+    static constexpr size_t BUF_SIZE = 1024;
+    char buf[BUF_SIZE];
+    memset(buf, 0, sizeof(char) * BUF_SIZE);
+    buf[snprintf(
+        buf, BUF_SIZE,
+        "%llu",
+        (unsigned long long int)arg
+    )] = '\0';
+    my_final_printout(buf);
+}
+template<std::signed_integral SIntT>
+inline void my_printout_base(SIntT arg) {
+    static constexpr size_t BUF_SIZE = 1024;
+    char buf[BUF_SIZE];
+    memset(buf, 0, sizeof(char) * BUF_SIZE);
+    buf[snprintf(
+        buf, BUF_SIZE,
+        "%lli",
+        (long long int)arg
+    )] = '\0';
+    my_final_printout(buf);
+}
+template<typename... ArgTypes>
+void my_printout(const ArgTypes&... args);
+
+template<typename T>
+inline void my_printout_base(const Vec2<T>& arg) {
+    my_printout(
+        "{",
+            arg.x, ", ",
+            arg.y,
+        "}"
+    );
+}
+template<typename T>
+inline void my_printout_base(const Vec3<T>& arg) {
+    my_printout(
+        "{",
+            arg.x, ", ",
+            arg.y, ", ",
+            arg.z,
+        "}"
+    );
+}
+
+template<typename... ArgTypes>
+void my_printout(const ArgTypes&... args) {
+    (..., my_printout_base(args));
+}
 
 //inline u64 to_bits(double val) {
 //    u64 ret;

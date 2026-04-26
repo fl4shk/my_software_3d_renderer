@@ -137,29 +137,26 @@ BaryLerp::BaryLerp(
         b_numer_det = det(_b_numer),
         c_numer_det = det(_c_numer),
         denom_det = det(_denom);
-        //one_over_denom_det = MyFixedPt(1) / denom_det,
-        //B = b_numer_det * one_over_denom_det,
-        //C = c_numer_det * one_over_denom_det,
-        //A = MyFixedPt(1) - B - C;
     MyRwFixedPt one_over_denom_det;
-    //one_over_denom_det.data = (
-    //    i64(
-    //        denom_det.recip_ldbl()
-    //        * (1 << MyRwFixedPt::FRAC_WIDTH)
-    //    )
-    //);
     one_over_denom_det = my_recip(denom_det);
     B = mult_cx_rw(b_numer_det, one_over_denom_det),
     C = mult_cx_rw(c_numer_det, one_over_denom_det),
     A = MyFixedPt(1) - B - C;
+    my_printout(
+        "BaryLerp: ",
+        "A=", A, " ",
+        "B=", B, " ",
+        "C=", C, "\n"
+    );
     if (!(
         A < MyFixedPt(0) || A > MyFixedPt(1)
         || B < MyFixedPt(0) || B > MyFixedPt(1)
         || C < MyFixedPt(0) || C > MyFixedPt(1)
     )) {
+        my_printout("BaryLerp: _inside_tri = true;\n");
         _inside_tri = true;
-    } else /*if (do_rast_interp)*/ {
-        //my_printout("returning!\n");
+    } else { // if (do_rast_interp)
+        my_printout("BaryLerp: returning!\n");
         return;
     }
     _rw = (
@@ -167,67 +164,32 @@ BaryLerp::BaryLerp(
         + mult_cx_rw(B, rwb)
         + mult_cx_rw(C, rwc)
     );
-    //_one_over_interp_rw.data = (
-    //    i64(
-    //        interp_rw.recip_ldbl()
-    //        * (1 << MyRwFixedPt::FRAC_WIDTH)
-    //    )
-    //);
     _one_over_rw = my_recip(_rw);
-    //if (do_rast_interp) {
-        _v = {
-            .x=x,
-            .y=y,
-            .z=mult_cx_rw(
-                (A * za + B * zb + C * zc),
-                _one_over_rw
-            ),
-            //.w=interp_rw,
-        };
+    _v = {
+        .x=x,
+        .y=y,
+        .z=mult_cx_rw(
+            (A * za + B * zb + C * zc),
+            _one_over_rw
+        ),
+        //.w=interp_rw,
+    };
 
-        _uv = {
-            //.x=(A * ua + B * ub + C * uc) / interp_rw,
-            //.y=(A * va + B * vb + C * vc) / interp_rw,
-            .x=mult_cx_rw(
-                (A * ua + B * ub + C * uc),
-                _one_over_rw
-            ),
-            .y=mult_cx_rw(
-                (A * va + B * vb + C * vc),
-                _one_over_rw
-            ),
-        };
-        //if (
-        //    double(uv().x) != 0.0
-        //    && double(uv().y) != 0.0
-        //) {
-        //    //my_printout(
-        //    //    "ABC", Vec3<double>{double(A), double(B), double(C)}, "\n",
-        //    //    "xy", Vec2<double>{double(x), double(y)}, "\n",
-        //    //    "uv", Vec2<double>{double(_uv.x), double(_uv.y)}, "\n"
-        //    //);
-        //}
-    //} else {
-    //    _v = {
-    //        .x=x,
-    //        .y=y,
-    //        .z=(A * za + B * zb + C * zc),
-    //        .w=(A * wa + B * wb + C * wc),
-    //    };
-    //    _uv = {
-    //        .x=(A * ua + B * ub + C * uc),
-    //        .y=(A * va + B * vb + C * vc),
-    //    };
-    //}
+    _uv = {
+        .x=mult_cx_rw(
+            (A * ua + B * ub + C * uc),
+            _one_over_rw
+        ),
+        .y=mult_cx_rw(
+            (A * va + B * vb + C * vc),
+            _one_over_rw
+        ),
+    };
+    my_printout(
+        "BaryLerp: ",
+        "_rw=", _rw, " ",
+        "_one_over_rw=", _one_over_rw, " ",
+        "_v=", _v, " ",
+        "_uv=", _uv, "\n"
+    );
 }
-//std::optional<MyFixedPt> BaryLerp::lerp(
-//    MyFixedPt v
-//) const {
-//    if (!inside_tri()) {
-//        return std::nullopt;
-//    }
-//    return mult_cx_rw(
-//        
-//    );
-//
-//}
