@@ -37,10 +37,10 @@ void Rast::_do_push_back(
         );
     if (lerp.inside_tri()) {
         //my_printout("test\n");
-        my_printout(
-            "Rast::_do_push_back(): "
-            "lerp.inside_tri() == true\n"
-        );
+        //my_printout(
+        //    "Rast::_do_push_back(): "
+        //    "lerp.inside_tri() == true\n"
+        //);
         ret.push_back(
             VertTextureCoords{
                 .img=tri.img,
@@ -49,10 +49,10 @@ void Rast::_do_push_back(
             }
         );
     } else {
-        my_printout(
-            "Rast::_do_push_back(): "
-            "lerp.inside_tri() == false\n"
-        );
+        //my_printout(
+        //    "Rast::_do_push_back(): "
+        //    "lerp.inside_tri() == false\n"
+        //);
     }
 }
 void Rast::calc_visib(
@@ -169,14 +169,14 @@ void Rast::calc_visib(
                     const auto& N = (-(v2 - v0)).cross(v1 - v0);
                     //--------
                     if (v0.dot(N) >= 0) {
-                        my_printout(
-                            "Rast::calc_visib(): _do_push_back(): ",
-                            "y=", y, " ",
-                            "x=", x, " ",
-                            "iy=", iy, " ",
-                            "ix=", ix, " ",
-                            "N=", N, "\n"
-                        );
+                        //my_printout(
+                        //    "Rast::calc_visib(): _do_push_back(): ",
+                        //    "y=", y, " ",
+                        //    "x=", x, " ",
+                        //    "iy=", iy, " ",
+                        //    "ix=", ix, " ",
+                        //    "N=", N, "\n"
+                        //);
                         _do_push_back(
                             tri,
                             Vec2<DrawT>{

@@ -67,6 +67,11 @@ SDL_Color Texture::at(const Vec2<size_t>& uv) {
         uv.y * _img->w + uv.x
     ];
     col = fmt->palette->colors[idx];
+    //printf(
+    //    "debug: idx=%u;  r=%u g=%u b=%u a=%u\n",
+    //    unsigned(idx),
+    //    unsigned(col.r), unsigned(col.g), unsigned(col.b), unsigned(col.a)
+    //);
 
     SDL_UnlockSurface(_img);
     return col;

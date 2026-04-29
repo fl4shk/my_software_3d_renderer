@@ -81,9 +81,9 @@ int main(int argc, char** argv) {
             //col = fmt->palette->colors[pal_idx];
             const SDL_Color col_sdl = texture.at(pos);
             Rgb555 col_rgb555;
-            col_rgb555.set_r(col_sdl.r);
-            col_rgb555.set_g(col_sdl.g);
-            col_rgb555.set_b(col_sdl.b);
+            col_rgb555.set_r((col_sdl.r >> 3) & 0x1f);
+            col_rgb555.set_g((col_sdl.g >> 3) & 0x1f);
+            col_rgb555.set_b((col_sdl.b >> 3) & 0x1f);
             std::fwrite(
                 &col_rgb555.data,
                 sizeof(col_rgb555.data),

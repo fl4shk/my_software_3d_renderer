@@ -245,6 +245,11 @@ inline u32 to_bits(float val) {
     memcpy(&ret, &val, sizeof(val));
     return ret;
 }
+inline float from_bits(u32 val) {
+    float ret;
+    memcpy(&ret, &val, sizeof(val));
+    return ret;
+}
 
 inline Vec2<u32> to_bits(const Vec2<float>& val) {
     Vec2<u32> ret;

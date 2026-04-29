@@ -155,6 +155,42 @@ void init_textures() {
     );
     tiny_fs_fclose(my_wood_block_img_file);
 }
+
+
+//extern u32
+//    test_float_sub_r1,
+//    test_float_sub_r2;
+//
+//int main(int argc, char** argv) {
+//    //static constexpr u32
+//    //    r1 = 0x43312264u,
+//    //    r2 = 0x430edd9bu;
+//    const u32 r1 = test_float_sub_r1;
+//    const u32 r2 = test_float_sub_r2;
+//
+//    const float r1_flt = from_bits(r1);
+//    const float r2_flt = from_bits(r2);
+//    const float diff_flt = r1_flt - r2_flt;
+//    const u32 diff = to_bits(diff_flt);
+//    static constexpr size_t BUF_SIZE = 1024;
+//    char buf[BUF_SIZE];
+//
+//    buf[snprintf(
+//        buf, BUF_SIZE,
+//        "r1=%x r2=%x diff=%x\n"
+//        "r1_flt=%f r2_flt=%f diff_flt=%f\n",
+//        r1, r2, diff,
+//        r1_flt, r2_flt, diff_flt
+//    )] = '\0';
+//    my_printout(buf);
+//
+//    for (;;) {
+//        if (!_did_main_loop_iter) {
+//            _did_main_loop_iter = true;
+//        }
+//    }
+//}
+
 //int main(int argc, char** argv) {
 //    //do_enable_irqs(VBLANK_IRQ);
 //
@@ -209,6 +245,7 @@ void init_textures() {
 //        }
 //    }
 //}
+
 int main(int argc, char** argv) {
     init_textures();
 
@@ -458,26 +495,26 @@ int main(int argc, char** argv) {
                         //  //0xff'ff'ff'ff
                         //  //item.second,
                         ///);
-                        my_printout(
-                            "debug: col.data: ",
-                            size_t(col.data),
-                            "\n"
-                        );
+                        //my_printout(
+                        //    "debug: col.data: ",
+                        //    size_t(col.data),
+                        //    "\n"
+                        //);
                         _melted_moon_fb[
                             temp_pos.y * SCREEN_SIZE_2D.x + temp_pos.x
                         ] = col.data;
                     }
-                    my_printout(
-                        "inner: out of range (maybe?): ",
-                        temp,
-                        "\n"
-                    );
+                    //my_printout(
+                    //    "inner: out of range (maybe?): ",
+                    //    temp,
+                    //    "\n"
+                    //);
                 } else {
-                    my_printout(
-                        "outer: out of range (maybe?): ",
-                        temp,
-                        "\n"
-                    );
+                    //my_printout(
+                    //    "outer: out of range (maybe?): ",
+                    //    temp,
+                    //    "\n"
+                    //);
                 }
             }
             _did_main_loop_iter = true;
