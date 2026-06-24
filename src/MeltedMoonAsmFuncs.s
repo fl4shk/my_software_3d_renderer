@@ -32,8 +32,8 @@ _my_text_start:
 .set VBLANK_IRQ, (0x1 << 0x0)
 .set TIMER_IRQ, (0x1 << 0x1)
 
-.set IRQ_ID_REG, (1 << 27)
-.set IRQ_ENABLE_REG, ((1 << 27) + 4)
+.set IRQ_ID_REG, (1 << 26)
+.set IRQ_ENABLE_REG, ((1 << 26) + 4)
 
 .align 4
 .global _do_enable_irqs

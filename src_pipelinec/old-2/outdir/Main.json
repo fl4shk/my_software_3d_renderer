@@ -1,0 +1,32 @@
+{
+  "cacheVersion": "D20240927T193831",
+  "outputFile": "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/src_nim/Main",
+  "outputLastModificationTime": "",
+  "compile": [
+    [
+      "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@m..@s..@s..@s..@s..@s..@s..@s..@s..@s..@s..@susr@slib@snim@slib@ssystem.nim.cpp",
+      "g++ -c -std=gnu++17 -funsigned-char  -w -fmax-errors=3 -fpermissive -O3 -fno-strict-aliasing -fno-ident -fno-math-errno   -I/usr/lib/nim/lib -I/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/src_nim -o @m..@s..@s..@s..@s..@s..@s..@s..@s..@s..@s..@susr@slib@snim@slib@ssystem.nim.cpp.o @m..@s..@s..@s..@s..@s..@s..@s..@s..@s..@s..@susr@slib@snim@slib@ssystem.nim.cpp"
+    ],
+    [
+      "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@mMain.nim.cpp",
+      "g++ -c -std=gnu++17 -funsigned-char  -w -fmax-errors=3 -fpermissive -O3 -fno-strict-aliasing -fno-ident -fno-math-errno   -I/usr/lib/nim/lib -I/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/src_nim -o @mMain.nim.cpp.o @mMain.nim.cpp"
+    ]
+  ],
+  "link": [
+    "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@m..@s..@s..@s..@s..@s..@s..@s..@s..@s..@s..@susr@slib@snim@slib@ssystem.nim.cpp.o",
+    "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@mMain.nim.cpp.o"
+  ],
+  "linkcmd": "g++   -o /media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/src_nim/Main /media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@m..@s..@s..@s..@s..@s..@s..@s..@s..@s..@s..@susr@slib@snim@slib@ssystem.nim.cpp.o /media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec/outdir/@mMain.nim.cpp.o   -Wl,--relax  ",
+  "extraCmds": [],
+  "configFiles": [
+    "/etc/nim/nim.cfg",
+    "/etc/nim/config.nims"
+  ],
+  "stdinInput": false,
+  "projectIsCmd": false,
+  "cmdInput": "",
+  "currentDir": "/media/other_data/fl4shk_home_stuff/Documents/prog/cxx/projects/software_3d/my_software_3d_renderer/src_pipelinec",
+  "cmdline": "",
+  "depfiles": [],
+  "nimexe": ""
+}

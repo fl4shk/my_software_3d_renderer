@@ -65,7 +65,7 @@ LD:=$(CXX)
 # Initial linker flags
 LD_FLAGS_PRE := \
 	-Wl,-Bstatic -Wl,--relax \
-	-L/home/fl4shk/picolibc/snowhousecpu-unknown-elf/lib \
+	-L/home/fl4shk/local/picolibc/snowhousecpu-unknown-elf/lib \
 
 LD_FLAGS:=$(LD_FLAGS) \
 	-lgcc -lc -lstdc++ -lm -ldummyhost \
